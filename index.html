@@ -10,7 +10,224 @@
   :root {
     --bg: #0d110e;
     --moss: #3a5c3e;
+    --pale-moss: #6a8f6e;<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>异味林地 | The Humid Wilds</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=Noto+Sans+SC:wght@300;400&family=Press+Start+2P&display=swap');
+
+  :root {
+    --bg: #0d110e;
+    --moss: #3a5c3e;
     --pale-moss: #6a8f6e;
+    --mushroom: #c8a96e;
+    --pale-mushroom: #e8d5a8;
+    --text: #c8d4c0;
+    --text-dim: #7a9070;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Serif SC', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── 背景图片 ── */
+  .forest-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    background-image: url('Hills-Free.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  /* 图片上叠一层暗色蒙版，保证文字可读 */
+  .forest-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(5,8,5,0.65) 0%,
+      rgba(5,8,5,0.55) 40%,
+      rgba(5,8,5,0.7) 100%
+    );
+  }
+  /* 漂浮孢子，叠加在图片之上增加氛围 */
+  .spore {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: rgba(200,169,110,0.6);
+    border-radius: 50%;
+    animation: float linear infinite;
+  }
+  @keyframes float {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-100vh) translateX(var(--drift)); opacity: 0; }
+  }
+
+  /* ── 入场内容 ── */
+  .gate {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    width: 100%;
+    padding: 48px 36px;
+    text-align: center;
+    animation: fadeIn 1.8s ease;
+    background: rgba(8,12,8,0.45);
+    border-radius: 4px;
+    backdrop-filter: blur(2px);
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .gate-title {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: clamp(1.6rem, 5.5vw, 2.4rem);
+    font-weight: 900;
+    color: #f4e9c9;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+    text-shadow:
+      2px 0 0 #2a3a1e,
+      -2px 0 0 #2a3a1e,
+      0 2px 0 #2a3a1e,
+      0 -2px 0 #2a3a1e,
+      3px 3px 0 #1a2412,
+      0 0 18px rgba(200,169,110,0.35);
+  }
+  .gate-subtitle {
+    font-family: 'Press Start 2P', 'Noto Sans SC', sans-serif;
+    font-size: 0.6rem;
+    color: var(--mushroom);
+    letter-spacing: 0.18em;
+    margin-bottom: 32px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  }
+  .gate-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--moss), transparent);
+    margin: 0 auto 32px;
+  }
+  .gate-text {
+    font-size: 0.9rem;
+    line-height: 2.1;
+    color: #d8e4d0;
+    font-weight: 300;
+    text-align: left;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+  .gate-text p + p { margin-top: 1.3em; }
+  .gate-highlight { color: #fff3da; }
+  .gate-bold { color: var(--pale-mushroom); font-weight: 600; }
+
+  .gate-enter {
+    display: inline-block;
+    margin-top: 44px;
+    background: none;
+    border: 1px solid var(--moss);
+    color: var(--text);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.92rem;
+    padding: 14px 28px;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    max-width: 90%;
+  }
+  .gate-enter::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--moss);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .gate-enter:hover { border-color: var(--pale-moss); }
+  .gate-enter:hover::before { opacity: 0.15; }
+  .gate-enter span { position: relative; z-index: 1; }
+
+  @media (max-width: 480px) {
+    .gate { padding: 32px 22px; }
+    .gate-text { font-size: 0.86rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="forest-bg" id="forestBg"></div>
+
+<div class="gate">
+  <div class="gate-title">欢迎来到异味林地</div>
+  <div class="gate-subtitle">THE HUMID WILDS</div>
+  <div class="gate-divider"></div>
+
+  <div class="gate-text">
+    <p>你曾有过那样的下午吗？</p>
+    <p>你跑到人家院子里玩，捡掉在地上的果子，忽然出现个陌生的小孩，ta没问你叫什么名字，没问你是哪里来的，ta用衣服下摆装着不少果子，看到你也在捡果子，跑过来跟你搭话，一起捡，聊着聊着，ta说后面那边的果子更多，我带你去，我们一起去捡！你没想太多，跟着对方一起跑过去，发现ta没骗你，真的有很多果子，你们一起捡，玩得很开心，连太阳快下山了都没发觉。</p>
+    <p>等天黑了下来，你才想起要回去吃饭了，ta看你要走了，有点舍不得，问你明天还来不来，你说来，写完作业还来这里玩，ta兴奋地说明天还在这等你。假期很快过去，你继续去学校上学，周末下楼玩，没再看到那张陪伴了你一整个假期的面孔。你这才想起来，其实你都不知道对方叫什么，住在哪，对方也没问过你这些问题。</p>
+    <p>后来你搬家了，上了初中、高中、大学，毕业出来工作，某次回老家，路过原来住的地方，才想起<span class="gate-highlight">"小时候跟谁一起在这捡果子，玩得很开心"</span>。你或许已经记不起那个人的脸了，但那种开心的感觉还很清晰。</p>
+    <p><span class="gate-bold">没有人可以永远停留在那个捡果子的黄昏，过去的不会再回来，但我们希望在那短暂的黄昏里，有些东西是可以暂时悬置的。我们无法消除差别和纷争，愿这片林地能保住这个黄昏。</span></p>
+  </div>
+
+  <button class="gate-enter" onclick="enterWilds()"><span>我愿温和地踏入那个捡果子的黄昏</span></button>
+</div>
+
+<script>
+  function generateForest() {
+    const bg = document.getElementById('forestBg');
+    for (let i = 0; i < 20; i++) {
+      const s = document.createElement('div');
+      s.className = 'spore';
+      const x = Math.random() * 100;
+      const duration = 8 + Math.random() * 20;
+      const delay = Math.random() * 20;
+      const drift = (Math.random() - 0.5) * 80;
+      const size = 1 + Math.random() * 2;
+      s.style.cssText = `
+        left:${x}%;
+        bottom:${-Math.random() * 10}px;
+        width:${size}px;height:${size}px;
+        --drift:${drift}px;
+        animation-duration:${duration}s;
+        animation-delay:-${delay}s;
+      `;
+      bg.appendChild(s);
+    }
+  }
+  generateForest();
+
+  function enterWilds() {
+    // 点击后跳转到正式的林地页面
+    window.location.href = "humid-wilds.html";
+  }
+</script>
+</body>
+</html>
+
     --mushroom: #c8a96e;
     --pale-mushroom: #e8d5a8;
     --text: #c8d4c0;
