@@ -58,16 +58,50 @@
   /* 漂浮孢子，叠加在图片之上增加氛围 */
   .spore {
     position: absolute;
-    width: 2px; height: 2px;
-    background: rgba(200,169,110,0.6);
     border-radius: 50%;
+    background: radial-gradient(circle, rgba(244,233,201,0.95) 0%, rgba(200,169,110,0.5) 60%, transparent 100%);
+    box-shadow: 0 0 6px 1px rgba(200,169,110,0.7);
     animation: float linear infinite;
   }
+  .spore.flicker {
+    animation: float linear infinite, flicker ease-in-out infinite;
+  }
   @keyframes float {
-    0%   { transform: translateY(0) translateX(0); opacity: 0; }
-    10%  { opacity: 1; }
-    90%  { opacity: 0.6; }
-    100% { transform: translateY(-100vh) translateX(var(--drift)); opacity: 0; }
+    0%   { transform: translateY(0) translateX(0) scale(0.6); opacity: 0; }
+    8%   { opacity: 1; }
+    50%  { transform: translateY(-50vh) translateX(calc(var(--drift) * 0.5)) scale(1); }
+    92%  { opacity: 0.9; }
+    100% { transform: translateY(-105vh) translateX(var(--drift)) scale(0.7); opacity: 0; }
+  }
+  @keyframes flicker {
+    0%, 100% { filter: brightness(1); }
+    50%      { filter: brightness(2.6); }
+  }
+  /* 标题周边专属的点缀孢子 */
+  .title-spore {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,243,218,1) 0%, rgba(200,169,110,0.6) 55%, transparent 100%);
+    box-shadow: 0 0 8px 2px rgba(244,233,201,0.8);
+    pointer-events: none;
+    animation: titleTwinkle ease-in-out infinite;
+  }
+  @keyframes titleTwinkle {
+    0%, 100% { opacity: 0.15; transform: scale(0.7); }
+    50%      { opacity: 1; transform: scale(1.15); }
+  }
+  /* 缓慢飘动的雾气层，增加画面呼吸感 */
+  .mist-layer {
+    position: absolute;
+    inset: -15% -15%;
+    background:
+      radial-gradient(ellipse 45% 30% at 25% 65%, rgba(200,169,110,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 28% at 75% 35%, rgba(180,200,170,0.05) 0%, transparent 70%);
+    animation: drift 24s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    0%   { transform: translateX(-4%) translateY(0) scale(1); }
+    100% { transform: translateX(4%) translateY(-3%) scale(1.08); }
   }
 
   /* ── 入场内容 ── */
@@ -166,10 +200,12 @@
 </head>
 <body>
 
-<div class="forest-bg" id="forestBg"></div>
+<div class="forest-bg" id="forestBg">
+  <div class="mist-layer"></div>
+</div>
 
 <div class="gate">
-  <div class="gate-title">欢迎来到异味林地</div>
+  <div class="gate-title" id="gateTitle" style="position:relative;">欢迎来到异味林地</div>
   <div class="gate-subtitle">THE HUMID WILDS</div>
   <div class="gate-divider"></div>
 
@@ -187,26 +223,58 @@
 <script>
   function generateForest() {
     const bg = document.getElementById('forestBg');
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 36; i++) {
       const s = document.createElement('div');
       s.className = 'spore';
       const x = Math.random() * 100;
-      const duration = 8 + Math.random() * 20;
+      const duration = 7 + Math.random() * 14;
       const delay = Math.random() * 20;
-      const drift = (Math.random() - 0.5) * 80;
-      const size = 1 + Math.random() * 2;
-      s.style.cssText = `
+      const drift = (Math.random() - 0.5) * 120;
+      const size = 2.5 + Math.random() * 4.5;
+      // 约三分之一的孢子带闪烁效果
+      if (Math.random() < 0.35) {
+        s.classList.add('flicker');
+        const flickerDuration = 1.5 + Math.random() * 2.5;
+        const flickerDelay = Math.random() * 4;
+        s.style.animationDuration = `${duration}s, ${flickerDuration}s`;
+        s.style.animationDelay = `-${delay}s, -${flickerDelay}s`;
+      } else {
+        s.style.animationDuration = `${duration}s`;
+        s.style.animationDelay = `-${delay}s`;
+      }
+      s.style.cssText += `
         left:${x}%;
         bottom:${-Math.random() * 10}px;
         width:${size}px;height:${size}px;
         --drift:${drift}px;
-        animation-duration:${duration}s;
-        animation-delay:-${delay}s;
       `;
       bg.appendChild(s);
     }
   }
   generateForest();
+
+  function generateTitleSpores() {
+    const title = document.getElementById('gateTitle');
+    const count = 9;
+    for (let i = 0; i < count; i++) {
+      const t = document.createElement('div');
+      t.className = 'title-spore';
+      const x = Math.random() * 100;
+      const y = -30 + Math.random() * 140;
+      const size = 2 + Math.random() * 3.5;
+      const duration = 1.8 + Math.random() * 2.4;
+      const delay = Math.random() * 3;
+      t.style.cssText = `
+        left:${x}%;
+        top:${y}%;
+        width:${size}px;height:${size}px;
+        animation-duration:${duration}s;
+        animation-delay:-${delay}s;
+      `;
+      title.appendChild(t);
+    }
+  }
+  generateTitleSpores();
 
   function enterWilds() {
     // 点击后跳转到正式的林地页面
