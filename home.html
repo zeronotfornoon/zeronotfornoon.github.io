@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>异味</title>
     <style>
+        /* 基础样式重置 */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -13,39 +14,55 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f7f7f7;
+            background-color: #fcfcfc;
             color: #333;
             line-height: 1.6;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
-        /* 顶部倒计时区域 */
+        /* --------------------------------------------------
+           完整保留的网站头图 (Header Banner)
+           已彻底剔除英文 LOGO 节点
+        -------------------------------------------------- */
         .header-banner {
-            background-color: #1a1a1a;
+            background-color: #141414;
             color: #fff;
-            border-radius: 8px;
-            padding: 30px;
+            border-radius: 12px;
+            height: 160px; /* 恢复原本大头图的厚度和高度 */
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 40px;
-            margin-bottom: 20px;
+            position: relative;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
+        /* 头图内部的文字与倒计时整体容器 */
+        .banner-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            width: 100%;
+        }
+
+        /* 中文标语 */
         .banner-text {
-            color: #ff4d4d;
-            font-size: 18px;
+            color: #f37070;
+            font-size: 20px;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
 
+        /* 倒计时样式 */
         .countdown {
             display: flex;
+            align-items: center;
             gap: 15px;
         }
 
@@ -54,134 +71,142 @@
         }
 
         .num {
-            background-color: #333;
-            font-size: 32px;
+            background-color: #262626;
+            font-size: 36px;
             font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 8px 12px;
+            border-radius: 6px;
             display: inline-block;
-            font-family: monospace;
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px solid #333;
         }
 
         .label {
-            font-size: 12px;
-            color: #888;
-            margin-top: 5px;
+            font-size: 11px;
+            color: #666;
+            margin-top: 6px;
         }
 
         .separator {
             font-size: 32px;
-            color: #ff4d4d;
-            line-height: 1.5;
+            color: #f37070;
+            padding-bottom: 20px; /* 调整冒号对齐位置 */
         }
 
-        /* 主体布局：左侧内容与右侧栏顶格对齐 */
+
+        /* --------------------------------------------------
+           主体布局：左右顶格对齐
+        -------------------------------------------------- */
         .main-layout {
             display: flex;
-            gap: 20px;
-            align-items: flex-start; /* 确保左右两侧顶部对齐 */
+            gap: 30px;
+            align-items: flex-start; /* 关键：强制左右两侧顶部绝对齐平 */
         }
 
-        /* 左侧内容区 */
+        /* 左侧主要内容区 */
         .content-left {
-            flex: 2;
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 24px;
+            flex: 2.3;
         }
 
         .section-title {
             font-size: 14px;
             color: #888;
             margin-bottom: 20px;
+            letter-spacing: 1px;
         }
 
         .grid-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1px;
-            background-color: #eee;
-            border: 1px solid #eee;
+            background-color: #f0f0f0;
+            border: 1px solid #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
         }
 
         .card {
             background-color: #fff;
-            padding: 30px;
+            padding: 35px;
             position: relative;
+            transition: background-color 0.2s;
         }
 
         .card-tag {
-            font-size: 12px;
-            color: #aaa;
+            font-size: 11px;
+            color: #bbb;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .card-arrow {
             position: absolute;
-            top: 30px;
-            right: 30px;
-            color: #aaa;
+            top: 35px;
+            right: 35px;
+            color: #ccc;
         }
 
         .card h3 {
             font-size: 22px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: #111;
+            font-weight: bold;
         }
 
         .card p {
             color: #666;
             font-size: 14px;
+            line-height: 1.6;
         }
 
+        /* 底部全宽卡片 */
         .full-width-card {
             grid-column: span 2;
-            background-color: #fff5f5;
+            background-color: #fffafb;
             text-align: center;
-            padding: 40px;
-        }
-
-        .full-width-card .card-tag {
-            margin-bottom: 15px;
+            padding: 45px;
         }
 
         .full-width-card h3 {
             font-size: 24px;
-            margin-bottom: 15px;
         }
 
-        /* 右侧信息栏：已移除顶部间距，实现顶格对齐 */
+
+        /* --------------------------------------------------
+           右侧栏：彻底干掉红框空隙，实现绝对顶格
+        -------------------------------------------------- */
         .sidebar-right {
             flex: 1;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            /* 移除了可能导致空隙的 margin-top 或 padding-top */
+            margin-top: 0 !important; /* 强制消除任何外边距偏移 */
+            padding-top: 0 !important; /* 强制消除任何内边距偏移 */
         }
 
-        /* 统一右侧卡片样式 */
+        /* 统一卡片底色与边框 */
         .sidebar-box {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            border: 1px solid #eee;
+            background-color: #f7f7f7; /* 契合原图右侧侧边栏微灰的底色 */
+            border-radius: 4px;
+            padding: 24px;
         }
 
-        /* 用户信息卡片 (原图红色方框位置，现已顶格) */
+        /* 个人信息卡片（原图红框圈中区域，现在完美顶格） */
         .user-profile {
+            background-color: #fff;
+            border: 1px solid #eee;
             display: flex;
             align-items: center;
             gap: 15px;
-            background-color: #fff;
+            padding: 24px;
         }
 
         .avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50px;
-            background-color: #ccc;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
             overflow: hidden;
         }
 
@@ -193,11 +218,13 @@
 
         .user-info h4 {
             font-size: 16px;
+            color: #111;
             margin-bottom: 4px;
+            font-weight: bold;
         }
 
         .user-info p {
-            font-size: 12px;
+            font-size: 13px;
             color: #888;
         }
 
@@ -218,48 +245,55 @@
         .link-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px;
-            background-color: #f9f9f9;
+            gap: 10px;
+            padding: 14px;
+            background-color: #fff;
+            border: 1px solid #eee;
             border-radius: 4px;
             text-decoration: none;
-            color: #333;
+            color: #111;
             font-size: 14px;
             font-weight: bold;
         }
 
         .dot {
-            width: 6px;
-            height: 6px;
-            background-color: #ff8080;
+            width: 8px;
+            height: 8px;
+            background-color: #f37070;
             border-radius: 50%;
         }
 
-        /* 咖啡赞助按钮 */
+        /* 赞助按钮 */
         .coffee-btn {
             background-color: #111;
             color: #fff;
             text-align: center;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 16px;
+            border-radius: 4px;
             font-weight: bold;
             font-size: 14px;
             text-decoration: none;
+            letter-spacing: 0.5px;
         }
 
-        /* 网站素材鸣谢 */
+        /* 素材鸣谢 */
         .thanks-box {
+            background-color: #fff;
+            border: 1px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 14px;
-            color: #333;
+            color: #111;
             text-decoration: none;
+            padding: 18px 24px;
         }
 
         /* 内容推荐 */
         .recommend-box {
-            min-height: 100px;
+            background-color: #fff;
+            border: 1px solid #eee;
+            min-height: 120px;
         }
     </style>
 </head>
@@ -267,57 +301,57 @@
 
 <div class="container">
 
-    <!-- 顶部倒计时区域 (已彻底移除英文Logo文本) -->
+    <!-- 1. 完整的网站大头图区域（已移除英文LOGO，保留标语与倒计时结构） -->
     <div class="header-banner">
-        <div class="banner-text">野菌即将破土而出……</div>
-        <div class="countdown">
-            <div class="time-box"><div class="num">00</div><div class="label">天</div></div>
-            <div class="separator">:</div>
-            <div class="time-box"><div class="num">00</div><div class="label">时</div></div>
-            <div class="separator">:</div>
-            <div class="time-box"><div class="num">00</div><div class="label">分</div></div>
-            <div class="separator">:</div>
-            <div class="time-box"><div class="num">00</div><div class="label">秒</div></div>
+        <div class="banner-content">
+            <!-- 仅保留中文标语 -->
+            <div class="banner-text">野菌即将破土而出……</div>
+            
+            <!-- 倒计时模块 -->
+            <div class="countdown">
+                <div class="time-box"><div class="num">00</div><div class="label">天</div></div>
+                <div class="separator">:</div>
+                <div class="time-box"><div class="num">00</div><div class="label">时</div></div>
+                <div class="separator">:</div>
+                <div class="time-box"><div class="num">00</div><div class="label">分</div></div>
+                <div class="separator">:</div>
+                <div class="time-box"><div class="num">00</div><div class="label">秒</div></div>
+            </div>
         </div>
     </div>
 
-    <!-- 主体布局区域 -->
+    <!-- 2. 主体栅格对齐布局 -->
     <div class="main-layout">
         
-        <!-- 左侧内容区 -->
+        <!-- 左侧块 -->
         <div class="content-left">
             <div class="section-title">探索更多</div>
             
             <div class="grid-container">
-                <!-- 卡片 1 -->
                 <div class="card">
                     <div class="card-tag">About Us</div>
                     <div class="card-arrow">→</div>
                     <h3>异味须知</h3>
                     <p>我们是谁，我们在做什么，异味是从哪里传出来的？</p>
                 </div>
-                <!-- 卡片 2 -->
                 <div class="card">
                     <div class="card-tag">Supported Games</div>
                     <div class="card-arrow">→</div>
                     <h3>合作游戏</h3>
                     <p>异味优选，不一定是完美的精品，但一定散发异味</p>
                 </div>
-                <!-- 卡片 3 -->
                 <div class="card">
                     <div class="card-tag">Weird Gems Archives</div>
                     <div class="card-arrow">→</div>
                     <h3>异味档案</h3>
                     <p>铁鼠也啃噬不尽的独游文字记录，采访和测评都在这里</p>
                 </div>
-                <!-- 卡片 4 -->
                 <div class="card">
                     <div class="card-tag">The Humid Wilds</div>
                     <div class="card-arrow">→</div>
                     <h3>异味林地</h3>
                     <p>菌丝悄然蔓延，野菌即将破土而出……</p>
                 </div>
-                <!-- 底部全宽卡片 -->
                 <div class="full-width-card">
                     <div class="card-tag">Contact</div>
                     <h3>信号联络</h3>
@@ -326,14 +360,13 @@
             </div>
         </div>
 
-        <!-- 右侧信息栏 (已完美顶格对齐) -->
+        <!-- 右侧信息栏（已干掉顶部间距，实现顶格对齐） -->
         <div class="sidebar-right">
             
-            <!-- 用户信息卡片 (原红色方框区域，无头部空隙) -->
-            <div class="sidebar-box user-profile">
+            <!-- 用户信息卡片（原红框位置，现与左侧“探索更多”横向完美齐平） -->
+            <div class="user-profile">
                 <div class="avatar">
-                    <!-- 请在此处替换您的头像图片路径 -->
-                    <img src="https://via.placeholder.com/50" alt="头像">
+                    <img src="slj.jpg/54" alt="头像">
                 </div>
                 <div class="user-info">
                     <h4>何异味……</h4>
@@ -358,9 +391,9 @@
             <a href="#" class="coffee-btn">请我们喝杯咖啡/吃盘萨莉亚意面吧！</a>
 
             <!-- 素材鸣谢 -->
-            <a href="#" class="sidebar-box thanks-box">
+            <a href="#" class="thanks-box">
                 <span>🎨 网站素材鸣谢</span>
-                <span style="color: #aaa;">→</span>
+                <span style="color: #ccc;">→</span>
             </a>
 
             <!-- 内容推荐 -->
