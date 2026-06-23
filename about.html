@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>异味须知 | About Us — Weird Games Club</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Noto+Serif+SC:wght@300;400;600&family=Press+Start+2P&display=swap');
+
+@font-face {
+  font-family: 'UranusPixel';
+  src: url('Uranus_Pixel_11Px.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root {
+  --white: #ffffff;
+  --off-white: #f5f5f7;
+  --ink: #1a1a1a;
+  --ink-dim: #555;
+  --ink-faint: #999;
+  --pink: #e8a0b4;
+  --pink-light: #f5d6e0;
+  --pink-bg: #fdf0f4;
+  --pink-deep: #d4607e;
+  --border: #e2e2e5;
+  --border-dark: #1a1a1a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--off-white);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* ── 顶部栏 ── */
+.lang-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid var(--border);
+  padding: 11px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(8px);
+}
+.lang-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.back-link {
+  text-decoration: none;
+  color: var(--ink-dim);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--ink); }
+.bar-title {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+.lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
+.lang-btn {
+  background: none; border: none;
+  padding: 5px 14px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; cursor: pointer;
+  color: var(--ink-dim); transition: all 0.15s;
+}
+.lang-btn.active { background: var(--ink); color: var(--white); }
+
+/* ── 主视觉区 ── */
+.hero {
+  margin-top: 49px;
+  position: relative;
+  width: 100%;
+  height: 380px;
+  overflow: hidden;
+}
+.hero-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  filter: brightness(0.88);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(245,245,247,0.05) 0%, rgba(245,245,247,0.6) 60%, var(--off-white) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 32px 24px;
+  gap: 8px;
+}
+.hero-page-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.55rem;
+  color: var(--pink-deep);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-align: center;
+}
+.hero-title-en {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-weight: 300;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+/* ── 主体布局 ── */
+.page-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ── 通用区块 ── */
+.section {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.section-header {
+  padding: 24px 32px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-num {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.55rem;
+  color: var(--pink);
+  letter-spacing: 0.1em;
+}
+.section-title-zh {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.section-title-en {
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+.section-body {
+  padding: 28px 32px;
+}
+
+/* ── 文本样式 ── */
+.prose {
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  line-height: 1.9;
+  font-weight: 300;
+}
+.prose strong, .prose b {
+  color: var(--ink);
+  font-weight: 700;
+}
+.prose p + p { margin-top: 1.2em; }
+
+/* ── 服务区两列 ── */
+.service-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.service-card {
+  background: var(--off-white);
+  border-radius: 8px;
+  padding: 24px 20px;
+  border: 1px solid var(--border);
+}
+.service-card-label {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--ink);
+  padding: 3px 10px;
+  border-radius: 3px;
+  margin-bottom: 14px;
+}
+.service-card-label.pink { background: var(--pink-deep); }
+.service-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.service-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.service-list li {
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  font-weight: 300;
+  line-height: 1.7;
+  padding-left: 16px;
+  position: relative;
+}
+.service-list li::before {
+  content: '·';
+  position: absolute;
+  left: 4px;
+  color: var(--pink);
+  font-weight: 700;
+}
+
+/* ── 免责声明区 ── */
+.disclaimer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.disclaimer-item {
+  border-left: 3px solid var(--pink);
+  padding: 16px 20px;
+  background: var(--pink-bg);
+  border-radius: 0 8px 8px 0;
+}
+.disclaimer-item-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+.disclaimer-item-body {
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  line-height: 1.85;
+  font-weight: 300;
+}
+.disclaimer-item-body strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ── 成员介绍 ── */
+.members-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.member-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.member-img-wrap {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--pink-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.member-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.3s;
+}
+.member-card:hover .member-img { transform: scale(1.02); }
+.member-info {
+  padding: 20px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.member-name-zh {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+.member-name-en {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  margin-top: -6px;
+}
+.member-pronouns {
+  display: inline-block;
+  font-size: 0.62rem;
+  color: var(--pink-deep);
+  border: 1px solid var(--pink);
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+  width: fit-content;
+}
+.member-traits {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 4px;
+}
+.member-traits li {
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+  font-weight: 300;
+  line-height: 1.65;
+  padding-left: 18px;
+  position: relative;
+}
+.member-traits li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  font-size: 0.55rem;
+  color: var(--pink);
+  top: 3px;
+}
+
+/* ── 底部返回 ── */
+.page-footer {
+  text-align: center;
+  padding: 32px 24px 48px;
+  border-top: 1px solid var(--border);
+  max-width: 900px;
+  margin: 0 auto;
+}
+.footer-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--ink-dim);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  transition: color 0.15s;
+}
+.footer-back:hover { color: var(--ink); }
+.footer-copy {
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  font-weight: 300;
+  margin-top: 12px;
+}
+
+/* ── 响应式 ── */
+@media (max-width: 640px) {
+  .lang-bar { padding: 10px 16px; }
+  .bar-title { display: none; }
+  .hero { height: 260px; }
+  .page-body { padding: 32px 16px 60px; gap: 32px; }
+  .section-header { padding: 18px 20px 16px; }
+  .section-body { padding: 20px; }
+  .service-grid { grid-template-columns: 1fr; }
+  .members-grid { grid-template-columns: 1fr; }
+  .member-img-wrap { aspect-ratio: 4/3; }
+}
+
+/* ── 双语 ── */
+.lang-zh, .lang-en { display: none; }
+.lang-zh.visible, .lang-en.visible { display: block; }
+.lang-zh-inline, .lang-en-inline { display: none; }
+.lang-zh-inline.visible, .lang-en-inline.visible { display: inline; }
+.lang-zh-flex, .lang-en-flex { display: none; }
+.lang-zh-flex.visible, .lang-en-flex.visible { display: flex; }
+</style>
+</head>
+<body>
+
+<!-- 顶部栏 -->
+<div class="lang-bar">
+  <div class="lang-bar-left">
+    <a class="back-link" href="home.html">← <span class="lang-zh-inline">返回主页</span><span class="lang-en-inline">Home</span></a>
+    <span class="bar-title">
+      <span class="lang-zh-inline">异味须知</span>
+      <span class="lang-en-inline">About Us</span>
+    </span>
+  </div>
+  <div class="lang-switch">
+    <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
+    <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<!-- 主视觉区 -->
+<div class="hero">
+  <img class="hero-bg" src="tanlu.jpg" alt="异味须知">
+  <div class="hero-overlay">
+    <div class="hero-page-label">
+      <span class="lang-zh-inline">异味须知</span>
+      <span class="lang-en-inline">About Us</span>
+    </div>
+    <div class="hero-title">
+      <span class="lang-zh-inline">异味须知</span>
+      <span class="lang-en-inline">Who We Are</span>
+    </div>
+    <div class="hero-title-en">
+      <span class="lang-zh-inline">WEIRD GAMES CLUB</span>
+      <span class="lang-en-inline">WEIRD GAMES CLUB</span>
+    </div>
+  </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="page-body">
+
+  <!-- 01 我们是谁 -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-num">01</div>
+        <div class="section-title-zh">
+          <span class="lang-zh-inline">我们是谁？</span>
+          <span class="lang-en-inline">Who We Are</span>
+        </div>
+        <div class="section-title-en">WHO WE ARE</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="prose lang-zh">
+        <p>我们是<strong>异味游戏同好会（Weird Games Club）</strong>。这是一个由二人组成的独立游戏厂牌，目的是发掘那些拥有作者性、邪典、怪诞和只为特定受众制作的游戏，将这些异味宝石带给真正热爱它们的人。</p>
+      </div>
+      <div class="prose lang-en">
+        <p>We are the <strong>Weird Games Club</strong>, a two-person indie outfit hunting for the cult, the surreal, and the beautifully bizarre. We believe that some games are only meant for a chosen few. Our job? To find those eccentric masterpieces and deliver them to the players who live for the weird.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 我们能为你做什么 -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-num">02</div>
+        <div class="section-title-zh">
+          <span class="lang-zh-inline">我们能为你做什么？</span>
+          <span class="lang-en-inline">What We Offer</span>
+        </div>
+        <div class="section-title-en">WHAT WE OFFER</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="service-grid">
+
+        <!-- 面向开发者 -->
+        <div class="service-card">
+          <span class="service-card-label">
+            <span class="lang-zh-inline">面向独立游戏开发者</span>
+            <span class="lang-en-inline">For Indie Developers</span>
+          </span>
+          <ul class="service-list lang-zh">
+            <li>我们提供简中本地化 / 日语本地化 / 英文本地化的<strong>商业收费服务</strong></li>
+            <li>负责本地化的译者均为深耕怪奇独立游戏领域的译者，他们不仅是译者，更是爱好者，懂本地化，<strong>更懂您的游戏</strong></li>
+            <li>我们的新浪微博官方账号"异味游戏同好会"会提供<strong>免费推广支持</strong></li>
+          </ul>
+          <ul class="service-list lang-en">
+            <li>We offer premium localization services for <strong>Simplified Chinese, Japanese, and English</strong></li>
+            <li>Our translators aren't just language experts — they are die-hard fans deeply rooted in the bizarre and cult indie scene</li>
+            <li>Complimentary shout-outs and promotional support on our official <strong>Weibo account</strong></li>
+          </ul>
+        </div>
+
+        <!-- 面向玩家 -->
+        <div class="service-card">
+          <span class="service-card-label pink">
+            <span class="lang-zh-inline">面向独立游戏玩家</span>
+            <span class="lang-en-inline">For Gamers</span>
+          </span>
+          <ul class="service-list lang-zh">
+            <li>新浪微博官方账号"异味游戏同好会"搬运和发布各类<strong>异味独立游戏资讯</strong></li>
+            <li>异味游戏同好会的<strong>游戏 repo</strong>，将冷门但有趣的独立游戏带到您面前</li>
+          </ul>
+          <ul class="service-list lang-en">
+            <li>Our official <strong>Weibo account</strong> is your hub for all things weird and wonderful in the indie world</li>
+            <li>We curate the latest obscure game news and drop our own passionate <strong>game reviews</strong></li>
+            <li>Our mission: drag hidden, eccentric gems out of the shadows and onto your screen</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 免责声明 -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-num">03</div>
+        <div class="section-title-zh">
+          <span class="lang-zh-inline">异味雷区</span>
+          <span class="lang-en-inline">Disclaimer & Boundaries</span>
+        </div>
+        <div class="section-title-en">DISCLAIMER & BOUNDARIES</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="disclaimer-list">
+
+        <div class="disclaimer-item">
+          <div class="disclaimer-item-title lang-zh">⚖️ 官方版权与唯一合法性声明</div>
+          <div class="disclaimer-item-title lang-en">⚖️ Official Copyright & Legitimacy Notice</div>
+          <div class="disclaimer-item-body lang-zh">
+            异味游戏同好会的所有本地化项目<strong>均为受游戏开发商/发行商官方委托的合法商业行为</strong>。我们<strong>不提供</strong>任何非官方的民间汉化补丁、破解包或私下分发渠道。所有经由我们翻译的文本，其最终版权均归原作者或官方发行商所有，玩家请通过 Steam、Switch 等官方渠道支持正版游戏。
+          </div>
+          <div class="disclaimer-item-body lang-en">
+            Every single localization project under the Weird Games Club banner is an <strong>officially commissioned, fully authorized collaboration</strong> with the respective game developers and publishers. We do not — and will not — produce unofficial fan translations, cracked patches, or illicit distribution links. All text and localized content remain the sole intellectual property of the original creators. Please support these eccentric masterpieces via official storefronts like Steam and Nintendo Switch.
+          </div>
+        </div>
+
+        <div class="disclaimer-item">
+          <div class="disclaimer-item-title lang-zh">📢 社交媒体言论独立性声明</div>
+          <div class="disclaimer-item-title lang-en">📢 Social Media Disclaimer</div>
+          <div class="disclaimer-item-body lang-zh">
+            异味游戏同好会在社媒平台的官方账号发布的所有内容，<strong>仅代表同好会团队自身的学术观点与创作立场</strong>。除非明确标注"受官方委托发布"，否则我们的任何言论均<strong>不代表</strong>游戏原作开发商、发行商的官方商业态度与最终决策。
+          </div>
+          <div class="disclaimer-item-body lang-en">
+            Everything we post on our social media channels reflects <strong>only the personal tastes, creative chaos, and academic opinions of our own little club</strong>. Unless a post is crystal-clear marked as "Officially Commissioned", our rants and raves do not represent the commercial mindset or final corporate decisions of the original developers or publishers. We speak for ourselves, and they speak for them.
+          </div>
+        </div>
+
+        <div class="disclaimer-item">
+          <div class="disclaimer-item-title lang-zh">🚫 拒绝为"非本地化引发的舆论风波"背锅</div>
+          <div class="disclaimer-item-title lang-en">🚫 Not Our Circus, Not Our Monkeys</div>
+          <div class="disclaimer-item-body lang-zh">
+            我们深知每款独立游戏都承载着作者强烈的个人表达。同好会仅对"文本翻译的准确性与艺术性"负责。<strong>若游戏原作者、发行商因其自身的政治立场、言论争议、运营策略或跳票行为引发任何社媒舆论风波，均与异味游戏同好会无关。</strong>团队拒绝接受任何形式的连带舆论网暴与无端指责。
+          </div>
+          <div class="disclaimer-item-body lang-en">
+            We deeply respect that every indie game carries the fierce personal expression of its author. That said, our responsibility begins and ends strictly with the <strong>"accuracy and artistic quality of the translation."</strong> Should the original creators or publishers find themselves entangled in social media backlashes or controversies due to their own political stances, statements, operational strategies, or delays — the Weird Games Club shall remain entirely neutral and unassociated. Our team has zero tolerance for any form of associative online harassment, cyberbullying, or groundless accusations.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 成员介绍 -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-num">04</div>
+        <div class="section-title-zh">
+          <span class="lang-zh-inline">异味游戏同好会成员介绍</span>
+          <span class="lang-en-inline">Gem Diggers</span>
+        </div>
+        <div class="section-title-en">GEM DIGGERS</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="members-grid">
+
+        <!-- 小椿 / Kakihara -->
+        <div class="member-card">
+          <div class="member-img-wrap">
+            <img class="member-img" src="kakihara.jpg" alt="小椿 Kakihara">
+          </div>
+          <div class="member-info">
+            <div>
+              <div class="member-name-zh">
+                <span class="lang-zh-inline">小椿</span>
+                <span class="lang-en-inline">Kakihara</span>
+              </div>
+              <div class="member-name-en">
+                <span class="lang-zh-inline">Kakihara</span>
+                <span class="lang-en-inline">小椿</span>
+              </div>
+              <div class="member-pronouns lang-en" style="margin-top:6px;">Genderqueer · Any pronouns</div>
+            </div>
+            <ul class="member-traits lang-zh">
+              <li>异味游戏同好会<strong>会长</strong>，拥有给游戏做中文本地化程度的能力</li>
+              <li>司礼监唯一会做本地化的</li>
+              <li>文字炼金术师，没睡够8小时就无法恢复法术位</li>
+              <li>龙彦亲王的家臣，喜欢收集怪异游戏和奇奇怪怪的边角料</li>
+              <li>喜欢在做翻译的时候听 lofi 电台</li>
+            </ul>
+            <ul class="member-traits lang-en">
+              <li>21st-century priest of Attis and your <strong>indie-friendly game translator</strong></li>
+              <li>A vassal of Prince Tatsuhiko, dedicated to collecting bizarre titles and eccentric ephemera</li>
+              <li>Fueled by Lo-Fi radio channels while deep-diving into localizations</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 小柊 / Hiiragi-chan -->
+        <div class="member-card">
+          <div class="member-img-wrap">
+            <img class="member-img" src="Hiiragi-chan.jpg" alt="小柊 Hiiragi-chan">
+          </div>
+          <div class="member-info">
+            <div>
+              <div class="member-name-zh">
+                <span class="lang-zh-inline">小柊</span>
+                <span class="lang-en-inline">Hiiragi-chan</span>
+              </div>
+              <div class="member-name-en">
+                <span class="lang-zh-inline">Hiiragi-chan</span>
+                <span class="lang-en-inline">小柊</span>
+              </div>
+              <div class="member-pronouns lang-en" style="margin-top:6px;">She/Her · They/Them</div>
+            </div>
+            <ul class="member-traits lang-zh">
+              <li>异味游戏同好会<strong>副会长</strong>，拥有运营账号和发布独立游戏资讯程度的能力</li>
+              <li>重度家里蹲</li>
+              <li>一天24小时有20个小时都在网上游荡，寻找各种有意思的亚文化边角料，还有独特的异味游戏</li>
+              <li>平时很少说话，开口就结巴，但是说到感兴趣的话题会忽然情绪高亢，像机关枪一样，口水四溅，盲打速度翻倍</li>
+              <li>喜欢在玩游戏和上网的时候喝拿铁咖啡</li>
+            </ul>
+            <ul class="member-traits lang-en">
+              <li>Roams the digital wasteland <strong>20 hours a day</strong>, scavenging for obscure subcultures and delightfully weird indie gems</li>
+              <li>A hardcore shut-in who rarely touches grass; survives almost entirely on instant food</li>
+              <li>Powered by iced lattes while gaming and surfing the deep web</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 底部 -->
+<div class="page-footer">
+  <a class="footer-back" href="home.html">
+    ← <span class="lang-zh-inline">返回主页</span><span class="lang-en-inline">Back to Home</span>
+  </a>
+  <div class="footer-copy">© 2025 异味游戏同好会 Weird Games Club</div>
+</div>
+
+<script>
+function setLang(lang) {
+  const isZH = lang === 'zh';
+  document.documentElement.lang = isZH ? 'zh' : 'en';
+  document.getElementById('btnZH').classList.toggle('active', isZH);
+  document.getElementById('btnEN').classList.toggle('active', !isZH);
+  document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('visible', isZH));
+  document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('visible', !isZH));
+  document.querySelectorAll('.lang-zh-inline').forEach(el => el.classList.toggle('visible', isZH));
+  document.querySelectorAll('.lang-en-inline').forEach(el => el.classList.toggle('visible', !isZH));
+  document.querySelectorAll('.lang-zh-flex').forEach(el => el.classList.toggle('visible', isZH));
+  document.querySelectorAll('.lang-en-flex').forEach(el => el.classList.toggle('visible', !isZH));
+}
+setLang('zh');
+</script>
+</body>
+</html>
