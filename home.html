@@ -6,6 +6,11 @@
 <title>异味游戏同好会 | Weird Games Club</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Press+Start+2P&display=swap');
+@font-face {
+  font-family: 'Uranus Pixel';
+  src: url('Uranus_Pixel_11Px.ttf') format('truetype');
+}
+
 
 :root {
   --white: #ffffff;
@@ -55,6 +60,52 @@ body {
 .lang-btn.active { background: var(--ink); color: var(--white); }
 
 /* ── 主视觉区（全宽） ── */
+/* 霓虹灯效果与精确定位 */
+.hero-title-row.lang-zh {
+  position: relative;
+  display: block;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.hero-title-zh {
+  display: inline-block;
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  border: 2px dashed var(--border);
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.7);
+}
+.hero-logo-img.neon-logo {
+  position: absolute;
+  bottom: -35px;
+  right: 20px;
+  height: 70px;
+  width: auto;
+  mix-blend-mode: normal !important; /* 霓虹灯效果需要正常混合模式 */
+  background: #1a1a1a; /* 黑色底衬托霓虹灯 */
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 2px solid #ff0055;
+  box-shadow: 0 0 10px #ff0055, inset 0 0 10px #ff0055;
+  animation: neon-flicker 2s infinite alternate;
+}
+
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    filter: drop-shadow(0 0 2px #ff0055) drop-shadow(0 0 10px #ff0055) drop-shadow(0 0 20px #ff0055);
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    filter: none;
+    opacity: 0.7;
+  }
+}
+
 .hero {
   margin-top: 49px;
   position: relative;
@@ -80,15 +131,9 @@ body {
   align-items: center;
   gap: 14px;
 }
-.hero-title-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.hero-title-zh {
-  font-size: clamp(1.8rem, 4.5vw, 3rem);
+/* replaced row */
+/* replaced */
+.hero-title-zh-old {
   font-weight: 900;
   color: var(--ink);
   letter-spacing: 0.02em;
@@ -116,7 +161,8 @@ body {
   height: clamp(110px, 15vw, 180px);
 }
 .hero-tagline {
-  font-size: clamp(0.95rem, 1.7vw, 1.15rem);
+  font-family: 'Uranus Pixel', sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
   color: var(--ink);
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -248,7 +294,7 @@ body {
 
 /* ── 右侧边栏 ── */
 .sidebar {
-  padding: 24px 20px;
+  padding: 48px 20px 24px 20px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -460,11 +506,11 @@ body {
   <div class="hero-overlay">
     <div class="hero-title-row lang-zh">
       <div class="hero-title-zh">异味游戏同好会</div>
-      <img class="hero-logo-img" src="logo2.jpg" alt="Weird Games Club">
+      <img class="hero-logo-img neon-logo" src="logo2.jpg" alt="Weird Games Club">
     </div>
     <div class="hero-title-row lang-en">
       <div class="hero-title-en">
-        <img class="hero-logo-img" src="logo2.jpg" alt="Weird Games Club">
+        <img class="hero-logo-img neon-logo" src="logo2.jpg" alt="Weird Games Club">
       </div>
     </div>
     <div class="hero-tagline">
@@ -666,22 +712,6 @@ body {
             <div class="side-rec-meta">
               <span class="lang-zh-inline">采访 · 待更新</span>
               <span class="lang-en-inline">Interview · Coming soon</span>
-            </div>
-          </div>
-        </a>
-        <a class="side-rec-item" href="#">
-          <div class="side-rec-thumb">
-            <span class="lang-zh-inline">图片<br>占位</span>
-            <span class="lang-en-inline">img</span>
-          </div>
-          <div class="side-rec-info">
-            <div class="side-rec-title">
-              <span class="lang-zh-inline">文章/游戏标题占位</span>
-              <span class="lang-en-inline">Article / Game Title</span>
-            </div>
-            <div class="side-rec-meta">
-              <span class="lang-zh-inline">游戏 · 待更新</span>
-              <span class="lang-en-inline">Game · Coming soon</span>
             </div>
           </div>
         </a>
