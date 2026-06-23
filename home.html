@@ -47,13 +47,11 @@ body {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.85);
-  border-bottom: 1px solid var(--border);
+  background: transparent;
   padding: 12px 32px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  backdrop-filter: blur(8px);
 }
 .lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
 .lang-btn {
@@ -66,13 +64,12 @@ body {
 }
 .lang-btn.active { background: var(--ink); color: var(--white); }
 
-/* ── 主视觉区（头图聚焦优化） ── */
+/* ── 主视觉区 ── */
 .hero {
-  margin-top: 49px;
+  margin-top: 0;
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: #000;
 }
 .hero-bg {
   width: 100%;
@@ -116,50 +113,42 @@ body {
   font-size: 0.6rem; color: var(--ink-faint);
   white-space: nowrap; font-weight: 300;
 }
-/* 英文logo——霓虹灯招牌效果 */
+/* 英文logo——霓虹灯招牌效果，贴合logo轮廓 */
 .hero-logo-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 20px;
-  border-radius: 10px;
-  border: 3px solid var(--pink);
-  box-shadow:
-    0 0 6px var(--pink),
-    0 0 18px var(--pink),
-    inset 0 0 10px rgba(232,160,180,0.15);
-  animation: neon-flicker 3.5s infinite;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(2px);
-  margin-top: 8px;
+  margin-top: 10px;
+  animation: neon-glow-flicker 3.5s infinite;
 }
-@keyframes neon-flicker {
-  0%,19%,21%,23%,25%,54%,56%,100% {
-    border-color: var(--pink);
-    box-shadow: 0 0 6px var(--pink), 0 0 20px var(--pink), inset 0 0 10px rgba(232,160,180,0.15);
+@keyframes neon-glow-flicker {
+  0%,18%,20%,22%,53%,55%,100% {
+    filter:
+      drop-shadow(0 0 4px var(--pink))
+      drop-shadow(0 0 12px var(--pink))
+      drop-shadow(0 0 24px var(--pink));
   }
-  20%,24%,55% {
-    border-color: rgba(232,160,180,0.3);
-    box-shadow: none;
+  19%,21%,54% {
+    filter: none;
   }
 }
 .hero-logo-img {
-  height: clamp(70px, 10vw, 120px);
-  width: clamp(180px, 28vw, 340px);
+  height: clamp(80px, 11vw, 130px);
+  width: clamp(200px, 30vw, 380px);
   display: block;
   object-fit: contain;
   mix-blend-mode: multiply;
 }
-/* 副标题：使用自定义像素字体 */
+/* 副标题：使用自定义像素字体，字号加大 */
 .hero-tagline {
   font-family: 'UranusPixel', 'Press Start 2P', monospace;
-  font-size: clamp(0.8rem, 1.4vw, 1rem);
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
   color: var(--ink-dim);
   font-weight: 400;
   letter-spacing: 0.06em;
   text-align: center;
   line-height: 1.9;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 /* ── 倒计时条 ── */
@@ -507,22 +496,20 @@ body {
   </div>
 </div>
 
-<!-- 主视觉区（头图聚焦与优化） -->
+<!-- 主视觉区 -->
 <div class="hero">
-  <img class="hero-bg" src="yiweijiayao.jpg" alt="异味游戏同好会头图">
+  <img class="hero-bg" src="yiweijiayao.jpg" alt="异味游戏同好会">
   <div class="hero-overlay">
-    <!-- 中文版：标题占位在上，logo在下 -->
-    <div class="lang-zh" style="display:flex;flex-direction:column;align-items:center;gap:14px;">
+    <!-- 中文版：中文标题占位 -->
+    <div class="lang-zh" style="display:flex;flex-direction:column;align-items:center;gap:12px;">
       <div class="hero-title-zh">异味游戏同好会</div>
-      <div class="hero-logo-wrap">
-        <img class="hero-logo-img" src="logo2.jpg" alt="Weird Games Club">
-      </div>
     </div>
-    <!-- 英文版：只显示大logo带霓虹灯 -->
+    <!-- 英文版：空，只显示logo（logo中英文共用，在下面） -->
     <div class="lang-en" style="display:flex;flex-direction:column;align-items:center;">
-      <div class="hero-logo-wrap" style="padding:14px 28px;">
-        <img class="hero-logo-img" style="height:clamp(90px,13vw,160px);width:clamp(220px,36vw,420px);" src="logo2.jpg" alt="Weird Games Club">
-      </div>
+    </div>
+    <!-- logo：中英文都显示，贴合轮廓霓虹灯发光 -->
+    <div class="hero-logo-wrap">
+      <img class="hero-logo-img" src="logo2.jpg" alt="Weird Games Club">
     </div>
     <div class="hero-tagline">
       <span class="lang-zh-inline">独立游戏不是流水线产品，每一份异味都值得深尝</span>
