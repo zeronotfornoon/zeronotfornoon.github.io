@@ -61,13 +61,13 @@ body {
   overflow: hidden;
 }
 
-/* 底图：黑白小人铺满 */
+/* 底图：黑白小人铺满，聚焦人物头像 */
 .hero-bg {
   width: 100%;
   display: block;
   max-height: 520px;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 65%;
   filter: brightness(0.82);
 }
 
@@ -112,23 +112,23 @@ body {
 
 /* 英文 logo 图片，放在标题旁边 */
 .hero-logo-img {
-  height: clamp(48px, 7vw, 72px);
+  height: clamp(72px, 10vw, 110px);
   width: auto;
   display: block;
   object-fit: contain;
 }
 
-/* 英文版标题：只显示大logo */
-.hero-title-en .hero-logo-img { height: clamp(56px, 9vw, 96px); }
+/* 英文版标题：只显示更大的logo */
+.hero-title-en .hero-logo-img { height: clamp(100px, 14vw, 160px); }
 
 .hero-tagline {
-  font-size: clamp(0.88rem, 1.6vw, 1rem);
-  color: var(--ink-dim);
-  font-weight: 300;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  color: var(--ink);
+  font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1.8;
   text-align: center;
-  margin-top: 6px;
+  margin-top: 10px;
 }
 
 /* ── 倒计时条 ── */
@@ -144,7 +144,7 @@ body {
 }
 .countdown-label {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(0.65rem, 1.3vw, 0.85rem);
+  font-size: clamp(0.8rem, 1.6vw, 1.05rem);
   color: var(--pink);
   letter-spacing: 0.04em;
   white-space: nowrap;
