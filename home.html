@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>异味游戏同好会 | Weird Games Club</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Noto+Serif+SC:wght@300;400;600&family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Press+Start+2P&display=swap');
 
 :root {
   --white: #ffffff;
   --off-white: #f7f6f4;
   --ink: #1a1a1a;
   --ink-dim: #555;
-  --ink-faint: #aaa;
+  --ink-faint: #999;
   --pink: #e8a0b4;
   --pink-light: #f5d6e0;
   --pink-bg: #fdf0f4;
@@ -22,12 +22,10 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--white);
   color: var(--ink);
   font-family: 'Noto Sans SC', sans-serif;
-  min-height: 100vh;
   overflow-x: hidden;
 }
 
@@ -36,108 +34,108 @@ body {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: var(--white);
+  background: rgba(255,255,255,0.92);
   border-bottom: 1px solid var(--border);
   padding: 10px 32px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  backdrop-filter: blur(6px);
 }
-.lang-logo { height: 32px; width: auto; display: block; }
-.lang-switch {
-  display: flex;
-  border: 1px solid var(--border-dark);
-}
+.lang-switch { display: flex; border: 1px solid var(--border-dark); }
 .lang-btn {
-  background: none;
-  border: none;
-  padding: 5px 14px;
+  background: none; border: none;
+  padding: 6px 16px;
   font-family: 'Noto Sans SC', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  color: var(--ink-dim);
-  transition: all 0.15s;
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.1em; cursor: pointer;
+  color: var(--ink-dim); transition: all 0.15s;
 }
 .lang-btn.active { background: var(--ink); color: var(--white); }
 
 /* ── 主视觉区 ── */
 .hero {
-  margin-top: 53px;
-  min-height: calc(100vh - 53px);
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: end;
-  overflow: hidden;
-  background: var(--white);
-}
-.hero-char { display: flex; align-items: flex-end; }
-.hero-char img {
+  margin-top: 49px;
+  position: relative;
   width: 100%;
-  max-width: 420px;
-  display: block;
-  object-fit: contain;
-  object-position: bottom;
+  overflow: hidden;
 }
-.hero-char.left { justify-content: flex-start; }
-.hero-char.right { justify-content: flex-end; }
 
-.hero-center {
-  padding: 60px 32px 80px;
-  text-align: center;
+/* 底图：黑白小人铺满 */
+.hero-bg {
+  width: 100%;
+  display: block;
+  max-height: 520px;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.82);
+}
+
+/* 标题+logo+副标题叠在底图上 */
+.hero-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.96) 40%, #fff 100%);
+  padding: 48px 40px 36px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
-  min-width: 280px;
+  gap: 12px;
+}
+
+.hero-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 /* 中文标题占位 */
 .hero-title-zh {
-  font-family: 'Noto Sans SC', sans-serif;
-  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+  font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 900;
   color: var(--ink);
-  letter-spacing: -0.01em;
-  line-height: 1.2;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
   border: 2px dashed var(--border);
-  padding: 16px 24px;
+  padding: 10px 20px;
   position: relative;
 }
 .hero-title-zh::after {
   content: '专属标题设计稿待替换';
   position: absolute;
-  bottom: -22px;
-  left: 50%; transform: translateX(-50%);
-  font-size: 0.62rem;
-  color: var(--ink-faint);
-  white-space: nowrap;
-  font-weight: 400;
+  bottom: -20px; left: 50%; transform: translateX(-50%);
+  font-size: 0.6rem; color: var(--ink-faint);
+  white-space: nowrap; font-weight: 300;
 }
 
-/* 英文标题用logo图片 */
-.hero-title-en img {
-  max-height: 80px;
-  max-width: 320px;
+/* 英文 logo 图片，放在标题旁边 */
+.hero-logo-img {
+  height: clamp(48px, 7vw, 72px);
   width: auto;
   display: block;
-  margin: 0 auto;
+  object-fit: contain;
 }
 
+/* 英文版标题：只显示大logo */
+.hero-title-en .hero-logo-img { height: clamp(56px, 9vw, 96px); }
+
 .hero-tagline {
-  font-size: 0.85rem;
+  font-size: clamp(0.88rem, 1.6vw, 1rem);
   color: var(--ink-dim);
   font-weight: 300;
   letter-spacing: 0.04em;
-  line-height: 1.9;
+  line-height: 1.8;
+  text-align: center;
+  margin-top: 6px;
 }
 
 /* ── 倒计时条 ── */
 .countdown-strip {
   background: var(--ink);
   color: var(--white);
-  padding: 22px 32px;
+  padding: 24px 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,65 +144,47 @@ body {
 }
 .countdown-label {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.75rem;
+  font-size: clamp(0.65rem, 1.3vw, 0.85rem);
   color: var(--pink);
   letter-spacing: 0.04em;
   white-space: nowrap;
 }
-.countdown-timer {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.cd-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
+.countdown-timer { display: flex; align-items: center; gap: 6px; }
+.cd-unit { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .cd-num {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  font-size: clamp(1.05rem, 2.2vw, 1.4rem);
   color: var(--white);
   background: #2a2a2a;
-  padding: 8px 12px;
-  min-width: 48px;
+  padding: 9px 13px;
+  min-width: 52px;
   text-align: center;
 }
 .cd-lbl {
-  font-size: 0.62rem;
-  color: var(--ink-faint);
+  font-size: 0.65rem; color: var(--ink-faint);
   font-family: 'Noto Sans SC', sans-serif;
-  font-weight: 300;
-  letter-spacing: 0.08em;
+  font-weight: 300; letter-spacing: 0.08em;
 }
 .cd-sep {
   font-family: 'Press Start 2P', monospace;
-  font-size: 1.1rem;
-  color: var(--pink);
-  margin-bottom: 16px;
+  font-size: 1.15rem; color: var(--pink);
+  margin-bottom: 18px;
 }
 
 /* ── 导航板块 ── */
 .nav-section {
-  padding: 64px 32px;
-  max-width: 960px;
+  padding: 56px 32px 64px;
+  max-width: 980px;
   margin: 0 auto;
 }
 .nav-section-title {
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  color: var(--ink-faint);
-  text-transform: uppercase;
-  margin-bottom: 28px;
-  font-weight: 400;
+  font-size: 0.72rem; letter-spacing: 0.18em;
+  color: var(--ink-faint); text-transform: uppercase;
+  margin-bottom: 24px; font-weight: 400;
 }
-
-/* 用 grid-template-areas 精确控制布局 */
 .nav-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto;
   gap: 1px;
   background: var(--border-dark);
   border: 1px solid var(--border-dark);
@@ -213,70 +193,53 @@ body {
     "archive wilds"
     "contact contact";
 }
-
 .nav-card {
   background: var(--white);
-  padding: 28px 24px;
+  padding: 32px 28px;
   text-decoration: none;
   color: var(--ink);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: flex; flex-direction: column; gap: 10px;
   transition: background 0.15s;
   position: relative;
 }
 .nav-card:hover { background: var(--off-white); }
-
 .nav-card.area-about   { grid-area: about; }
 .nav-card.area-games   { grid-area: games; }
 .nav-card.area-archive { grid-area: archive; }
-.nav-card.area-wilds   { grid-area: wilds; background: var(--ink); }
-.nav-card.area-wilds .nav-card-zh  { color: var(--white); }
-.nav-card.area-wilds .nav-card-en  { color: rgba(255,255,255,0.4); }
-.nav-card.area-wilds .nav-card-desc { color: rgba(255,255,255,0.6); }
-.nav-card.area-wilds .nav-card-arrow { color: var(--pink); }
-.nav-card.area-wilds:hover { background: #2a2a2a; }
+.nav-card.area-wilds   { grid-area: wilds; }
 .nav-card.area-contact {
   grid-area: contact;
   background: var(--pink-bg);
+  align-items: center;
+  text-align: center;
 }
 .nav-card.area-contact:hover { background: var(--pink-light); }
+.nav-card.area-contact .nav-card-arrow { position: static; margin-top: 4px; }
 
 .nav-card-en {
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  color: var(--ink-faint);
-  font-weight: 400;
-  text-transform: uppercase;
+  font-size: 0.7rem; letter-spacing: 0.12em;
+  color: var(--ink-faint); font-weight: 400; text-transform: uppercase;
 }
 .nav-card-zh {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: 0.02em;
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--ink); letter-spacing: 0.02em;
 }
 .nav-card-desc {
-  font-size: 0.78rem;
-  color: var(--ink-dim);
-  font-weight: 300;
-  line-height: 1.7;
-  margin-top: 4px;
+  font-size: 0.9rem; color: var(--ink-dim);
+  font-weight: 300; line-height: 1.75; margin-top: 2px;
 }
 .nav-card-arrow {
-  position: absolute;
-  top: 28px; right: 24px;
-  font-size: 0.8rem;
-  color: var(--ink-faint);
+  position: absolute; top: 32px; right: 28px;
+  font-size: 0.85rem; color: var(--ink-faint);
   transition: transform 0.15s, color 0.15s;
 }
 .nav-card:hover .nav-card-arrow { transform: translateX(3px); color: var(--ink); }
-.nav-card.area-wilds:hover .nav-card-arrow { color: var(--pink); }
 
 /* ── 底部 ── */
 .footer {
   border-top: 1px solid var(--border);
   padding: 32px;
-  max-width: 960px;
+  max-width: 980px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -284,59 +247,38 @@ body {
   flex-wrap: wrap;
   gap: 20px;
 }
-.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
 .footer-link {
-  text-decoration: none;
-  color: var(--ink-dim);
-  font-size: 0.78rem;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  text-decoration: none; color: var(--ink-dim);
+  font-size: 0.85rem; font-weight: 400;
+  display: flex; align-items: center; gap: 7px;
   transition: color 0.15s;
 }
 .footer-link:hover { color: var(--ink); }
 .footer-link .dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-  flex-shrink: 0;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor; flex-shrink: 0;
 }
 .footer-afdian {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--ink);
-  color: var(--white);
-  text-decoration: none;
-  font-size: 0.72rem;
-  padding: 10px 20px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1.6;
-  transition: background 0.15s;
-  text-align: center;
+  display: inline-flex; align-items: center;
+  background: var(--ink); color: var(--white);
+  text-decoration: none; font-size: 0.78rem;
+  padding: 11px 22px; font-weight: 700;
+  letter-spacing: 0.04em; line-height: 1.6;
+  transition: background 0.15s; text-align: center;
 }
 .footer-afdian:hover { background: #333; }
-.footer-afdian .afdian-mono {
-  font-family: monospace;
-  font-style: italic;
-}
+.afdian-mono { font-family: monospace; font-style: italic; }
 
 /* ── 响应式 ── */
 @media (max-width: 640px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero-char.left { display: none; }
-  .hero-char.right { justify-content: center; max-height: 200px; overflow: hidden; }
-  .hero-char.right img { max-width: 240px; }
-  .hero-center { padding: 40px 20px; }
   .lang-bar { padding: 10px 16px; }
-  .nav-section { padding: 40px 16px; }
+  .hero-overlay { padding: 32px 20px 28px; }
+  .hero-title-row { gap: 12px; }
+  .countdown-strip { gap: 12px; padding: 16px; }
+  .nav-section { padding: 36px 16px 48px; }
   .nav-grid { grid-template-columns: 1fr; grid-template-areas: "about" "games" "archive" "wilds" "contact"; }
   .footer { padding: 24px 16px; flex-direction: column; align-items: flex-start; }
-  .countdown-strip { gap: 12px; padding: 16px; }
-  .countdown-label { font-size: 0.6rem; }
 }
 
 /* ── 双语 ── */
@@ -350,7 +292,6 @@ body {
 
 <!-- 顶部语言栏 -->
 <div class="lang-bar">
-  <img src="logo.jpg" alt="Weird Games Club" class="lang-logo">
   <div class="lang-switch">
     <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
     <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
@@ -359,23 +300,26 @@ body {
 
 <!-- 主视觉区 -->
 <div class="hero">
-  <div class="hero-char left">
-    <img src="yiweiyouxuan.jpg" alt="异味游戏同好会">
-  </div>
-  <div class="hero-center">
-    <!-- 中文标题：占位虚线框，设计稿到了替换这整个div -->
-    <div class="hero-title-zh lang-zh">异味游戏同好会</div>
-    <!-- 英文标题：直接用logo图片 -->
-    <div class="hero-title-en lang-en">
-      <img src="logo.jpg" alt="Weird Games Club">
+  <img class="hero-bg" src="yiweiyouxuan.jpg" alt="异味游戏同好会">
+  <div class="hero-overlay">
+
+    <!-- 中文版：标题占位 + 旁边放logo图 -->
+    <div class="hero-title-row lang-zh">
+      <div class="hero-title-zh">异味游戏同好会</div>
+      <img class="hero-logo-img" src="logo.jpg" alt="Weird Games Club logo">
     </div>
+
+    <!-- 英文版：只放大logo图 -->
+    <div class="hero-title-row lang-en">
+      <div class="hero-title-en">
+        <img class="hero-logo-img" src="logo.jpg" alt="Weird Games Club">
+      </div>
+    </div>
+
     <div class="hero-tagline">
       <span class="lang-zh-inline">独立游戏不是流水线产品，每一份异味都值得深尝</span>
-      <span class="lang-en-inline">Indie games aren't assembly-line products.<br>Every weird taste is worth savoring.</span>
+      <span class="lang-en-inline">Indie games aren't assembly-line products. Every weird taste is worth savoring.</span>
     </div>
-  </div>
-  <div class="hero-char right">
-    <img src="yiweiyouxuan.jpg" alt="异味游戏同好会">
   </div>
 </div>
 
@@ -388,34 +332,22 @@ body {
   <div class="countdown-timer">
     <div class="cd-unit">
       <div class="cd-num" id="cdDays">00</div>
-      <div class="cd-lbl">
-        <span class="lang-zh-inline">天</span>
-        <span class="lang-en-inline">days</span>
-      </div>
+      <div class="cd-lbl"><span class="lang-zh-inline">天</span><span class="lang-en-inline">days</span></div>
     </div>
     <div class="cd-sep">:</div>
     <div class="cd-unit">
       <div class="cd-num" id="cdHours">00</div>
-      <div class="cd-lbl">
-        <span class="lang-zh-inline">时</span>
-        <span class="lang-en-inline">hrs</span>
-      </div>
+      <div class="cd-lbl"><span class="lang-zh-inline">时</span><span class="lang-en-inline">hrs</span></div>
     </div>
     <div class="cd-sep">:</div>
     <div class="cd-unit">
       <div class="cd-num" id="cdMins">00</div>
-      <div class="cd-lbl">
-        <span class="lang-zh-inline">分</span>
-        <span class="lang-en-inline">min</span>
-      </div>
+      <div class="cd-lbl"><span class="lang-zh-inline">分</span><span class="lang-en-inline">min</span></div>
     </div>
     <div class="cd-sep">:</div>
     <div class="cd-unit">
       <div class="cd-num" id="cdSecs">00</div>
-      <div class="cd-lbl">
-        <span class="lang-zh-inline">秒</span>
-        <span class="lang-en-inline">sec</span>
-      </div>
+      <div class="cd-lbl"><span class="lang-zh-inline">秒</span><span class="lang-en-inline">sec</span></div>
     </div>
   </div>
 </div>
@@ -428,28 +360,25 @@ body {
   </div>
   <div class="nav-grid">
 
-    <a class="nav-card area-about" href="#" id="aboutLink">
+    <a class="nav-card area-about" href="#">
       <span class="nav-card-en">About Us</span>
-      <span class="nav-card-zh lang-zh">异味须知</span>
-      <span class="nav-card-zh lang-en">About Us</span>
+      <span class="nav-card-zh"><span class="lang-zh-inline">异味须知</span><span class="lang-en-inline">About Us</span></span>
       <span class="nav-card-desc lang-zh">我们是谁，我们在做什么，异味是从哪里传出来的？</span>
       <span class="nav-card-desc lang-en">Who we are, what we do, and where the smell comes from.</span>
       <span class="nav-card-arrow">→</span>
     </a>
 
-    <a class="nav-card area-games" href="#" id="gamesLink">
+    <a class="nav-card area-games" href="#">
       <span class="nav-card-en">Supported Games</span>
-      <span class="nav-card-zh lang-zh">合作游戏</span>
-      <span class="nav-card-zh lang-en">Supported Games</span>
+      <span class="nav-card-zh"><span class="lang-zh-inline">合作游戏</span><span class="lang-en-inline">Supported Games</span></span>
       <span class="nav-card-desc lang-zh">异味优选，不一定是完美的精品，但一定散发异味</span>
       <span class="nav-card-desc lang-en">Not necessarily flawless, but always unmistakably weird.</span>
       <span class="nav-card-arrow">→</span>
     </a>
 
-    <a class="nav-card area-archive" href="#" id="archiveLink">
+    <a class="nav-card area-archive" href="#">
       <span class="nav-card-en">Weird Gems Archives</span>
-      <span class="nav-card-zh lang-zh">异味档案</span>
-      <span class="nav-card-zh lang-en">Weird Gems Archives</span>
+      <span class="nav-card-zh"><span class="lang-zh-inline">异味档案</span><span class="lang-en-inline">Weird Gems Archives</span></span>
       <span class="nav-card-desc lang-zh">铁鼠也啃噬不尽的独游文字记录，采访和测评都在这里</span>
       <span class="nav-card-desc lang-en">Interviews and reviews that even the iron rat can't chew through.</span>
       <span class="nav-card-arrow">→</span>
@@ -457,8 +386,7 @@ body {
 
     <a class="nav-card area-wilds" href="index.html">
       <span class="nav-card-en">The Humid Wilds</span>
-      <span class="nav-card-zh lang-zh">异味林地</span>
-      <span class="nav-card-zh lang-en">The Humid Wilds</span>
+      <span class="nav-card-zh"><span class="lang-zh-inline">异味林地</span><span class="lang-en-inline">The Humid Wilds</span></span>
       <span class="nav-card-desc lang-zh">菌丝悄然蔓延，野菌即将破土而出……</span>
       <span class="nav-card-desc lang-en">Mycelium spreads quietly. The mushrooms are almost here.</span>
       <span class="nav-card-arrow">→</span>
@@ -467,8 +395,7 @@ body {
     <a class="nav-card area-contact" id="contactLink"
       href="https://difficult-snowshoe-651.notion.site/3757a80dce1180018e24f9f298233120">
       <span class="nav-card-en">Contact</span>
-      <span class="nav-card-zh lang-zh">信号联络</span>
-      <span class="nav-card-zh lang-en">Contact</span>
+      <span class="nav-card-zh"><span class="lang-zh-inline">信号联络</span><span class="lang-en-inline">Contact</span></span>
       <span class="nav-card-desc lang-zh">想合作？信号接收器功率全开！</span>
       <span class="nav-card-desc lang-en">Want to collab? Our signal receiver is wide open.</span>
       <span class="nav-card-arrow">→</span>
@@ -482,13 +409,11 @@ body {
   <div class="footer-links">
     <a class="footer-link" href="https://weibo.com/u/2416997860" target="_blank" rel="noopener">
       <span class="dot"></span>
-      <span class="lang-zh-inline">微博</span>
-      <span class="lang-en-inline">Weibo</span>
+      <span class="lang-zh-inline">微博</span><span class="lang-en-inline">Weibo</span>
     </a>
     <a class="footer-link" href="https://www.gcores.com/users/523089/talks" target="_blank" rel="noopener">
       <span class="dot"></span>
-      <span class="lang-zh-inline">机核 Gcores</span>
-      <span class="lang-en-inline">Gcores</span>
+      <span class="lang-zh-inline">机核 Gcores</span><span class="lang-en-inline">Gcores</span>
     </a>
   </div>
   <a class="footer-afdian" href="https://afdian.com/a/manwithouttalent" target="_blank" rel="noopener">
@@ -506,23 +431,18 @@ function setLang(lang) {
   document.documentElement.lang = isZH ? 'zh' : 'en';
   document.getElementById('btnZH').classList.toggle('active', isZH);
   document.getElementById('btnEN').classList.toggle('active', !isZH);
-
   document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('visible', isZH));
   document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('visible', !isZH));
   document.querySelectorAll('.lang-zh-inline').forEach(el => el.classList.toggle('visible', isZH));
   document.querySelectorAll('.lang-en-inline').forEach(el => el.classList.toggle('visible', !isZH));
-
   document.getElementById('contactLink').href = isZH ? CONTACT_ZH : CONTACT_EN;
 }
 
-// 倒计时，目标：2025年8月28日 20:00 北京时间
 const TARGET = new Date('2025-08-28T20:00:00+08:00');
 function updateCountdown() {
   const diff = TARGET - new Date();
   if (diff <= 0) {
-    ['cdDays','cdHours','cdMins','cdSecs'].forEach(id => {
-      document.getElementById(id).textContent = '00';
-    });
+    ['cdDays','cdHours','cdMins','cdSecs'].forEach(id => document.getElementById(id).textContent = '00');
     return;
   }
   document.getElementById('cdDays').textContent  = String(Math.floor(diff/86400000)).padStart(2,'0');
@@ -532,8 +452,6 @@ function updateCountdown() {
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
-// 默认中文
 setLang('zh');
 </script>
 </body>
