@@ -9,21 +9,16 @@
 
 :root {
   --white: #ffffff;
-  --off-white: #f5f5f7;
-  --ink: #111111;
-  --ink-dim: #444444;
-  --ink-faint: #888888;
+  --off-white: #f7f6f4;
+  --ink: #1a1a1a;
+  --ink-dim: #555;
+  --ink-faint: #999;
   --pink: #e8a0b4;
   --pink-light: #f5d6e0;
   --pink-bg: #fdf0f4;
-  --border: #e2e2e5;
-  --border-dark: #111111;
-  --sidebar-width: 320px;
-  
-  /* 社交媒体品牌色 */
-  --color-weibo: #df2029;
-  --color-gcores: #fb5607;
-  --color-afdian: #9466ff;
+  --border: #e0ddd8;
+  --border-dark: #1a1a1a;
+  --sidebar-width: 280px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,7 +28,6 @@ body {
   color: var(--ink);
   font-family: 'Noto Sans SC', sans-serif;
   overflow-x: hidden;
-  line-height: 1.5;
 }
 
 /* ── 顶部语言栏 ── */
@@ -41,182 +35,186 @@ body {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255,255,255,0.93);
   border-bottom: 1px solid var(--border);
-  padding: 12px 32px;
+  padding: 10px 32px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
 }
-.lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
+.lang-switch { display: flex; border: 1px solid var(--border-dark); }
 .lang-btn {
   background: none; border: none;
   padding: 6px 16px;
   font-family: 'Noto Sans SC', sans-serif;
   font-size: 0.75rem; font-weight: 700;
   letter-spacing: 0.1em; cursor: pointer;
-  color: var(--ink-dim); transition: all 0.2s;
+  color: var(--ink-dim); transition: all 0.15s;
 }
 .lang-btn.active { background: var(--ink); color: var(--white); }
 
-/* ── 主视觉区（头图聚焦优化） ── */
+/* ── 主视觉区（全宽） ── */
 .hero {
   margin-top: 49px;
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: #000;
 }
 .hero-bg {
   width: 100%;
   display: block;
-  height: 380px;
+  height: 420px;
   object-fit: cover;
-  /* 聚焦于头像区域，并给予适当的裁剪视口 */
-  object-position: center 35%;
-  filter: brightness(0.95);
+  object-position: center 55%;
+  filter: brightness(0.88);
 }
-/* 渐变遮罩 */
+/* 渐变遮罩，底部淡出 */
 .hero-overlay {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(to bottom, rgba(245,245,247,0.1) 0%, rgba(245,245,247,0.6) 60%, var(--off-white) 100%);
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(247,246,244,0.92) 55%, var(--off-white) 100%);
+  padding: 56px 48px 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  padding: 40px 24px 24px;
+  gap: 14px;
 }
 .hero-title-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px; /* 拉开人物与人物、标题之间的距离，方便放下标题 */
+  gap: 24px;
   flex-wrap: wrap;
 }
 .hero-title-zh {
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
   font-weight: 900;
   color: var(--ink);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   line-height: 1.1;
-  background: rgba(255, 255, 255, 0.85);
-  padding: 12px 28px;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-  backdrop-filter: blur(4px);
+  border: 2px dashed var(--border);
+  padding: 10px 20px;
+  position: relative;
+  background: rgba(255,255,255,0.7);
+}
+.hero-title-zh::after {
+  content: '专属标题设计稿待替换';
+  position: absolute;
+  bottom: -20px; left: 50%; transform: translateX(-50%);
+  font-size: 0.6rem; color: var(--ink-faint);
+  white-space: nowrap; font-weight: 300;
 }
 .hero-logo-img {
-  height: clamp(90px, 12vw, 140px);
+  height: clamp(80px, 11vw, 130px);
   width: auto;
   display: block;
   object-fit: contain;
-  /* 抠图级融合：使用 multiply 混合模式完美去除白底 */
-  mix-blend-mode: multiply; 
-  transform: scale(1.15); /* 调大英文logo */
+  mix-blend-mode: multiply;
+}
+.hero-title-en .hero-logo-img {
+  height: clamp(110px, 15vw, 180px);
 }
 .hero-tagline {
-  font-size: clamp(1rem, 1.8vw, 1.2rem);
-  color: var(--ink-dim);
-  font-weight: 500;
+  font-size: clamp(0.95rem, 1.7vw, 1.15rem);
+  color: var(--ink);
+  font-weight: 700;
   letter-spacing: 0.04em;
+  line-height: 1.8;
   text-align: center;
-  margin-top: 16px;
-  background: rgba(245, 245, 247, 0.7);
-  padding: 4px 12px;
-  border-radius: 4px;
+  margin-top: 8px;
 }
 
 /* ── 倒计时条 ── */
+.countdown-container {
+  max-width: 1200px;
+  margin: 16px auto;
+  padding: 0 16px;
+}
 .countdown-strip {
   background: var(--ink);
   color: var(--white);
-  padding: 20px 32px;
+  padding: 22px 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 28px;
   flex-wrap: wrap;
+  border-radius: 8px;
 }
 .countdown-label {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+  font-size: clamp(0.75rem, 1.5vw, 1rem);
   color: var(--pink);
   letter-spacing: 0.04em;
+  white-space: nowrap;
 }
-.countdown-timer { display: flex; align-items: center; gap: 8px; }
+.countdown-timer { display: flex; align-items: center; gap: 6px; }
 .cd-unit { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .cd-num {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-size: clamp(1rem, 2vw, 1.35rem);
   color: var(--white);
-  background: #252525;
-  padding: 8px 12px;
-  min-width: 55px;
+  background: #2a2a2a;
+  padding: 9px 12px;
+  min-width: 50px;
   text-align: center;
-  border-radius: 4px;
 }
 .cd-lbl {
   font-size: 0.65rem; color: var(--ink-faint);
-  font-weight: 400; letter-spacing: 0.08em;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 300; letter-spacing: 0.08em;
 }
 .cd-sep {
   font-family: 'Press Start 2P', monospace;
-  font-size: 1.2rem; color: var(--pink);
-  margin-bottom: 16px;
+  font-size: 1.1rem; color: var(--pink);
+  margin-bottom: 18px;
 }
 
-/* ── 两栏布局（左宽右窄） ── */
+/* ── 主体两栏布局 ── */
 .body-layout {
   display: grid;
   grid-template-columns: 1fr var(--sidebar-width);
-  gap: 24px;
-  max-width: 1240px;
-  margin: 32px auto;
-  padding: 0 24px;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
   align-items: start;
+  padding: 0 16px;
 }
 
-/* ── 左侧主内容区 ── */
+/* ── 主内容（左） ── */
 .main-col {
+  padding: 48px 32px 64px 32px;
   background: var(--white);
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.03);
-  border: 1px solid var(--border);
+  min-height: 600px;
+  border-right: 1px solid var(--border);
 }
 .nav-section-title {
-  font-size: 0.8rem; letter-spacing: 0.15em;
+  font-size: 0.72rem; letter-spacing: 0.18em;
   color: var(--ink-faint); text-transform: uppercase;
-  margin-bottom: 24px; font-weight: 700;
+  margin-bottom: 20px; font-weight: 400;
 }
 .nav-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
   grid-template-areas:
     "about  games"
     "archive wilds"
     "contact contact";
 }
 .nav-card {
-  background: var(--off-white);
+  background: var(--white);
   padding: 28px 24px;
   text-decoration: none;
   color: var(--ink);
   display: flex; flex-direction: column; gap: 10px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
+  transition: background 0.15s;
   position: relative;
 }
-.nav-card:hover {
-  background: var(--white);
-  border-color: var(--ink);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
-}
+.nav-card:hover { background: var(--off-white); }
 .nav-card.area-about   { grid-area: about; }
 .nav-card.area-games   { grid-area: games; }
 .nav-card.area-archive { grid-area: archive; }
@@ -227,225 +225,219 @@ body {
   align-items: center;
   text-align: center;
 }
-.nav-card.area-contact:hover { background: var(--pink-light); border-color: var(--pink); }
-.nav-card.area-contact .nav-card-arrow { position: static; margin-top: 4px; }
-
+.nav-card.area-contact:hover { background: var(--pink-light); }
+.nav-card.area-contact .nav-card-arrow { position: static; margin-top: 2px; }
 .nav-card-en {
-  font-size: 0.7rem; letter-spacing: 0.1em;
-  color: var(--ink-faint); font-weight: 700; text-transform: uppercase;
+  font-size: 0.68rem; letter-spacing: 0.12em;
+  color: var(--ink-faint); font-weight: 400; text-transform: uppercase;
 }
 .nav-card-zh {
-  font-size: 1.2rem; font-weight: 700;
+  font-size: 1.15rem; font-weight: 700;
   color: var(--ink); letter-spacing: 0.02em;
 }
 .nav-card-desc {
-  font-size: 0.9rem; color: var(--ink-dim);
-  font-weight: 400; line-height: 1.6; margin-top: 4px;
+  font-size: 0.88rem; color: var(--ink-dim);
+  font-weight: 300; line-height: 1.75; margin-top: 2px;
 }
 .nav-card-arrow {
-  position: absolute; bottom: 24px; right: 24px;
-  font-size: 1rem; color: var(--ink-faint);
-  transition: all 0.2s;
+  position: absolute; top: 28px; right: 24px;
+  font-size: 0.85rem; color: var(--ink-faint);
+  transition: transform 0.15s, color 0.15s;
 }
-.nav-card:hover .nav-card-arrow { transform: translateX(4px); color: var(--ink); }
+.nav-card:hover .nav-card-arrow { transform: translateX(3px); color: var(--ink); }
 
-/* ── 右侧边栏（参考图3全新升级） ── */
+/* ── 右侧边栏 ── */
 .sidebar {
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+  background: var(--off-white);
+  position: sticky;
+  top: 49px;
 }
 
-/* 侧栏独立卡片样式 */
+/* 侧栏通用卡片 */
 .side-card {
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 24px 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  border-radius: 2px;
+  padding: 18px 16px;
 }
 .side-card-title {
-  font-size: 0.95rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--ink);
-  margin-bottom: 18px;
+  margin-bottom: 14px;
   letter-spacing: 0.04em;
-  border-left: 4px solid var(--ink);
-  padding-left: 10px;
 }
 
-/* 右侧最上方：头像+文字信息条（参考图3布局） */
-.side-profile-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
+/* 头像信息条 */
+.side-profile {
   display: flex;
   align-items: center;
-  gap: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  gap: 12px;
 }
 .side-avatar {
-  width: 56px; height: 56px;
+  width: 48px; height: 48px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--border);
   flex-shrink: 0;
 }
-.side-profile-text {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
 .side-profile-name {
-  font-size: 1.05rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--ink);
+  line-height: 1.4;
 }
 .side-profile-sub {
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   color: var(--ink-faint);
-  font-weight: 400;
+  margin-top: 2px;
+  font-weight: 300;
 }
 
-/* 关注我们按钮样式（完全参考图3大色块高质感设计） */
-.side-links { display: flex; flex-direction: column; gap: 12px; }
-.side-btn {
+/* 社媒链接 */
+.side-links { display: flex; flex-direction: column; gap: 8px; }
+.side-link {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
   text-decoration: none;
-  padding: 14px;
-  color: var(--white);
-  font-size: 0.95rem;
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  color: var(--ink);
+  font-size: 0.82rem;
   font-weight: 700;
-  border-radius: 8px;
-  transition: opacity 0.2s, transform 0.1s;
-  letter-spacing: 0.05em;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: all 0.15s;
+  letter-spacing: 0.02em;
 }
-.side-btn:active { transform: scale(0.98); }
-.side-btn:hover { opacity: 0.9; }
+.side-link:hover { background: var(--ink); color: var(--white); }
+.side-link .side-link-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--pink);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.side-link:hover .side-link-dot { background: var(--pink-light); }
 
-.btn-weibo { background-color: var(--color-weibo); }
-.btn-gcores { background-color: var(--color-gcores); }
-.btn-afdian { background-color: var(--color-afdian); }
+/* 爱发电按钮 */
+.side-afdian {
+  display: block;
+  text-align: center;
+  background: var(--ink);
+  color: var(--white);
+  text-decoration: none;
+  padding: 11px 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.65;
+  letter-spacing: 0.03em;
+  transition: background 0.15s;
+}
+.side-afdian:hover { background: #333; }
+.side-afdian .mono { font-family: monospace; font-style: italic; }
 
-/* 可点击的鸣谢按钮 */
-.side-credit-btn {
+/* 网站素材鸣谢 */
+.side-credit {
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-decoration: none;
   color: var(--ink-dim);
-  font-size: 0.9rem;
-  font-weight: 700;
-  padding: 16px 20px;
+  font-size: 0.78rem;
+  font-weight: 400;
+  padding: 14px 16px;
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  transition: all 0.2s;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+  transition: all 0.15s;
 }
-.side-credit-btn:hover {
-  background: var(--off-white);
-  color: var(--ink);
-  border-color: var(--ink);
-}
-.side-credit-arrow { color: var(--ink-faint); font-weight: 400; }
+.side-credit:hover { background: var(--off-white); color: var(--ink); }
+.side-credit-arrow { color: var(--ink-faint); font-size: 0.75rem; }
 
-/* 内容推荐列表设计 */
-.side-rec-list { display: flex; flex-direction: column; gap: 12px; }
+/* 内容推荐 */
+.side-rec-list { display: flex; flex-direction: column; gap: 10px; }
 .side-rec-item {
   display: flex;
-  gap: 12px;
-  align-items: center;
+  gap: 10px;
+  align-items: flex-start;
   text-decoration: none;
   color: var(--ink);
-  padding: 10px;
-  border-radius: 6px;
-  background: var(--white);
-  border: 1px solid transparent;
-  transition: all 0.2s;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  transition: opacity 0.15s;
 }
-.side-rec-item:hover {
-  background: var(--off-white);
-  border-color: var(--border);
-}
+.side-rec-item:last-child { border-bottom: none; padding-bottom: 0; }
+.side-rec-item:hover { opacity: 0.7; }
 .side-rec-thumb {
-  width: 60px; height: 60px;
-  background: #eaeaea;
-  border-radius: 6px;
+  width: 52px; height: 52px;
+  background: var(--border);
+  border-radius: 2px;
   flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.7rem; color: var(--ink-faint);
-  text-align: center; line-height: 1.3;
-  border: 1px dashed var(--ink-faint);
+  font-size: 0.6rem; color: var(--ink-faint);
+  text-align: center; line-height: 1.4;
 }
-.side-rec-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.side-rec-item-title {
-  font-size: 0.88rem; font-weight: 700;
-  color: var(--ink); line-height: 1.4;
+.side-rec-title {
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--ink); line-height: 1.5;
 }
 .side-rec-meta {
-  font-size: 0.75rem; color: var(--ink-faint);
-  font-weight: 400;
+  font-size: 0.68rem; color: var(--ink-faint);
+  margin-top: 3px; font-weight: 300;
 }
 
 /* ── 底部 ── */
 .footer {
   border-top: 1px solid var(--border);
-  padding: 32px 24px;
-  max-width: 1240px;
+  padding: 24px 32px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--white);
 }
 .footer-copy {
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   color: var(--ink-faint);
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.04em;
 }
 
-/* ── 响应式设计：手机端自动折叠与流式适配 ── */
-@media (max-width: 992px) {
+/* ── 响应式：手机端 ── */
+@media (max-width: 768px) {
+  .lang-bar { padding: 10px 16px; }
+  .hero-bg { height: 280px; }
+  .hero-overlay { padding: 32px 20px 24px; }
+  .hero-title-row { gap: 14px; }
+  .countdown-container { padding: 0 8px; margin: 8px auto; }
+  .countdown-strip { gap: 14px; padding: 16px; flex-direction: column; border-radius: 6px; }
+  .countdown-label { white-space: normal; text-align: center; }
   .body-layout {
     grid-template-columns: 1fr;
-    gap: 24px;
-    margin: 16px auto;
+    padding: 0 8px;
   }
   .main-col {
-    padding: 24px;
+    padding: 32px 16px 40px;
+    border-right: none;
   }
-  /* 手机端右侧栏移到主内容下方 */
-  .sidebar {
-    order: 2;
-  }
-}
-
-@media (max-width: 576px) {
-  .lang-bar { padding: 10px 16px; }
-  .hero-bg { height: 240px; object-position: center 30%; }
-  .hero-overlay { padding: 16px; }
-  .hero-title-row { gap: 16px; }
-  .hero-title-zh { font-size: 1.6rem; padding: 8px 16px; }
-  .hero-logo-img { height: 70px; }
-  .countdown-strip { gap: 12px; padding: 16px; flex-direction: column; }
   .nav-grid {
     grid-template-columns: 1fr;
     grid-template-areas: "about" "games" "archive" "wilds" "contact";
   }
-  .nav-card { padding: 20px; }
+  .sidebar {
+    position: static;
+    padding: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .footer { padding: 20px 16px; }
 }
 
-/* ── 双语切换核心控制 ── */
+/* ── 双语 ── */
 .lang-zh, .lang-en { display: none; }
 .lang-zh.visible, .lang-en.visible { display: block; }
 .lang-zh-inline, .lang-en-inline { display: none; }
@@ -462,17 +454,17 @@ body {
   </div>
 </div>
 
-<!-- 主视觉区（头图聚焦与优化） -->
+<!-- 主视觉区 -->
 <div class="hero">
-  <img class="hero-bg" src="yiweijiayao.jpg" alt="异味游戏同好会头图">
+  <img class="hero-bg" src="yiweijiayao.jpg" alt="异味游戏同好会">
   <div class="hero-overlay">
     <div class="hero-title-row lang-zh">
       <div class="hero-title-zh">异味游戏同好会</div>
-      <img class="hero-logo-img" src="logo2.jpg" alt="Weird Games Club Logo">
+      <img class="hero-logo-img" src="logo2.jpg" alt="Weird Games Club">
     </div>
     <div class="hero-title-row lang-en">
       <div class="hero-title-en">
-        <img class="hero-logo-img" src="logo2.jpg" alt="Weird Games Club Logo">
+        <img class="hero-logo-img" src="logo2.jpg" alt="Weird Games Club">
       </div>
     </div>
     <div class="hero-tagline">
@@ -483,38 +475,40 @@ body {
 </div>
 
 <!-- 倒计时条 -->
-<div class="countdown-strip">
-  <div class="countdown-label">
-    <span class="lang-zh-inline">野菌即将破土而出……</span>
-    <span class="lang-en-inline">The mushrooms are about to emerge…</span>
-  </div>
-  <div class="countdown-timer">
-    <div class="cd-unit">
-      <div class="cd-num" id="cdDays">00</div>
-      <div class="cd-lbl"><span class="lang-zh-inline">天</span><span class="lang-en-inline">days</span></div>
+<div class="countdown-container">
+  <div class="countdown-strip">
+    <div class="countdown-label">
+      <span class="lang-zh-inline">野菌即将破土而出……</span>
+      <span class="lang-en-inline">The mushrooms are about to emerge…</span>
     </div>
-    <div class="cd-sep">:</div>
-    <div class="cd-unit">
-      <div class="cd-num" id="cdHours">00</div>
-      <div class="cd-lbl"><span class="lang-zh-inline">时</span><span class="lang-en-inline">hrs</span></div>
-    </div>
-    <div class="cd-sep">:</div>
-    <div class="cd-unit">
-      <div class="cd-num" id="cdMins">00</div>
-      <div class="cd-lbl"><span class="lang-zh-inline">分</span><span class="lang-en-inline">min</span></div>
-    </div>
-    <div class="cd-sep">:</div>
-    <div class="cd-unit">
-      <div class="cd-num" id="cdSecs">00</div>
-      <div class="cd-lbl"><span class="lang-zh-inline">秒</span><span class="lang-en-inline">sec</span></div>
+    <div class="countdown-timer">
+      <div class="cd-unit">
+        <div class="cd-num" id="cdDays">00</div>
+        <div class="cd-lbl"><span class="lang-zh-inline">天</span><span class="lang-en-inline">days</span></div>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit">
+        <div class="cd-num" id="cdHours">00</div>
+        <div class="cd-lbl"><span class="lang-zh-inline">时</span><span class="lang-en-inline">hrs</span></div>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit">
+        <div class="cd-num" id="cdMins">00</div>
+        <div class="cd-lbl"><span class="lang-zh-inline">分</span><span class="lang-en-inline">min</span></div>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit">
+        <div class="cd-num" id="cdSecs">00</div>
+        <div class="cd-lbl"><span class="lang-zh-inline">秒</span><span class="lang-en-inline">sec</span></div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 主体两栏布局 -->
+<!-- 主体两栏 -->
 <div class="body-layout">
 
-  <!-- 左：主内容区 -->
+  <!-- 左：主导航 -->
   <div class="main-col">
     <div class="nav-section-title">
       <span class="lang-zh-inline">探索更多</span>
@@ -566,7 +560,8 @@ body {
         <span class="nav-card-arrow">→</span>
       </a>
 
-      <a class="nav-card area-contact" id="contactLink" href="https://difficult-snowshoe-651.notion.site/3757a80dce1180018e24f9f298233120">
+      <a class="nav-card area-contact" id="contactLink"
+        href="https://difficult-snowshoe-651.notion.site/3757a80dce1180018e24f9f298233120">
         <span class="nav-card-en">Contact</span>
         <span class="nav-card-zh">
           <span class="lang-zh-inline">信号联络</span>
@@ -580,56 +575,62 @@ body {
     </div>
   </div>
 
-  <!-- 右：全新高质感侧边栏 -->
+  <!-- 右：侧栏 -->
   <div class="sidebar">
 
-    <!-- 最上方：头像+文字信息条 -->
-    <div class="side-profile-card">
-      <img class="side-avatar" src="slj.jpg" alt="头像">
-      <div class="side-profile-text">
-        <div class="side-profile-name">
-          <span class="lang-zh-inline">何异味……</span>
-          <span class="lang-en-inline">What's the weird smell…</span>
-        </div>
-        <div class="side-profile-sub">
-          <span class="lang-zh-inline">已收容 12 款异味游戏</span>
-          <span class="lang-en-inline">12 weird games archived</span>
+    <!-- 头像信息 -->
+    <div class="side-card">
+      <div class="side-profile">
+        <img class="side-avatar" src="slj.jpg" alt="异味游戏同好会">
+        <div class="side-profile-text">
+          <div class="side-profile-name">
+            <span class="lang-zh-inline">何异味……</span>
+            <span class="lang-en-inline">What's the weird smell…</span>
+          </div>
+          <div class="side-profile-sub">
+            <span class="lang-zh-inline">已收容 12 款异味游戏</span>
+            <span class="lang-en-inline">12 weird games archived</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 关注我们大色块入口 -->
+    <!-- 社媒链接 -->
     <div class="side-card">
       <div class="side-card-title">
         <span class="lang-zh-inline">关注我们</span>
         <span class="lang-en-inline">Find Us</span>
       </div>
       <div class="side-links">
-        <a class="side-btn btn-weibo" href="https://weibo.com/u/2416997860" target="_blank" rel="noopener">
+        <a class="side-link" href="https://weibo.com/u/2416997860" target="_blank" rel="noopener">
+          <span class="side-link-dot"></span>
           <span class="lang-zh-inline">微博</span>
           <span class="lang-en-inline">Weibo</span>
         </a>
-        <a class="side-btn btn-gcores" href="https://www.gcores.com/users/523089/talks" target="_blank" rel="noopener">
+        <a class="side-link" href="https://www.gcores.com/users/523089/talks" target="_blank" rel="noopener">
+          <span class="side-link-dot"></span>
           <span class="lang-zh-inline">机核 Gcores</span>
           <span class="lang-en-inline">Gcores</span>
-        </a>
-        <a class="side-btn btn-afdian" href="https://afdian.com/a/manwithouttalent" target="_blank" rel="noopener">
-          <span class="lang-zh-inline">⚡ 爱发电支持</span>
-          <span class="lang-en-inline">⚡ Support via Afdian</span>
         </a>
       </div>
     </div>
 
-    <!-- 可点击跳转的鸣谢按钮 -->
-    <a class="side-credit-btn" href="credits.html" id="creditLink">
+    <!-- 爱发电 -->
+    <a class="side-afdian" href="https://afdian.com/a/manwithouttalent" target="_blank" rel="noopener">
+      <span class="lang-zh-inline">请我们喝杯咖啡/吃盘萨莉亚意面吧！</span>
+      <span class="lang-en-inline">Enjoying our work?<br><span class="mono">Fuel our next project with a coffee!</span></span>
+    </a>
+
+    <!-- 网站素材鸣谢 -->
+    <a class="side-credit" href="#" id="creditLink">
       <span>
-        <span class="lang-zh-inline">🎨 鸣谢名单</span>
-        <span class="lang-en-inline">🎨 Credits List</span>
+        <span class="lang-zh-inline">🎨 网站素材鸣谢</span>
+        <span class="lang-en-inline">🎨 Credits</span>
       </span>
       <span class="side-credit-arrow">→</span>
     </a>
 
-    <!-- 最新内容推荐 -->
+    <!-- 内容推荐 -->
     <div class="side-card">
       <div class="side-card-title">
         <span class="lang-zh-inline">内容推荐</span>
@@ -638,33 +639,49 @@ body {
       <div class="side-rec-list">
         <a class="side-rec-item" href="#">
           <div class="side-rec-thumb">
-            <span class="lang-zh-inline">最新<br>文章</span>
-            <span class="lang-en-inline">Post</span>
+            <span class="lang-zh-inline">图片<br>占位</span>
+            <span class="lang-en-inline">img</span>
           </div>
           <div class="side-rec-info">
-            <div class="side-rec-item-title">
-              <span class="lang-zh-inline">【独立游戏评测】最新更新占位</span>
-              <span class="lang-en-inline">New Review Heading Placeholder</span>
+            <div class="side-rec-title">
+              <span class="lang-zh-inline">文章/游戏标题占位</span>
+              <span class="lang-en-inline">Article / Game Title</span>
             </div>
             <div class="side-rec-meta">
               <span class="lang-zh-inline">评测 · 待更新</span>
-              <span class="lang-en-inline">Review · Update Soon</span>
+              <span class="lang-en-inline">Review · Coming soon</span>
             </div>
           </div>
         </a>
         <a class="side-rec-item" href="#">
           <div class="side-rec-thumb">
-            <span class="lang-zh-inline">独家<br>采访</span>
-            <span class="lang-en-inline">Interv.</span>
+            <span class="lang-zh-inline">图片<br>占位</span>
+            <span class="lang-en-inline">img</span>
           </div>
           <div class="side-rec-info">
-            <div class="side-rec-item-title">
-              <span class="lang-zh-inline">【开发者专访】核心篇章占位</span>
-              <span class="lang-en-inline">Developer Interview Placeholder</span>
+            <div class="side-rec-title">
+              <span class="lang-zh-inline">文章/游戏标题占位</span>
+              <span class="lang-en-inline">Article / Game Title</span>
             </div>
             <div class="side-rec-meta">
               <span class="lang-zh-inline">采访 · 待更新</span>
-              <span class="lang-en-inline">Interview · Update Soon</span>
+              <span class="lang-en-inline">Interview · Coming soon</span>
+            </div>
+          </div>
+        </a>
+        <a class="side-rec-item" href="#">
+          <div class="side-rec-thumb">
+            <span class="lang-zh-inline">图片<br>占位</span>
+            <span class="lang-en-inline">img</span>
+          </div>
+          <div class="side-rec-info">
+            <div class="side-rec-title">
+              <span class="lang-zh-inline">文章/游戏标题占位</span>
+              <span class="lang-en-inline">Article / Game Title</span>
+            </div>
+            <div class="side-rec-meta">
+              <span class="lang-zh-inline">游戏 · 待更新</span>
+              <span class="lang-en-inline">Game · Coming soon</span>
             </div>
           </div>
         </a>
@@ -677,7 +694,7 @@ body {
 <!-- 底部 -->
 <div class="footer">
   <div class="footer-copy">
-    © 2026 异味游戏同好会 Weird Games Club
+    © 2025 异味游戏同好会 Weird Games Club
   </div>
 </div>
 
