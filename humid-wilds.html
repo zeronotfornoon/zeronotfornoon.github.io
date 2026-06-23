@@ -26,6 +26,8 @@
     color: var(--text);
     font-family: 'Noto Serif SC', serif;
     min-height: 100vh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    -webkit-text-size-adjust: 100%;
     overflow-x: hidden;
     position: relative;
   }
@@ -39,7 +41,7 @@
     overflow: hidden;
     background-image: url('Background.png');
     background-size: cover;
-    background-position: center;
+    background-position: center 78%;
     background-repeat: no-repeat;
   }
   .forest-bg::before {
@@ -104,8 +106,9 @@
     position: relative;
     z-index: 1;
     max-width: 720px;
+    width: 100%;
     margin: 0 auto;
-    padding: 28px 20px 120px;
+    padding: 24px 20px calc(118px + env(safe-area-inset-bottom));
     animation: fadeIn 1.2s ease;
   }
   @keyframes fadeIn {
@@ -173,6 +176,9 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
+  .action-grid .action-btn:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
   .action-btn {
     background: rgba(58, 92, 62, 0.25);
     border: 1px solid var(--moss);
@@ -180,6 +186,9 @@
     font-family: 'Noto Sans SC', sans-serif;
     font-size: 0.88rem;
     padding: 14px 10px;
+    min-height: 48px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
     cursor: pointer;
     letter-spacing: 0.04em;
     transition: all 0.25s;
@@ -193,6 +202,11 @@
   .action-btn:disabled {
     opacity: 0.45;
     cursor: not-allowed;
+  }
+  .action-btn.cooldown {
+    font-size: 0.8rem;
+    line-height: 1.35;
+    white-space: normal;
   }
 
   /* ── 进度条 ── */
@@ -266,10 +280,11 @@
     background: rgba(8, 12, 8, 0.92);
     border-top: 1px solid var(--border);
     backdrop-filter: blur(8px);
-    padding: 12px 20px;
+    padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
   }
   .member-card-inner {
     max-width: 720px;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -300,8 +315,8 @@
   /* ── 音乐开关 ── */
   .music-toggle {
     position: fixed;
-    top: 16px;
-    right: 16px;
+    top: calc(12px + env(safe-area-inset-top));
+    right: calc(12px + env(safe-area-inset-right));
     z-index: 20;
     background: rgba(8, 12, 8, 0.8);
     border: 1px solid var(--moss);
@@ -470,12 +485,29 @@
   }
   .sponsor-link:hover { text-decoration: underline; }
 
-  @media (max-width: 480px) {
-    .wilds-wrap { padding: 20px 14px 110px; }
-    .panel { padding: 18px 16px; }
-    .action-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-    .action-btn { font-size: 0.82rem; padding: 12px 8px; }
+  @media (max-width: 600px) {
+    .forest-bg { background-position: center 85%; }
+    .wilds-wrap { padding: 16px 14px calc(108px + env(safe-area-inset-bottom)); }
+    .panel { padding: 18px 16px; margin-bottom: 12px; }
+    .wilds-title { font-size: clamp(1.35rem, 6vw, 1.85rem); }
+    .weather-row { font-size: 0.88rem; }
+    .action-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .action-btn { font-size: 0.84rem; padding: 12px 8px; min-height: 46px; }
+    .stat-header { font-size: 0.82rem; }
+    .section-title { font-size: 0.9rem; }
+    .backpack-info { font-size: 0.85rem; }
+    .modal { padding: 22px 18px; max-height: calc(100vh - 32px); }
+    .sponsor-modal { max-height: calc(100vh - 40px); }
     .avatar-option { width: 60px; height: 60px; }
+    .member-card-inner { gap: 10px; }
+    .member-avatar { width: 42px; height: 42px; }
+    .member-name { font-size: 0.88rem; }
+    .music-toggle { font-size: 0.7rem; padding: 7px 12px; }
+  }
+
+  @media (max-width: 360px) {
+    .action-btn { font-size: 0.78rem; padding: 11px 6px; }
+    .action-btn.cooldown { font-size: 0.72rem; line-height: 1.35; }
   }
 </style>
 </head>
@@ -511,6 +543,7 @@
       <button class="action-btn" onclick="showComingSoon('捡果子')">捡果子</button>
       <button class="action-btn" onclick="showComingSoon('动物小屋')">动物小屋</button>
       <button class="action-btn" onclick="showComingSoon('探索林地')">探索林地</button>
+      <button class="action-btn" onclick="showWildMushroom()">采野菌</button>
     </div>
 
     <div class="divider"></div>
@@ -600,6 +633,7 @@
   const CARD_KEY = 'humidWildsCard';
   const MUSIC_KEY = 'humidWildsMusic';
   const BACKPACK_MAX = 50;
+  const COMPOST_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 
   // 爱发电用户 ID（manwithouttalent）
   // 若 API 无法直接调用，可改用同目录下的 sponsors.json 作为备用数据源
@@ -615,6 +649,7 @@
 
   let selectedAvatar = 'character1.jpg';
   let state = null;
+  let compostTimer = null;
 
   function generateForest() {
     const bg = document.getElementById('forestBg');
@@ -682,11 +717,11 @@
 
     if (saved) {
       state = JSON.parse(saved);
+      migrateCompostState(state, today);
       if (state.date !== today) {
         state.date = today;
         state.weather = pickWeather();
         state.humidity = calcBaseHumidity(state.weather);
-        state.lastCompost = state.lastCompost === today ? state.lastCompost : '';
       }
     } else {
       const weather = pickWeather();
@@ -695,7 +730,7 @@
         weather: weather,
         humidity: calcBaseHumidity(weather),
         mycelium: randomAround(20, 3),
-        lastCompost: '',
+        lastCompostAt: 0,
         backpackCount: 0,
         backpackMax: BACKPACK_MAX
       };
@@ -730,10 +765,7 @@
     document.getElementById('backpackCount').textContent = state.backpackCount;
     document.getElementById('backpackMax').textContent = state.backpackMax;
 
-    const compostedToday = state.lastCompost === todayStr();
-    const btn = document.getElementById('btnCompost');
-    btn.disabled = compostedToday;
-    btn.textContent = compostedToday ? '今日已堆肥' : '堆肥';
+    renderCompostButton();
   }
 
   function selectAvatar(el) {
@@ -773,8 +805,8 @@
   }
 
   function doCompost() {
-    if (state.lastCompost === todayStr()) return;
-    state.lastCompost = todayStr();
+    if (!canCompost()) return;
+    state.lastCompostAt = Date.now();
     state.mycelium = clamp(state.mycelium + randomAround(12, 4), 0, 100);
     saveState();
     renderState();
@@ -788,6 +820,61 @@
 
   function closeAlert() {
     document.getElementById('alertModal').classList.add('hidden');
+  }
+
+  function canCompost() {
+    if (!state.lastCompostAt) return true;
+    return Date.now() - state.lastCompostAt >= COMPOST_COOLDOWN_MS;
+  }
+
+  function getCompostRemainMs() {
+    if (!state.lastCompostAt) return 0;
+    const remain = COMPOST_COOLDOWN_MS - (Date.now() - state.lastCompostAt);
+    return remain > 0 ? remain : 0;
+  }
+
+  function formatCompostRemain(ms) {
+    const totalSec = Math.ceil(ms / 1000);
+    const h = Math.floor(totalSec / 3600);
+    const m = Math.floor((totalSec % 3600) / 60);
+    if (h > 0) return `${h}小时${m}分后可堆肥`;
+    if (m > 0) return `${m}分后可堆肥`;
+    return `${totalSec}秒后可堆肥`;
+  }
+
+  function renderCompostButton() {
+    const btn = document.getElementById('btnCompost');
+    if (canCompost()) {
+      btn.disabled = false;
+      btn.classList.remove('cooldown');
+      btn.textContent = '堆肥';
+      if (compostTimer) {
+        clearInterval(compostTimer);
+        compostTimer = null;
+      }
+    } else {
+      btn.disabled = true;
+      btn.classList.add('cooldown');
+      btn.textContent = formatCompostRemain(getCompostRemainMs());
+      if (!compostTimer) {
+        compostTimer = setInterval(renderCompostButton, 30000);
+      }
+    }
+  }
+
+  function migrateCompostState(state, today) {
+    if (state.lastCompostAt == null) {
+      if (state.lastCompost) {
+        state.lastCompostAt = state.lastCompost === today ? Date.now() : 0;
+        delete state.lastCompost;
+      } else {
+        state.lastCompostAt = 0;
+      }
+    }
+  }
+
+  function showWildMushroom() {
+    showAlert('野菌还未破土而出，请耐心等待……');
   }
 
   function showComingSoon(feature) {
