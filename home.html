@@ -9,24 +9,31 @@
 
 :root {
   --white: #ffffff;
-  --off-white: #f7f6f4;
-  --ink: #1a1a1a;
-  --ink-dim: #555;
-  --ink-faint: #999;
+  --off-white: #f5f5f7;
+  --ink: #111111;
+  --ink-dim: #444444;
+  --ink-faint: #888888;
   --pink: #e8a0b4;
   --pink-light: #f5d6e0;
   --pink-bg: #fdf0f4;
-  --border: #e0ddd8;
-  --border-dark: #1a1a1a;
+  --border: #e2e2e5;
+  --border-dark: #111111;
+  --sidebar-width: 320px;
+  
+  /* 社交媒体品牌色 */
+  --color-weibo: #df2029;
+  --color-gcores: #fb5607;
+  --color-afdian: #9466ff;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--white);
+  background: var(--off-white);
   color: var(--ink);
   font-family: 'Noto Sans SC', sans-serif;
   overflow-x: hidden;
+  line-height: 1.5;
 }
 
 /* ── 顶部语言栏 ── */
@@ -34,175 +41,182 @@ body {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255, 255, 255, 0.85);
   border-bottom: 1px solid var(--border);
-  padding: 10px 32px;
+  padding: 12px 32px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
 }
-.lang-switch { display: flex; border: 1px solid var(--border-dark); }
+.lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
 .lang-btn {
   background: none; border: none;
   padding: 6px 16px;
   font-family: 'Noto Sans SC', sans-serif;
   font-size: 0.75rem; font-weight: 700;
   letter-spacing: 0.1em; cursor: pointer;
-  color: var(--ink-dim); transition: all 0.15s;
+  color: var(--ink-dim); transition: all 0.2s;
 }
 .lang-btn.active { background: var(--ink); color: var(--white); }
 
-/* ── 主视觉区 ── */
+/* ── 主视觉区（头图聚焦优化） ── */
 .hero {
   margin-top: 49px;
   position: relative;
   width: 100%;
   overflow: hidden;
+  background: #000;
 }
-
-/* 底图：黑白小人铺满，聚焦人物头像 */
 .hero-bg {
   width: 100%;
   display: block;
-  max-height: 520px;
+  height: 380px;
   object-fit: cover;
-  object-position: center 65%;
-  filter: brightness(0.82);
+  /* 聚焦于头像区域，并给予适当的裁剪视口 */
+  object-position: center 35%;
+  filter: brightness(0.95);
 }
-
-/* 标题+logo+副标题叠在底图上 */
+/* 渐变遮罩 */
 .hero-overlay {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.96) 40%, #fff 100%);
-  padding: 48px 40px 36px;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, rgba(245,245,247,0.1) 0%, rgba(245,245,247,0.6) 60%, var(--off-white) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  justify-content: flex-end;
+  padding: 40px 24px 24px;
 }
-
 .hero-title-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 40px; /* 拉开人物与人物、标题之间的距离，方便放下标题 */
   flex-wrap: wrap;
 }
-
-/* 中文标题占位 */
 .hero-title-zh {
   font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 900;
   color: var(--ink);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
   line-height: 1.1;
-  border: 2px dashed var(--border);
-  padding: 10px 20px;
-  position: relative;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 12px 28px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  backdrop-filter: blur(4px);
 }
-.hero-title-zh::after {
-  content: '专属标题设计稿待替换';
-  position: absolute;
-  bottom: -20px; left: 50%; transform: translateX(-50%);
-  font-size: 0.6rem; color: var(--ink-faint);
-  white-space: nowrap; font-weight: 300;
-}
-
-/* 英文 logo 图片，放在标题旁边 */
 .hero-logo-img {
-  height: clamp(72px, 10vw, 110px);
+  height: clamp(90px, 12vw, 140px);
   width: auto;
   display: block;
   object-fit: contain;
+  /* 抠图级融合：使用 multiply 混合模式完美去除白底 */
+  mix-blend-mode: multiply; 
+  transform: scale(1.15); /* 调大英文logo */
 }
-
-/* 英文版标题：只显示更大的logo */
-.hero-title-en .hero-logo-img { height: clamp(100px, 14vw, 160px); }
-
 .hero-tagline {
   font-size: clamp(1rem, 1.8vw, 1.2rem);
-  color: var(--ink);
-  font-weight: 700;
+  color: var(--ink-dim);
+  font-weight: 500;
   letter-spacing: 0.04em;
-  line-height: 1.8;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 16px;
+  background: rgba(245, 245, 247, 0.7);
+  padding: 4px 12px;
+  border-radius: 4px;
 }
 
 /* ── 倒计时条 ── */
 .countdown-strip {
   background: var(--ink);
   color: var(--white);
-  padding: 24px 32px;
+  padding: 20px 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 24px;
   flex-wrap: wrap;
 }
 .countdown-label {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(0.8rem, 1.6vw, 1.05rem);
+  font-size: clamp(0.75rem, 1.5vw, 0.95rem);
   color: var(--pink);
   letter-spacing: 0.04em;
-  white-space: nowrap;
 }
-.countdown-timer { display: flex; align-items: center; gap: 6px; }
+.countdown-timer { display: flex; align-items: center; gap: 8px; }
 .cd-unit { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .cd-num {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
   color: var(--white);
-  background: #2a2a2a;
-  padding: 9px 13px;
-  min-width: 52px;
+  background: #252525;
+  padding: 8px 12px;
+  min-width: 55px;
   text-align: center;
+  border-radius: 4px;
 }
 .cd-lbl {
   font-size: 0.65rem; color: var(--ink-faint);
-  font-family: 'Noto Sans SC', sans-serif;
-  font-weight: 300; letter-spacing: 0.08em;
+  font-weight: 400; letter-spacing: 0.08em;
 }
 .cd-sep {
   font-family: 'Press Start 2P', monospace;
-  font-size: 1.15rem; color: var(--pink);
-  margin-bottom: 18px;
+  font-size: 1.2rem; color: var(--pink);
+  margin-bottom: 16px;
 }
 
-/* ── 导航板块 ── */
-.nav-section {
-  padding: 56px 32px 64px;
-  max-width: 980px;
-  margin: 0 auto;
+/* ── 两栏布局（左宽右窄） ── */
+.body-layout {
+  display: grid;
+  grid-template-columns: 1fr var(--sidebar-width);
+  gap: 24px;
+  max-width: 1240px;
+  margin: 32px auto;
+  padding: 0 24px;
+  align-items: start;
+}
+
+/* ── 左侧主内容区 ── */
+.main-col {
+  background: var(--white);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+  border: 1px solid var(--border);
 }
 .nav-section-title {
-  font-size: 0.72rem; letter-spacing: 0.18em;
+  font-size: 0.8rem; letter-spacing: 0.15em;
   color: var(--ink-faint); text-transform: uppercase;
-  margin-bottom: 24px; font-weight: 400;
+  margin-bottom: 24px; font-weight: 700;
 }
 .nav-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--border-dark);
-  border: 1px solid var(--border-dark);
+  gap: 16px;
   grid-template-areas:
     "about  games"
     "archive wilds"
     "contact contact";
 }
 .nav-card {
-  background: var(--white);
-  padding: 32px 28px;
+  background: var(--off-white);
+  padding: 28px 24px;
   text-decoration: none;
   color: var(--ink);
   display: flex; flex-direction: column; gap: 10px;
-  transition: background 0.15s;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
   position: relative;
 }
-.nav-card:hover { background: var(--off-white); }
+.nav-card:hover {
+  background: var(--white);
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
 .nav-card.area-about   { grid-area: about; }
 .nav-card.area-games   { grid-area: games; }
 .nav-card.area-archive { grid-area: archive; }
@@ -213,12 +227,12 @@ body {
   align-items: center;
   text-align: center;
 }
-.nav-card.area-contact:hover { background: var(--pink-light); }
+.nav-card.area-contact:hover { background: var(--pink-light); border-color: var(--pink); }
 .nav-card.area-contact .nav-card-arrow { position: static; margin-top: 4px; }
 
 .nav-card-en {
-  font-size: 0.7rem; letter-spacing: 0.12em;
-  color: var(--ink-faint); font-weight: 400; text-transform: uppercase;
+  font-size: 0.7rem; letter-spacing: 0.1em;
+  color: var(--ink-faint); font-weight: 700; text-transform: uppercase;
 }
 .nav-card-zh {
   font-size: 1.2rem; font-weight: 700;
@@ -226,62 +240,212 @@ body {
 }
 .nav-card-desc {
   font-size: 0.9rem; color: var(--ink-dim);
-  font-weight: 300; line-height: 1.75; margin-top: 2px;
+  font-weight: 400; line-height: 1.6; margin-top: 4px;
 }
 .nav-card-arrow {
-  position: absolute; top: 32px; right: 28px;
-  font-size: 0.85rem; color: var(--ink-faint);
-  transition: transform 0.15s, color 0.15s;
+  position: absolute; bottom: 24px; right: 24px;
+  font-size: 1rem; color: var(--ink-faint);
+  transition: all 0.2s;
 }
-.nav-card:hover .nav-card-arrow { transform: translateX(3px); color: var(--ink); }
+.nav-card:hover .nav-card-arrow { transform: translateX(4px); color: var(--ink); }
+
+/* ── 右侧边栏（参考图3全新升级） ── */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 侧栏独立卡片样式 */
+.side-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+.side-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 18px;
+  letter-spacing: 0.04em;
+  border-left: 4px solid var(--ink);
+  padding-left: 10px;
+}
+
+/* 右侧最上方：头像+文字信息条（参考图3布局） */
+.side-profile-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+.side-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+}
+.side-profile-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.side-profile-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.side-profile-sub {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  font-weight: 400;
+}
+
+/* 关注我们按钮样式（完全参考图3大色块高质感设计） */
+.side-links { display: flex; flex-direction: column; gap: 12px; }
+.side-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  padding: 14px;
+  color: var(--white);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: opacity 0.2s, transform 0.1s;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.side-btn:active { transform: scale(0.98); }
+.side-btn:hover { opacity: 0.9; }
+
+.btn-weibo { background-color: var(--color-weibo); }
+.btn-gcores { background-color: var(--color-gcores); }
+.btn-afdian { background-color: var(--color-afdian); }
+
+/* 可点击的鸣谢按钮 */
+.side-credit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 16px 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+}
+.side-credit-btn:hover {
+  background: var(--off-white);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.side-credit-arrow { color: var(--ink-faint); font-weight: 400; }
+
+/* 内容推荐列表设计 */
+.side-rec-list { display: flex; flex-direction: column; gap: 12px; }
+.side-rec-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  text-decoration: none;
+  color: var(--ink);
+  padding: 10px;
+  border-radius: 6px;
+  background: var(--white);
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+.side-rec-item:hover {
+  background: var(--off-white);
+  border-color: var(--border);
+}
+.side-rec-thumb {
+  width: 60px; height: 60px;
+  background: #eaeaea;
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; color: var(--ink-faint);
+  text-align: center; line-height: 1.3;
+  border: 1px dashed var(--ink-faint);
+}
+.side-rec-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.side-rec-item-title {
+  font-size: 0.88rem; font-weight: 700;
+  color: var(--ink); line-height: 1.4;
+}
+.side-rec-meta {
+  font-size: 0.75rem; color: var(--ink-faint);
+  font-weight: 400;
+}
 
 /* ── 底部 ── */
 .footer {
   border-top: 1px solid var(--border);
-  padding: 32px;
-  max-width: 980px;
+  padding: 32px 24px;
+  max-width: 1240px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
+  justify-content: center;
 }
-.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
-.footer-link {
-  text-decoration: none; color: var(--ink-dim);
-  font-size: 0.85rem; font-weight: 400;
-  display: flex; align-items: center; gap: 7px;
-  transition: color 0.15s;
+.footer-copy {
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+  font-weight: 400;
+  letter-spacing: 0.04em;
 }
-.footer-link:hover { color: var(--ink); }
-.footer-link .dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: currentColor; flex-shrink: 0;
-}
-.footer-afdian {
-  display: inline-flex; align-items: center;
-  background: var(--ink); color: var(--white);
-  text-decoration: none; font-size: 0.78rem;
-  padding: 11px 22px; font-weight: 700;
-  letter-spacing: 0.04em; line-height: 1.6;
-  transition: background 0.15s; text-align: center;
-}
-.footer-afdian:hover { background: #333; }
-.afdian-mono { font-family: monospace; font-style: italic; }
 
-/* ── 响应式 ── */
-@media (max-width: 640px) {
+/* ── 响应式设计：手机端自动折叠与流式适配 ── */
+@media (max-width: 992px) {
+  .body-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin: 16px auto;
+  }
+  .main-col {
+    padding: 24px;
+  }
+  /* 手机端右侧栏移到主内容下方 */
+  .sidebar {
+    order: 2;
+  }
+}
+
+@media (max-width: 576px) {
   .lang-bar { padding: 10px 16px; }
-  .hero-overlay { padding: 32px 20px 28px; }
-  .hero-title-row { gap: 12px; }
-  .countdown-strip { gap: 12px; padding: 16px; }
-  .nav-section { padding: 36px 16px 48px; }
-  .nav-grid { grid-template-columns: 1fr; grid-template-areas: "about" "games" "archive" "wilds" "contact"; }
-  .footer { padding: 24px 16px; flex-direction: column; align-items: flex-start; }
+  .hero-bg { height: 240px; object-position: center 30%; }
+  .hero-overlay { padding: 16px; }
+  .hero-title-row { gap: 16px; }
+  .hero-title-zh { font-size: 1.6rem; padding: 8px 16px; }
+  .hero-logo-img { height: 70px; }
+  .countdown-strip { gap: 12px; padding: 16px; flex-direction: column; }
+  .nav-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: "about" "games" "archive" "wilds" "contact";
+  }
+  .nav-card { padding: 20px; }
 }
 
-/* ── 双语 ── */
+/* ── 双语切换核心控制 ── */
 .lang-zh, .lang-en { display: none; }
 .lang-zh.visible, .lang-en.visible { display: block; }
 .lang-zh-inline, .lang-en-inline { display: none; }
@@ -298,24 +462,19 @@ body {
   </div>
 </div>
 
-<!-- 主视觉区 -->
+<!-- 主视觉区（头图聚焦与优化） -->
 <div class="hero">
-  <img class="hero-bg" src="yiweiyouxuan.jpg" alt="异味游戏同好会">
+  <img class="hero-bg" src="yiweijiayao.jpg" alt="异味游戏同好会头图">
   <div class="hero-overlay">
-
-    <!-- 中文版：标题占位 + 旁边放logo图 -->
     <div class="hero-title-row lang-zh">
       <div class="hero-title-zh">异味游戏同好会</div>
-      <img class="hero-logo-img" src="logo.jpg" alt="Weird Games Club logo">
+      <img class="hero-logo-img" src="logo2.jpg" alt="Weird Games Club Logo">
     </div>
-
-    <!-- 英文版：只放大logo图 -->
     <div class="hero-title-row lang-en">
       <div class="hero-title-en">
-        <img class="hero-logo-img" src="logo.jpg" alt="Weird Games Club">
+        <img class="hero-logo-img" src="logo2.jpg" alt="Weird Games Club Logo">
       </div>
     </div>
-
     <div class="hero-tagline">
       <span class="lang-zh-inline">独立游戏不是流水线产品，每一份异味都值得深尝</span>
       <span class="lang-en-inline">Indie games aren't assembly-line products. Every weird taste is worth savoring.</span>
@@ -352,74 +511,174 @@ body {
   </div>
 </div>
 
-<!-- 导航板块 -->
-<div class="nav-section">
-  <div class="nav-section-title">
-    <span class="lang-zh-inline">探索更多</span>
-    <span class="lang-en-inline">Explore</span>
+<!-- 主体两栏布局 -->
+<div class="body-layout">
+
+  <!-- 左：主内容区 -->
+  <div class="main-col">
+    <div class="nav-section-title">
+      <span class="lang-zh-inline">探索更多</span>
+      <span class="lang-en-inline">Explore</span>
+    </div>
+    <div class="nav-grid">
+
+      <a class="nav-card area-about" href="#">
+        <span class="nav-card-en">About Us</span>
+        <span class="nav-card-zh">
+          <span class="lang-zh-inline">异味须知</span>
+          <span class="lang-en-inline">About Us</span>
+        </span>
+        <span class="nav-card-desc lang-zh">我们是谁，我们在做什么，异味是从哪里传出来的？</span>
+        <span class="nav-card-desc lang-en">Who we are, what we do, and where the smell comes from.</span>
+        <span class="nav-card-arrow">→</span>
+      </a>
+
+      <a class="nav-card area-games" href="#">
+        <span class="nav-card-en">Supported Games</span>
+        <span class="nav-card-zh">
+          <span class="lang-zh-inline">合作游戏</span>
+          <span class="lang-en-inline">Supported Games</span>
+        </span>
+        <span class="nav-card-desc lang-zh">异味优选，不一定是完美的精品，但一定散发异味</span>
+        <span class="nav-card-desc lang-en">Not necessarily flawless, but always unmistakably weird.</span>
+        <span class="nav-card-arrow">→</span>
+      </a>
+
+      <a class="nav-card area-archive" href="#">
+        <span class="nav-card-en">Weird Gems Archives</span>
+        <span class="nav-card-zh">
+          <span class="lang-zh-inline">异味档案</span>
+          <span class="lang-en-inline">Weird Gems Archives</span>
+        </span>
+        <span class="nav-card-desc lang-zh">铁鼠也啃噬不尽的独游文字记录，采访和测评都在这里</span>
+        <span class="nav-card-desc lang-en">Interviews and reviews that even the iron rat can't chew through.</span>
+        <span class="nav-card-arrow">→</span>
+      </a>
+
+      <a class="nav-card area-wilds" href="index.html">
+        <span class="nav-card-en">The Humid Wilds</span>
+        <span class="nav-card-zh">
+          <span class="lang-zh-inline">异味林地</span>
+          <span class="lang-en-inline">The Humid Wilds</span>
+        </span>
+        <span class="nav-card-desc lang-zh">菌丝悄然蔓延，野菌即将破土而出……</span>
+        <span class="nav-card-desc lang-en">Mycelium spreads quietly. The mushrooms are almost here.</span>
+        <span class="nav-card-arrow">→</span>
+      </a>
+
+      <a class="nav-card area-contact" id="contactLink" href="https://difficult-snowshoe-651.notion.site/3757a80dce1180018e24f9f298233120">
+        <span class="nav-card-en">Contact</span>
+        <span class="nav-card-zh">
+          <span class="lang-zh-inline">信号联络</span>
+          <span class="lang-en-inline">Contact</span>
+        </span>
+        <span class="nav-card-desc lang-zh">想合作？信号接收器功率全开！</span>
+        <span class="nav-card-desc lang-en">Want to collab? Our signal receiver is wide open.</span>
+        <span class="nav-card-arrow">→</span>
+      </a>
+
+    </div>
   </div>
-  <div class="nav-grid">
 
-    <a class="nav-card area-about" href="#">
-      <span class="nav-card-en">About Us</span>
-      <span class="nav-card-zh"><span class="lang-zh-inline">异味须知</span><span class="lang-en-inline">About Us</span></span>
-      <span class="nav-card-desc lang-zh">我们是谁，我们在做什么，异味是从哪里传出来的？</span>
-      <span class="nav-card-desc lang-en">Who we are, what we do, and where the smell comes from.</span>
-      <span class="nav-card-arrow">→</span>
+  <!-- 右：全新高质感侧边栏 -->
+  <div class="sidebar">
+
+    <!-- 最上方：头像+文字信息条 -->
+    <div class="side-profile-card">
+      <img class="side-avatar" src="slj.jpg" alt="头像">
+      <div class="side-profile-text">
+        <div class="side-profile-name">
+          <span class="lang-zh-inline">何异味……</span>
+          <span class="lang-en-inline">What's the weird smell…</span>
+        </div>
+        <div class="side-profile-sub">
+          <span class="lang-zh-inline">已收容 12 款异味游戏</span>
+          <span class="lang-en-inline">12 weird games archived</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 关注我们大色块入口 -->
+    <div class="side-card">
+      <div class="side-card-title">
+        <span class="lang-zh-inline">关注我们</span>
+        <span class="lang-en-inline">Find Us</span>
+      </div>
+      <div class="side-links">
+        <a class="side-btn btn-weibo" href="https://weibo.com/u/2416997860" target="_blank" rel="noopener">
+          <span class="lang-zh-inline">微博</span>
+          <span class="lang-en-inline">Weibo</span>
+        </a>
+        <a class="side-btn btn-gcores" href="https://www.gcores.com/users/523089/talks" target="_blank" rel="noopener">
+          <span class="lang-zh-inline">机核 Gcores</span>
+          <span class="lang-en-inline">Gcores</span>
+        </a>
+        <a class="side-btn btn-afdian" href="https://afdian.com/a/manwithouttalent" target="_blank" rel="noopener">
+          <span class="lang-zh-inline">⚡ 爱发电支持</span>
+          <span class="lang-en-inline">⚡ Support via Afdian</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 可点击跳转的鸣谢按钮 -->
+    <a class="side-credit-btn" href="credits.html" id="creditLink">
+      <span>
+        <span class="lang-zh-inline">🎨 鸣谢名单</span>
+        <span class="lang-en-inline">🎨 Credits List</span>
+      </span>
+      <span class="side-credit-arrow">→</span>
     </a>
 
-    <a class="nav-card area-games" href="#">
-      <span class="nav-card-en">Supported Games</span>
-      <span class="nav-card-zh"><span class="lang-zh-inline">合作游戏</span><span class="lang-en-inline">Supported Games</span></span>
-      <span class="nav-card-desc lang-zh">异味优选，不一定是完美的精品，但一定散发异味</span>
-      <span class="nav-card-desc lang-en">Not necessarily flawless, but always unmistakably weird.</span>
-      <span class="nav-card-arrow">→</span>
-    </a>
-
-    <a class="nav-card area-archive" href="#">
-      <span class="nav-card-en">Weird Gems Archives</span>
-      <span class="nav-card-zh"><span class="lang-zh-inline">异味档案</span><span class="lang-en-inline">Weird Gems Archives</span></span>
-      <span class="nav-card-desc lang-zh">铁鼠也啃噬不尽的独游文字记录，采访和测评都在这里</span>
-      <span class="nav-card-desc lang-en">Interviews and reviews that even the iron rat can't chew through.</span>
-      <span class="nav-card-arrow">→</span>
-    </a>
-
-    <a class="nav-card area-wilds" href="index.html">
-      <span class="nav-card-en">The Humid Wilds</span>
-      <span class="nav-card-zh"><span class="lang-zh-inline">异味林地</span><span class="lang-en-inline">The Humid Wilds</span></span>
-      <span class="nav-card-desc lang-zh">菌丝悄然蔓延，野菌即将破土而出……</span>
-      <span class="nav-card-desc lang-en">Mycelium spreads quietly. The mushrooms are almost here.</span>
-      <span class="nav-card-arrow">→</span>
-    </a>
-
-    <a class="nav-card area-contact" id="contactLink"
-      href="https://difficult-snowshoe-651.notion.site/3757a80dce1180018e24f9f298233120">
-      <span class="nav-card-en">Contact</span>
-      <span class="nav-card-zh"><span class="lang-zh-inline">信号联络</span><span class="lang-en-inline">Contact</span></span>
-      <span class="nav-card-desc lang-zh">想合作？信号接收器功率全开！</span>
-      <span class="nav-card-desc lang-en">Want to collab? Our signal receiver is wide open.</span>
-      <span class="nav-card-arrow">→</span>
-    </a>
+    <!-- 最新内容推荐 -->
+    <div class="side-card">
+      <div class="side-card-title">
+        <span class="lang-zh-inline">内容推荐</span>
+        <span class="lang-en-inline">Recommended</span>
+      </div>
+      <div class="side-rec-list">
+        <a class="side-rec-item" href="#">
+          <div class="side-rec-thumb">
+            <span class="lang-zh-inline">最新<br>文章</span>
+            <span class="lang-en-inline">Post</span>
+          </div>
+          <div class="side-rec-info">
+            <div class="side-rec-item-title">
+              <span class="lang-zh-inline">【独立游戏评测】最新更新占位</span>
+              <span class="lang-en-inline">New Review Heading Placeholder</span>
+            </div>
+            <div class="side-rec-meta">
+              <span class="lang-zh-inline">评测 · 待更新</span>
+              <span class="lang-en-inline">Review · Update Soon</span>
+            </div>
+          </div>
+        </a>
+        <a class="side-rec-item" href="#">
+          <div class="side-rec-thumb">
+            <span class="lang-zh-inline">独家<br>采访</span>
+            <span class="lang-en-inline">Interv.</span>
+          </div>
+          <div class="side-rec-info">
+            <div class="side-rec-item-title">
+              <span class="lang-zh-inline">【开发者专访】核心篇章占位</span>
+              <span class="lang-en-inline">Developer Interview Placeholder</span>
+            </div>
+            <div class="side-rec-meta">
+              <span class="lang-zh-inline">采访 · 待更新</span>
+              <span class="lang-en-inline">Interview · Update Soon</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
 
   </div>
 </div>
 
 <!-- 底部 -->
 <div class="footer">
-  <div class="footer-links">
-    <a class="footer-link" href="https://weibo.com/u/2416997860" target="_blank" rel="noopener">
-      <span class="dot"></span>
-      <span class="lang-zh-inline">微博</span><span class="lang-en-inline">Weibo</span>
-    </a>
-    <a class="footer-link" href="https://www.gcores.com/users/523089/talks" target="_blank" rel="noopener">
-      <span class="dot"></span>
-      <span class="lang-zh-inline">机核 Gcores</span><span class="lang-en-inline">Gcores</span>
-    </a>
+  <div class="footer-copy">
+    © 2026 异味游戏同好会 Weird Games Club
   </div>
-  <a class="footer-afdian" href="https://afdian.com/a/manwithouttalent" target="_blank" rel="noopener">
-    <span class="lang-zh-inline">请我们喝杯咖啡/吃盘萨莉亚意面吧！</span>
-    <span class="lang-en-inline">Enjoying our work?<br><span class="afdian-mono">Fuel our next project with a coffee!</span></span>
-  </a>
 </div>
 
 <script>
@@ -438,11 +697,14 @@ function setLang(lang) {
   document.getElementById('contactLink').href = isZH ? CONTACT_ZH : CONTACT_EN;
 }
 
+// 倒计时 目标：2025年8月28日 20:00 北京时间
 const TARGET = new Date('2025-08-28T20:00:00+08:00');
 function updateCountdown() {
   const diff = TARGET - new Date();
   if (diff <= 0) {
-    ['cdDays','cdHours','cdMins','cdSecs'].forEach(id => document.getElementById(id).textContent = '00');
+    ['cdDays','cdHours','cdMins','cdSecs'].forEach(id => {
+      document.getElementById(id).textContent = '00';
+    });
     return;
   }
   document.getElementById('cdDays').textContent  = String(Math.floor(diff/86400000)).padStart(2,'0');
