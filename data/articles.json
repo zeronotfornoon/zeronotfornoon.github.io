@@ -1,0 +1,138 @@
+{
+    "articles":  [
+                     {
+                         "id":  "whos-lila-garage-heathen",
+                         "category":  "interview",
+                         "featured":  true,
+                         "date":  "2026-06-24",
+                         "author":  "小椿",
+                         "tags":  [
+                                      "莱拉是谁",
+                                      "Who\u0027s Lila?",
+                                      "Garage Heathen",
+                                      "大卫·林奇",
+                                      "独立游戏",
+                                      "咖啡时间系列"
+                                  ],
+                         "title":  "献给大卫·林奇的 1-bit 轮回狂宴：采访《莱拉是谁？》制作人 Garage Heathen",
+                         "excerpt":  "没错，又有独立游戏开发给大卫·林奇写情书了。《与独立游戏开发的咖啡时间》系列第一弹——我们采访了俄罗斯独立开发者 Garage Heathen，聊聊 1-bit 画面、捏脸推剧情，以及 ARG 解谜背后的创作。",
+                         "cover":  "cover.png"
+                     },
+                     {
+                         "id":  "loc-update-placeholder",
+                         "category":  "news",
+                         "featured":  false,
+                         "date":  "2026-06-22",
+                         "author":  "异味游戏同好会",
+                         "tags":  [
+                                      "本地化",
+                                      "独立游戏"
+                                  ],
+                         "title":  "【游戏资讯】某款异味独立游戏中文本地化更新跟踪中",
+                         "excerpt":  "我们正在跟进一款即将推出中文版的独立游戏。本地化进度、预计上线时间与更多细节，将在确认后于本栏更新。",
+                         "cover":  ""
+                     },
+                     {
+                         "id":  "cult-game-research",
+                         "category":  "research",
+                         "featured":  false,
+                         "date":  "2026-06-18",
+                         "author":  "小椿",
+                         "tags":  [
+                                      "考据",
+                                      "邪典游戏",
+                                      "90年代"
+                                  ],
+                         "title":  "【游戏考据】被遗忘的 DOS 邪典：一款只在特定论坛流传过的异味 RPG",
+                         "excerpt":  "它没有进入任何「经典游戏」榜单，却在少数玩家的硬盘里存活了二十年。本文梳理其开发背景、消失原因，以及为何它值得被重新发现。",
+                         "cover":  ""
+                     },
+                     {
+                         "id":  "patch-digest",
+                         "category":  "news",
+                         "featured":  false,
+                         "date":  "2026-06-15",
+                         "author":  "小柊",
+                         "tags":  [
+                                      "补丁",
+                                      "汉化",
+                                      "模组"
+                                  ],
+                         "title":  "【游戏资讯】模组与汉化补丁汇总即将上线",
+                         "excerpt":  "异味档案将定期整理社区模组、官方补丁与本地化相关动态，方便玩家一站式查阅。",
+                         "cover":  ""
+                     },
+                     {
+                         "id":  "indie-dev-interview-02",
+                         "category":  "interview",
+                         "featured":  false,
+                         "date":  "2026-06-10",
+                         "author":  "异味游戏同好会",
+                         "tags":  [
+                                      "独立游戏",
+                                      "开发者"
+                                  ],
+                         "title":  "【开发者专访】核心篇章占位：与一位不愿露脸的邪典游戏作者对话",
+                         "excerpt":  "他/她拒绝提供照片，却愿意花三小时聊「为什么这款游戏必须足够怪异」。采访全文整理中。",
+                         "cover":  ""
+                     },
+                     {
+                         "id":  "sound-design-research",
+                         "category":  "research",
+                         "featured":  false,
+                         "date":  "2026-06-05",
+                         "author":  "小椿",
+                         "tags":  [
+                                      "音效设计",
+                                      "恐怖游戏",
+                                      "考据"
+                                  ],
+                         "title":  "【游戏考据】「让人起鸡皮疙瘩但不至于逃跑」：几款异味恐怖游戏的音效设计笔记",
+                         "excerpt":  "从低保真采样到故意失真的 BGM，本文对比几款小众恐怖游戏如何用声音制造「异味」而非单纯的 jump scare。",
+                         "cover":  ""
+                     },
+                     {
+                         "id":  "game-jam-news",
+                         "category":  "news",
+                         "featured":  false,
+                         "date":  "2026-06-01",
+                         "author":  "小柊",
+                         "tags":  [
+                                      "Game Jam",
+                                      "独立游戏"
+                                  ],
+                         "title":  "【游戏资讯】2026 独立游戏 Game Jam 见闻：48 小时里长出来的野菌",
+                         "excerpt":  "我们旁观了几场 Game Jam 的终稿展示，记录那些短暂存在却足够怪异的 prototype。",
+                         "cover":  ""
+                     },
+                     {
+                         "id":  "localization-announce",
+                         "category":  "news",
+                         "featured":  false,
+                         "date":  "2026-05-28",
+                         "author":  "异味游戏同好会",
+                         "tags":  [
+                                      "官方委托",
+                                      "本地化"
+                                  ],
+                         "title":  "【游戏资讯】受官方委托：又一款异味游戏即将推出简中版",
+                         "excerpt":  "经开发商/发行商官方委托，我们正在为一款即将公布的独立游戏进行简中本地化。游戏名称与上线时间将于后续正式公开。",
+                         "cover":  ""
+                     },
+                     {
+                         "id":  "opus-brian-interview",
+                         "category":  "interview",
+                         "featured":  false,
+                         "date":  "2026-05-24",
+                         "author":  "异味游戏同好会",
+                         "tags":  [
+                                      "OPUS：心相吾山",
+                                      "SIGONO",
+                                      "BRIAN"
+                                  ],
+                         "title":  "【开发者专访】专访《OPUS：心相吾山》主创 BRIAN：「这趟旅程既是探索，也是回望」",
+                         "excerpt":  "Brian Lee（李思毅），独立游戏团队 SIGONO 联合创始人兼创作总监。2026 年系列新作《OPUS：心相吾山》面世，我们与他聊了聊创作背后的思考。",
+                         "cover":  ""
+                     }
+                 ]
+}
