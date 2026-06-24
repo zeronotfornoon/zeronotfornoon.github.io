@@ -136,29 +136,26 @@ body {
   object-fit: cover;
   /* 聚焦于头像区域，并给予适当的裁剪视口 */
   object-position: center 35%;
-  filter: brightness(1.04) contrast(1.02);
+  filter: brightness(0.95);
 }
 /* 渐变遮罩 */
 .hero-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(to bottom, rgba(245,245,247,0) 0%, rgba(245,245,247,0.18) 62%, rgba(245,245,247,0.72) 100%);
+  background: linear-gradient(to bottom, rgba(245,245,247,0.05) 0%, rgba(245,245,247,0.55) 55%, var(--off-white) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   padding: 40px 24px 28px;
   gap: 10px;
-  overflow: visible;
 }
 .hero-title-img {
   display: block;
   width: auto;
-  height: auto;
-  max-width: min(92vw, 720px);
-  max-height: calc(100% - 3.5rem);
+  height: clamp(52px, 11vw, 96px);
+  max-width: min(92vw, 820px);
   object-fit: contain;
-  object-position: center bottom;
   flex-shrink: 0;
   filter:
     drop-shadow(0 0 2px rgba(232, 160, 180, 0.35))
@@ -1299,10 +1296,7 @@ html[lang="en"] .side-char-line {
 @media (max-width: 576px) {
   .lang-bar { padding: 8px 16px; }
   .site-logo-img { height: 44px; max-width: 200px; }
-  .hero-title-img {
-    max-width: min(94vw, 480px);
-    max-height: calc(100% - 2.75rem);
-  }
+  .hero-title-img { height: clamp(40px, 10vw, 72px); max-width: min(94vw, 640px); }
   .hero-bg { height: 240px; object-position: center 30%; }
   .hero-overlay { padding: 16px; }
   .countdown-strip { gap: 8px; padding: 16px 12px; flex-wrap: wrap; }
