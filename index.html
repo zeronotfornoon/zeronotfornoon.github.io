@@ -81,19 +81,15 @@ body {
   object-fit: contain;
   animation: logo-neon-flicker 3.5s infinite;
 }
-.hero-en-logo-wrap {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 6px;
-}
-.lang-en.visible.hero-en-logo-wrap { display: flex; }
-.hero-logo-large {
-  height: clamp(100px, 22vw, 176px);
-  width: auto;
-  max-width: min(96vw, 720px);
+.hero-title-img {
   display: block;
+  width: auto;
+  height: clamp(52px, 11vw, 96px);
+  max-width: min(92vw, 820px);
   object-fit: contain;
-  animation: logo-neon-flicker 3.5s infinite;
+  filter:
+    drop-shadow(0 0 2px rgba(232, 160, 180, 0.35))
+    drop-shadow(0 2px 8px rgba(17, 17, 17, 0.12));
 }
 @keyframes logo-neon-flicker {
   0%,18%,20%,22%,53%,55%,100% {
@@ -146,28 +142,6 @@ body {
   padding: 40px 24px 28px;
   gap: 10px;
 }
-/* 中文标题占位 */
-.hero-title-zh {
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  font-weight: 900;
-  color: var(--ink);
-  letter-spacing: 0.05em;
-  line-height: 1.1;
-  background: rgba(255,255,255,0.82);
-  padding: 12px 32px;
-  border-radius: 8px;
-  backdrop-filter: blur(4px);
-  border: 2px dashed var(--border);
-  position: relative;
-}
-.hero-title-zh::after {
-  content: '专属标题设计稿待替换';
-  position: absolute;
-  bottom: -20px; left: 50%; transform: translateX(-50%);
-  font-size: 0.6rem; color: var(--ink-faint);
-  white-space: nowrap; font-weight: 300;
-}
-/* 英文 logo 已移至顶部导航栏 */
 /* 副标题：使用自定义像素字体，字号加大 */
 .hero-tagline {
   font-family: 'UranusPixel', 'Press Start 2P', monospace;
@@ -727,38 +701,110 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   padding-left: 10px;
 }
 
-/* 右侧最上方：头像+文字信息条（参考图3布局） */
-.side-profile-card {
+/* 角色卡（侧栏顶部） */
+.side-char-card {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 20px;
+  padding: 22px 20px 18px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+.side-char-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--pink) 0%, var(--pink-light) 55%, transparent 100%);
+}
+.side-char-top {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  margin-bottom: 14px;
 }
 .side-avatar {
-  width: 56px; height: 56px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--border);
+  border: 3px solid var(--pink-light);
+  box-shadow: 0 0 0 1px var(--pink), 0 4px 12px rgba(232, 160, 180, 0.25);
   flex-shrink: 0;
 }
-.side-profile-text {
+.side-char-info {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
+  padding-top: 4px;
 }
-.side-profile-name {
-  font-size: 1.05rem;
-  font-weight: 700;
+.side-char-name {
+  font-size: 1.2rem;
+  font-weight: 900;
   color: var(--ink);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
 }
-.side-profile-sub {
-  font-size: 0.82rem;
-  color: var(--ink-faint);
+.side-char-title {
+  font-size: 0.78rem;
+  color: var(--ink-dim);
   font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+}
+html[lang="en"] .side-char-title {
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+}
+.side-char-line {
+  font-family: 'UranusPixel', 'Press Start 2P', monospace;
+  font-size: 0.92rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  background: var(--pink-bg);
+  border-radius: 8px;
+  border: 1px dashed rgba(232, 160, 180, 0.55);
+}
+html[lang="en"] .side-char-line {
+  font-size: 0.82rem;
+}
+.side-char-badge {
+  align-items: center;
+  align-self: flex-start;
+  padding: 6px 12px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+  line-height: 1.3;
+}
+.side-char-card .lang-zh,
+.side-char-card .lang-en {
+  display: none;
+}
+.side-char-card .lang-zh.visible,
+.side-char-card .lang-en.visible {
+  display: block;
+}
+.side-char-card .side-char-badge.lang-zh.visible,
+.side-char-card .side-char-badge.lang-en.visible {
+  display: inline-flex;
+}
+.side-char-badge .archived-count {
+  color: var(--pink);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.68rem;
+  margin: 0 3px;
+  letter-spacing: 0;
 }
 
 /* 关注我们按钮样式（完全参考图3大色块高质感设计） */
@@ -1083,10 +1129,9 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 @media (max-width: 576px) {
   .lang-bar { padding: 8px 16px; }
   .site-logo-img { height: 44px; max-width: 200px; }
-  .hero-logo-large { height: clamp(72px, 20vw, 120px); max-width: min(94vw, 520px); }
+  .hero-title-img { height: clamp(40px, 10vw, 72px); max-width: min(94vw, 640px); }
   .hero-bg { height: 240px; object-position: center 30%; }
   .hero-overlay { padding: 16px; }
-  .hero-title-zh { font-size: 1.6rem; padding: 8px 16px; }
   .countdown-strip { gap: 12px; padding: 16px; flex-direction: column; }
   .nav-grid {
     grid-template-columns: 1fr;
@@ -1121,14 +1166,6 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 }
 
 /* ── 双语切换核心控制 ── */
-.lang-zh, .lang-en { display: none; }
-.lang-zh.visible {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-.lang-en.visible.hero-en-logo-wrap { display: flex; }
 .lang-zh-inline, .lang-en-inline { display: none; }
 .lang-zh-inline.visible, .lang-en-inline.visible { display: inline; }
 </style>
@@ -1150,17 +1187,10 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 <div class="hero">
   <img class="hero-bg" src="yiweijiayao.jpg" alt="异味游戏同好会">
   <div class="hero-overlay">
-    <!-- 中文版：中文标题占位 -->
-    <div class="lang-zh">
-      <div class="hero-title-zh">异味游戏同好会</div>
-    </div>
-    <!-- 英文版：大号霓虹 Logo 作为标题 -->
-    <div class="lang-en hero-en-logo-wrap">
-      <img class="hero-logo-large" src="logo2.png" alt="Weird Games Club">
-    </div>
+    <img class="hero-title-img" src="hero-title-zh.png" alt="异味游戏同好会 Weird Games Club">
     <div class="hero-tagline">
       <span class="lang-zh-inline">独立游戏不是流水线产品，每一份异味都值得深尝</span>
-      <span class="lang-en-inline">Indie games aren't assembly-line products. Every weird taste is worth savoring.</span>
+      <span class="lang-en-inline">Savor Weird Games Slowly</span>
     </div>
   </div>
 </div>
@@ -1275,8 +1305,8 @@ html[lang="en"] .countdown-label-row-en { display: block; }
             <span class="lang-zh-inline">异味须知</span>
             <span class="lang-en-inline">About Us</span>
           </span>
-          <span class="nav-card-desc lang-zh">我们是谁，我们在做什么，异味是从哪里传出来的？</span>
-          <span class="nav-card-desc lang-en">Who we are, what we do, and where the smell comes from.</span>
+          <span class="nav-card-desc lang-zh">我们是谁，我们在做什么，异味是从哪里飘出来的？</span>
+          <span class="nav-card-desc lang-en">Who we are, what we do, and where the weird gems comes from.</span>
           <span class="nav-card-arrow">→</span>
         </div>
         <span class="nav-card-icon nav-icon-notepad" aria-hidden="true"><span class="icon-binding"></span><span class="icon-lines"></span></span>
@@ -1290,7 +1320,7 @@ html[lang="en"] .countdown-label-row-en { display: block; }
             <span class="lang-en-inline">Supported Games</span>
           </span>
           <span class="nav-card-desc lang-zh">异味优选，不一定是完美的精品，但一定散发异味</span>
-          <span class="nav-card-desc lang-en">Not necessarily flawless, but always unmistakably weird.</span>
+          <span class="nav-card-desc lang-en">Far from perfect, but utterly unique.</span>
           <span class="nav-card-arrow">→</span>
         </div>
         <span class="nav-card-icon nav-icon-gamepad" aria-hidden="true"><span class="gp-shell"></span><span class="gp-dpad"></span><span class="gp-face"></span></span>
@@ -1304,7 +1334,7 @@ html[lang="en"] .countdown-label-row-en { display: block; }
             <span class="lang-en-inline">Weird Gems Archives</span>
           </span>
           <span class="nav-card-desc lang-zh">铁鼠也啃噬不尽的独游文字记录，采访和测评都在这里</span>
-          <span class="nav-card-desc lang-en">Interviews and reviews that even the iron rat can't chew through.</span>
+          <span class="nav-card-desc lang-en">Interviews and reviews that even Tesso can't eat away.</span>
           <span class="nav-card-arrow">→</span>
         </div>
         <span class="nav-card-icon nav-icon-bookshelf" aria-hidden="true"></span>
@@ -1332,7 +1362,7 @@ html[lang="en"] .countdown-label-row-en { display: block; }
             <span class="lang-en-inline">Contact</span>
           </span>
           <span class="nav-card-desc lang-zh">想合作？信号接收器功率全开！</span>
-          <span class="nav-card-desc lang-en">Want to collab? Our signal receiver is wide open.</span>
+          <span class="nav-card-desc lang-en">Want to collab? Just want to say Hi? Shoot a message!</span>
           <span class="nav-card-arrow">→</span>
         </div>
         <span class="nav-card-icon nav-icon-tower" aria-hidden="true"><span class="tw-body"></span><span class="tw-deck tw-deck-1"></span><span class="tw-deck tw-deck-2"></span><span class="tw-deck tw-deck-3"></span><span class="tw-antennas"></span></span>
@@ -1344,19 +1374,21 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   <!-- 右：全新高质感侧边栏 -->
   <div class="sidebar">
 
-    <!-- 最上方：头像+文字信息条 -->
-    <div class="side-profile-card">
-      <img class="side-avatar" src="slj.jpg" alt="头像">
-      <div class="side-profile-text">
-        <div class="side-profile-name">
-          <span class="lang-zh-inline">何异味……</span>
-          <span class="lang-en-inline">What's the weird smell…</span>
-        </div>
-        <div class="side-profile-sub">
-          <span class="lang-zh-inline">已收容 12 款异味游戏</span>
-          <span class="lang-en-inline">12 weird games archived</span>
+    <!-- 角色卡 -->
+    <div class="side-char-card">
+      <div class="side-char-top">
+        <img class="side-avatar" src="slj.jpg" alt="">
+        <div class="side-char-info">
+          <div class="side-char-name lang-zh">小椿</div>
+          <div class="side-char-name lang-en">Kakihara</div>
+          <div class="side-char-title lang-zh">看板中官</div>
+          <div class="side-char-title lang-en">21st-century priest of Attis</div>
         </div>
       </div>
+      <div class="side-char-line lang-zh">何异味……</div>
+      <div class="side-char-line lang-en">WTF</div>
+      <div class="side-char-badge lang-zh">已收容 <span class="archived-count">12</span> 款异味游戏</div>
+      <div class="side-char-badge lang-en"><span class="archived-count">12</span> weird games archived</div>
     </div>
 
     <!-- 内容推荐 -->
@@ -1422,8 +1454,8 @@ html[lang="en"] .countdown-label-row-en { display: block; }
           <span class="lang-en-inline">Gcores</span>
         </a>
         <a class="side-btn btn-afdian" href="https://afdian.com/a/manwithouttalent" target="_blank" rel="noopener">
-          <span class="lang-zh-inline">⚡ 爱发电支持</span>
-          <span class="lang-en-inline">⚡ Support via Afdian</span>
+          <span class="lang-zh-inline">异味够好味吗？<br>请我们喝杯咖啡或者吃盘萨莉亚意面吧</span>
+          <span class="lang-en-inline">Enjoying our work?<br>Fuel our next project with a coffee!</span>
         </a>
       </div>
     </div>
@@ -1431,8 +1463,8 @@ html[lang="en"] .countdown-label-row-en { display: block; }
     <!-- 网站素材鸣谢 -->
     <a class="side-credit-btn" href="credits.html" id="creditLink">
       <span>
-        <span class="lang-zh-inline">🎨 网站素材鸣谢</span>
-        <span class="lang-en-inline">🎨 Art Credits</span>
+        <span class="lang-zh-inline">网站素材鸣谢</span>
+        <span class="lang-en-inline">Credits</span>
       </span>
       <span class="side-credit-arrow">→</span>
     </a>
@@ -1446,7 +1478,10 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 
 <!-- 底部 -->
 <div class="footer">
-  <div class="footer-brand">异味值得深尝</div>
+<div class="footer-brand">
+  <span class="lang-zh-inline">异味值得深尝</span>
+  <span class="lang-en-inline">Funky, and Far-Reaching</span>
+</div>
   <div class="footer-copy">
     © 2026 异味游戏同好会 Weird Games Club
   </div>
@@ -1455,6 +1490,15 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 <script>
 const CONTACT_ZH = 'https://difficult-snowshoe-651.notion.site/3757a80dce1180018e24f9f298233120';
 const CONTACT_EN = 'https://difficult-snowshoe-651.notion.site/Contact-3757a80dce118015a7bbc02a423d6d7a';
+
+/** 合作游戏收录数量 — 新游戏上线时只改这一处 */
+const ARCHIVED_GAME_COUNT = 12;
+
+function syncArchivedCount() {
+  document.querySelectorAll('.archived-count').forEach(el => {
+    el.textContent = String(ARCHIVED_GAME_COUNT);
+  });
+}
 
 function setLang(lang) {
   const isZH = lang === 'zh';
@@ -1558,6 +1602,7 @@ function scrollToTop() {
 })();
 
 setLang('zh');
+syncArchivedCount();
 </script>
 </body>
 </html>
