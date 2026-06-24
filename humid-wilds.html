@@ -36,7 +36,7 @@
     color: var(--text);
     font-family: 'Noto Serif SC', serif;
     min-height: 100vh;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     -webkit-text-size-adjust: 100%;
     overflow-x: hidden;
     position: relative;
@@ -118,7 +118,7 @@
     max-width: 720px;
     width: 100%;
     margin: 0 auto;
-    padding: 24px 20px calc(118px + env(safe-area-inset-bottom));
+    padding: calc(64px + env(safe-area-inset-top)) 20px calc(118px + env(safe-area-inset-bottom));
     animation: fadeIn 1.2s ease;
   }
   @keyframes fadeIn {
@@ -436,37 +436,69 @@
     background: rgba(58, 92, 62, 0.25);
   }
 
-  .home-link, .music-toggle {
+  /* ── 顶部栏（与主站 Logo 一致） ── */
+  .wilds-top-bar {
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 20;
-    background: rgba(8, 12, 8, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: calc(10px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 10px calc(16px + env(safe-area-inset-left));
+    background: rgba(8, 12, 8, 0.92);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+  }
+  .lang-bar-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    line-height: 0;
+    flex-shrink: 0;
+    animation: neon-glow-flicker 3.5s infinite;
+    transition: opacity 0.2s;
+  }
+  .lang-bar-logo:hover { opacity: 0.92; }
+  .site-logo-img {
+    height: 38px;
+    width: auto;
+    max-width: 168px;
+    display: block;
+    object-fit: contain;
+  }
+  @keyframes neon-glow-flicker {
+    0%,18%,20%,22%,53%,55%,100% {
+      filter:
+        drop-shadow(0 0 3px #e8a0b4)
+        drop-shadow(0 0 10px #e8a0b4)
+        drop-shadow(0 0 18px rgba(232, 160, 180, 0.85));
+    }
+    19%,21%,54% {
+      filter: none;
+    }
+  }
+  .wilds-music-btn {
+    flex-shrink: 0;
+    background: rgba(58, 92, 62, 0.35);
     border: 1px solid var(--moss);
     color: var(--text);
     font-family: 'Noto Sans SC', sans-serif;
-    font-size: 0.75rem;
-    padding: 8px 14px;
+    font-size: 0.72rem;
+    padding: 7px 12px;
     cursor: pointer;
     border-radius: 4px;
     letter-spacing: 0.06em;
     transition: all 0.2s;
-    text-decoration: none;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
-  .home-link {
-    top: calc(12px + env(safe-area-inset-top));
-    left: calc(12px + env(safe-area-inset-left));
-  }
-  .music-toggle {
-    top: calc(12px + env(safe-area-inset-top));
-    right: calc(12px + env(safe-area-inset-right));
-  }
-  .home-link:hover, .music-toggle:hover {
+  .wilds-music-btn:hover {
     border-color: var(--pale-moss);
     color: #f4e9c9;
   }
-
-  /* ── 音乐开关（样式见 .home-link, .music-toggle） ── */
 
   /* ── 弹窗 ── */
   .modal-overlay {
@@ -750,7 +782,7 @@
 
   @media (max-width: 600px) {
     .forest-bg { background-position: center 85%; }
-    .wilds-wrap { padding: 16px 14px calc(108px + env(safe-area-inset-bottom)); }
+    .wilds-wrap { padding: calc(56px + env(safe-area-inset-top)) 14px calc(108px + env(safe-area-inset-bottom)); }
     .panel { padding: 18px 16px; margin-bottom: 12px; }
     .wilds-title { font-size: clamp(1.35rem, 6vw, 1.85rem); }
     .weather-row { font-size: 0.88rem; }
@@ -765,7 +797,8 @@
     .id-card-photo { width: 46px; height: 56px; }
     .id-card-type { font-size: 0.66rem; }
     .member-logout-btn { font-size: 0.68rem; padding: 6px 10px; }
-    .home-link, .music-toggle { font-size: 0.7rem; padding: 7px 12px; }
+    .wilds-music-btn { font-size: 0.68rem; padding: 6px 10px; }
+    .site-logo-img { height: 30px; max-width: 132px; }
   }
 
   @media (max-width: 360px) {
@@ -782,8 +815,12 @@
   <div class="mist-layer"></div>
 </div>
 
-<a class="home-link" href="https://zeronotfornoon.github.io/" rel="noopener">← 返回主页</a>
-<button class="music-toggle" id="musicToggle" onclick="toggleMusic()">♪ 音乐开启</button>
+<div class="wilds-top-bar">
+  <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
+    <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+  </a>
+  <button class="wilds-music-btn" id="musicToggle" type="button" onclick="toggleMusic()">♪ 音乐开启</button>
+</div>
 
 <audio id="forestAudio" loop preload="auto">
   <source src="siarhei_korbut-forest-391164.mp3" type="audio/mpeg">

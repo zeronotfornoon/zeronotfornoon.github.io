@@ -47,11 +47,42 @@ body {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: transparent;
-  padding: 12px 32px;
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  padding: 10px 32px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+.lang-bar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+  flex-shrink: 0;
+  animation: neon-glow-flicker 3.5s infinite;
+  transition: opacity 0.2s;
+}
+.lang-bar-logo:hover { opacity: 0.92; }
+.site-logo-img {
+  height: 38px;
+  width: auto;
+  max-width: 168px;
+  display: block;
+  object-fit: contain;
+}
+@keyframes neon-glow-flicker {
+  0%,18%,20%,22%,53%,55%,100% {
+    filter:
+      drop-shadow(0 0 3px var(--pink))
+      drop-shadow(0 0 10px var(--pink))
+      drop-shadow(0 0 18px var(--pink));
+  }
+  19%,21%,54% {
+    filter: none;
+  }
 }
 .lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
 .lang-btn {
@@ -113,31 +144,7 @@ body {
   font-size: 0.6rem; color: var(--ink-faint);
   white-space: nowrap; font-weight: 300;
 }
-/* 英文logo——霓虹灯招牌效果，贴合logo轮廓 */
-.hero-logo-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
-  animation: neon-glow-flicker 3.5s infinite;
-}
-@keyframes neon-glow-flicker {
-  0%,18%,20%,22%,53%,55%,100% {
-    filter:
-      drop-shadow(0 0 4px var(--pink))
-      drop-shadow(0 0 12px var(--pink))
-      drop-shadow(0 0 24px var(--pink));
-  }
-  19%,21%,54% {
-    filter: none;
-  }
-}
-.hero-logo-img {
-  height: clamp(80px, 11vw, 130px);
-  width: clamp(200px, 30vw, 380px);
-  display: block;
-  object-fit: contain;
-}
+/* 英文 logo 已移至顶部导航栏 */
 /* 副标题：使用自定义像素字体，字号加大 */
 .hero-tagline {
   font-family: 'UranusPixel', 'Press Start 2P', monospace;
@@ -437,14 +444,132 @@ body {
   max-width: 1240px;
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+}
+.footer-brand {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.12em;
 }
 .footer-copy {
   font-size: 0.8rem;
   color: var(--ink-faint);
   font-weight: 400;
   letter-spacing: 0.04em;
+}
+
+/* ── 主栏内容推荐轮播 ── */
+.rec-carousel-section {
+  margin-bottom: 32px;
+}
+.rec-carousel {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--off-white);
+  border: 1px solid var(--border);
+}
+.rec-carousel-track {
+  position: relative;
+  min-height: 148px;
+}
+.rec-slide {
+  display: none;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 56px 22px 22px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: opacity 0.35s ease;
+}
+.rec-slide.active {
+  display: flex;
+}
+.rec-slide-thumb {
+  width: 88px;
+  height: 88px;
+  background: #eaeaea;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  text-align: center;
+  line-height: 1.35;
+  border: 1px dashed var(--ink-faint);
+}
+.rec-slide-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.rec-slide-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.45;
+}
+.rec-slide-meta {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  font-weight: 400;
+}
+.rec-carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink-dim);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.rec-carousel-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--white);
+}
+.rec-carousel-btn.prev { left: 10px; }
+.rec-carousel-btn.next { right: 10px; }
+.rec-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px 14px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+.rec-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: var(--border);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.rec-carousel-dot.active {
+  background: var(--ink);
+  transform: scale(1.15);
 }
 
 /* ── 响应式设计：手机端自动折叠与流式适配 ── */
@@ -464,18 +589,21 @@ body {
 }
 
 @media (max-width: 576px) {
-  .lang-bar { padding: 10px 16px; }
+  .lang-bar { padding: 8px 16px; }
+  .site-logo-img { height: 30px; max-width: 132px; }
   .hero-bg { height: 240px; object-position: center 30%; }
   .hero-overlay { padding: 16px; }
-  .hero-title-row { gap: 16px; }
   .hero-title-zh { font-size: 1.6rem; padding: 8px 16px; }
-  .hero-logo-img { height: 70px; }
   .countdown-strip { gap: 12px; padding: 16px; flex-direction: column; }
   .nav-grid {
     grid-template-columns: 1fr;
     grid-template-areas: "about" "games" "archive" "wilds" "contact";
   }
   .nav-card { padding: 20px; }
+  .rec-slide { padding: 18px 48px 18px 16px; }
+  .rec-slide-thumb { width: 72px; height: 72px; font-size: 0.72rem; }
+  .rec-slide-title { font-size: 0.95rem; }
+  .rec-carousel-btn { width: 32px; height: 32px; font-size: 1rem; }
 }
 
 /* ── 双语切换核心控制 ── */
@@ -489,6 +617,9 @@ body {
 
 <!-- 顶部语言栏 -->
 <div class="lang-bar">
+  <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
+    <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+  </a>
   <div class="lang-switch">
     <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
     <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
@@ -503,12 +634,8 @@ body {
     <div class="lang-zh" style="display:flex;flex-direction:column;align-items:center;gap:12px;">
       <div class="hero-title-zh">异味游戏同好会</div>
     </div>
-    <!-- 英文版：空，只显示logo（logo中英文共用，在下面） -->
+    <!-- 英文版：主视觉区仅保留副标题 -->
     <div class="lang-en" style="display:flex;flex-direction:column;align-items:center;">
-    </div>
-    <!-- logo：中英文都显示，贴合轮廓霓虹灯发光 -->
-    <div class="hero-logo-wrap">
-      <img class="hero-logo-img" src="logo2.png" alt="Weird Games Club">
     </div>
     <div class="hero-tagline">
       <span class="lang-zh-inline">独立游戏不是流水线产品，每一份异味都值得深尝</span>
@@ -553,6 +680,53 @@ body {
 
   <!-- 左：主内容区 -->
   <div class="main-col">
+
+    <div class="rec-carousel-section">
+      <div class="nav-section-title">
+        <span class="lang-zh-inline">内容推荐</span>
+        <span class="lang-en-inline">Recommended</span>
+      </div>
+      <div class="rec-carousel" id="recCarousel">
+        <div class="rec-carousel-track">
+          <a class="rec-slide active" href="#">
+            <div class="rec-slide-thumb">
+              <span class="lang-zh-inline">最新<br>文章</span>
+              <span class="lang-en-inline">Post</span>
+            </div>
+            <div class="rec-slide-info">
+              <div class="rec-slide-title">
+                <span class="lang-zh-inline">【独立游戏评测】最新更新占位</span>
+                <span class="lang-en-inline">New Review Heading Placeholder</span>
+              </div>
+              <div class="rec-slide-meta">
+                <span class="lang-zh-inline">评测 · 待更新</span>
+                <span class="lang-en-inline">Review · Update Soon</span>
+              </div>
+            </div>
+          </a>
+          <a class="rec-slide" href="#">
+            <div class="rec-slide-thumb">
+              <span class="lang-zh-inline">独家<br>采访</span>
+              <span class="lang-en-inline">Interv.</span>
+            </div>
+            <div class="rec-slide-info">
+              <div class="rec-slide-title">
+                <span class="lang-zh-inline">【开发者专访】核心篇章占位</span>
+                <span class="lang-en-inline">Developer Interview Placeholder</span>
+              </div>
+              <div class="rec-slide-meta">
+                <span class="lang-zh-inline">采访 · 待更新</span>
+                <span class="lang-en-inline">Interview · Update Soon</span>
+              </div>
+            </div>
+          </a>
+        </div>
+        <button class="rec-carousel-btn prev" type="button" aria-label="上一条" onclick="moveRecCarousel(-1)">‹</button>
+        <button class="rec-carousel-btn next" type="button" aria-label="下一条" onclick="moveRecCarousel(1)">›</button>
+        <div class="rec-carousel-dots" id="recCarouselDots"></div>
+      </div>
+    </div>
+
     <div class="nav-section-title">
       <span class="lang-zh-inline">探索更多</span>
       <span class="lang-en-inline">Explore</span>
@@ -592,7 +766,7 @@ body {
         <span class="nav-card-arrow">→</span>
       </a>
 
-      <a class="nav-card area-wilds" href="forest.html">
+      <a class="nav-card area-wilds" href="index.html">
         <span class="nav-card-en">The Humid Wilds</span>
         <span class="nav-card-zh">
           <span class="lang-zh-inline">异味林地</span>
@@ -666,53 +840,12 @@ body {
       <span class="side-credit-arrow">→</span>
     </a>
 
-    <!-- 最新内容推荐 -->
-    <div class="side-card">
-      <div class="side-card-title">
-        <span class="lang-zh-inline">内容推荐</span>
-        <span class="lang-en-inline">Recommended</span>
-      </div>
-      <div class="side-rec-list">
-        <a class="side-rec-item" href="#">
-          <div class="side-rec-thumb">
-            <span class="lang-zh-inline">最新<br>文章</span>
-            <span class="lang-en-inline">Post</span>
-          </div>
-          <div class="side-rec-info">
-            <div class="side-rec-item-title">
-              <span class="lang-zh-inline">【独立游戏评测】最新更新占位</span>
-              <span class="lang-en-inline">New Review Heading Placeholder</span>
-            </div>
-            <div class="side-rec-meta">
-              <span class="lang-zh-inline">评测 · 待更新</span>
-              <span class="lang-en-inline">Review · Update Soon</span>
-            </div>
-          </div>
-        </a>
-        <a class="side-rec-item" href="#">
-          <div class="side-rec-thumb">
-            <span class="lang-zh-inline">独家<br>采访</span>
-            <span class="lang-en-inline">Interv.</span>
-          </div>
-          <div class="side-rec-info">
-            <div class="side-rec-item-title">
-              <span class="lang-zh-inline">【开发者专访】核心篇章占位</span>
-              <span class="lang-en-inline">Developer Interview Placeholder</span>
-            </div>
-            <div class="side-rec-meta">
-              <span class="lang-zh-inline">采访 · 待更新</span>
-              <span class="lang-en-inline">Interview · Update Soon</span>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-
   </div>
 </div>
 
 <!-- 底部 -->
 <div class="footer">
+  <div class="footer-brand">异味值得深尝</div>
   <div class="footer-copy">
     © 2026 异味游戏同好会 Weird Games Club
   </div>
@@ -734,8 +867,8 @@ function setLang(lang) {
   document.getElementById('contactLink').href = isZH ? CONTACT_ZH : CONTACT_EN;
 }
 
-// 倒计时 目标：2025年8月28日 20:00 北京时间
-const TARGET = new Date('2025-08-28T20:00:00+08:00');
+// 倒计时 目标：2026年9月24日 20:00 北京时间
+const TARGET = new Date('2026-09-24T20:00:00+08:00');
 function updateCountdown() {
   const diff = TARGET - new Date();
   if (diff <= 0) {
@@ -751,6 +884,51 @@ function updateCountdown() {
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
+
+// 内容推荐轮播
+let recCarouselIndex = 0;
+let recCarouselTimer = null;
+const recSlides = () => document.querySelectorAll('#recCarousel .rec-slide');
+const recDotsContainer = document.getElementById('recCarouselDots');
+
+function buildRecCarouselDots() {
+  if (!recDotsContainer) return;
+  recDotsContainer.innerHTML = '';
+  recSlides().forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'rec-carousel-dot' + (i === recCarouselIndex ? ' active' : '');
+    dot.setAttribute('aria-label', '第 ' + (i + 1) + ' 条');
+    dot.addEventListener('click', () => goRecCarousel(i));
+    recDotsContainer.appendChild(dot);
+  });
+}
+
+function goRecCarousel(index) {
+  const slides = recSlides();
+  if (!slides.length) return;
+  recCarouselIndex = ((index % slides.length) + slides.length) % slides.length;
+  slides.forEach((slide, i) => slide.classList.toggle('active', i === recCarouselIndex));
+  recDotsContainer.querySelectorAll('.rec-carousel-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === recCarouselIndex);
+  });
+}
+
+function moveRecCarousel(step) {
+  goRecCarousel(recCarouselIndex + step);
+  restartRecCarouselAuto();
+}
+
+function restartRecCarouselAuto() {
+  if (recCarouselTimer) clearInterval(recCarouselTimer);
+  if (recSlides().length > 1) {
+    recCarouselTimer = setInterval(() => moveRecCarousel(1), 6000);
+  }
+}
+
+buildRecCarouselDots();
+restartRecCarouselAuto();
+
 setLang('zh');
 </script>
 </body>

@@ -44,29 +44,47 @@ body {
   z-index: 100;
   background: rgba(255,255,255,0.92);
   border-bottom: 1px solid var(--border);
-  padding: 11px 32px;
+  padding: 10px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   backdrop-filter: blur(8px);
 }
 .lang-bar-left {
   display: flex;
   align-items: center;
   gap: 16px;
+  min-width: 0;
 }
-.back-link {
-  text-decoration: none;
-  color: var(--ink-dim);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+.lang-bar-logo {
   display: flex;
   align-items: center;
-  gap: 6px;
-  transition: color 0.15s;
+  text-decoration: none;
+  line-height: 0;
+  flex-shrink: 0;
+  animation: neon-glow-flicker 3.5s infinite;
+  transition: opacity 0.2s;
 }
-.back-link:hover { color: var(--ink); }
+.lang-bar-logo:hover { opacity: 0.92; }
+.site-logo-img {
+  height: 38px;
+  width: auto;
+  max-width: 168px;
+  display: block;
+  object-fit: contain;
+}
+@keyframes neon-glow-flicker {
+  0%,18%,20%,22%,53%,55%,100% {
+    filter:
+      drop-shadow(0 0 3px var(--pink))
+      drop-shadow(0 0 10px var(--pink))
+      drop-shadow(0 0 18px var(--pink));
+  }
+  19%,21%,54% {
+    filter: none;
+  }
+}
 .bar-title {
   font-size: 0.78rem;
   color: var(--ink-faint);
@@ -391,7 +409,8 @@ body {
 
 /* ── 响应式 ── */
 @media (max-width: 640px) {
-  .lang-bar { padding: 10px 16px; }
+  .lang-bar { padding: 8px 16px; }
+  .site-logo-img { height: 30px; max-width: 132px; }
   .bar-title { display: none; }
   .hero { height: 260px; }
   .page-body { padding: 32px 16px 60px; gap: 32px; }
@@ -416,7 +435,9 @@ body {
 <!-- 顶部栏 -->
 <div class="lang-bar">
   <div class="lang-bar-left">
-    <a class="back-link" href="home.html">← <span class="lang-zh-inline">返回主页</span><span class="lang-en-inline">Home</span></a>
+    <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
+      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    </a>
     <span class="bar-title">
       <span class="lang-zh-inline">异味须知</span>
       <span class="lang-en-inline">About Us</span>
