@@ -336,11 +336,36 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   padding: 28px 24px;
   text-decoration: none;
   color: var(--ink);
-  display: flex; flex-direction: column; gap: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 16px;
   border-radius: 8px;
   border: 1px solid transparent;
   transition: all 0.2s ease;
   position: relative;
+  overflow: hidden;
+}
+.nav-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  padding-bottom: 18px;
+}
+.nav-card-icon {
+  flex-shrink: 0;
+  width: 72px;
+  align-self: center;
+  position: relative;
+  opacity: 0.82;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.nav-card:hover .nav-card-icon {
+  opacity: 1;
+  transform: scale(1.04);
 }
 .nav-card:hover {
   background: var(--white);
@@ -355,11 +380,229 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 .nav-card.area-contact {
   grid-area: contact;
   background: var(--pink-bg);
+}
+.nav-card.area-contact:hover { background: var(--pink-light); border-color: var(--pink); }
+.nav-card.area-contact .nav-card-body {
   align-items: center;
   text-align: center;
 }
-.nav-card.area-contact:hover { background: var(--pink-light); border-color: var(--pink); }
 .nav-card.area-contact .nav-card-arrow { position: static; margin-top: 4px; }
+
+/* ── 导航卡 CSS 图标 ── */
+.nav-icon-notepad {
+  height: 64px;
+}
+.nav-icon-notepad::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: 44px;
+  height: 50px;
+  background: #f0ede4;
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  transform: rotate(6deg);
+  opacity: 0.55;
+}
+.nav-icon-notepad::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  width: 46px;
+  height: 54px;
+  background: #fffef8;
+  border: 2px solid var(--ink);
+  border-radius: 2px 6px 6px 2px;
+  box-shadow: 2px 3px 0 rgba(17, 17, 17, 0.12);
+}
+.nav-icon-notepad .icon-lines {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  width: 28px;
+  height: 34px;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0 5px,
+    rgba(17, 17, 17, 0.18) 5px 6px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+.nav-icon-notepad .icon-binding {
+  position: absolute;
+  top: 0;
+  left: 4px;
+  width: 12px;
+  height: 58px;
+  background: repeating-linear-gradient(
+    180deg,
+    var(--ink) 0 2px,
+    transparent 2px 7px
+  );
+  border-radius: 2px 0 0 2px;
+  opacity: 0.35;
+  z-index: 2;
+}
+
+.nav-icon-gamepad {
+  height: 58px;
+}
+.nav-icon-gamepad::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 4px;
+  width: 58px;
+  height: 34px;
+  background: var(--ink);
+  border-radius: 18px;
+  box-shadow: inset 0 -4px 0 rgba(255, 255, 255, 0.08);
+}
+.nav-icon-gamepad::after {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 14px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 2px;
+  box-shadow:
+    24px 0 0 -2px rgba(255, 255, 255, 0.85),
+    24px 0 0 0 rgba(255, 255, 255, 0.85),
+    36px -6px 0 0 #e8a0b4,
+    36px 6px 0 0 var(--white),
+    44px -6px 0 0 var(--white),
+    44px 6px 0 0 #e8a0b4;
+}
+
+.nav-icon-bookshelf {
+  height: 68px;
+}
+.nav-icon-bookshelf::before {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 4px;
+  width: 58px;
+  height: 4px;
+  background: var(--ink);
+  border-radius: 1px;
+  box-shadow: 0 -28px 0 var(--ink), 0 -56px 0 var(--ink);
+}
+.nav-icon-bookshelf::after {
+  content: '';
+  position: absolute;
+  bottom: 12px;
+  left: 8px;
+  width: 50px;
+  height: 52px;
+  background:
+    linear-gradient(90deg, #e8a0b4 0 8px, transparent 8px 10px) 0 0 / 50px 22px no-repeat,
+    linear-gradient(90deg, #7a9e7a 0 7px, transparent 7px 9px) 10px 0 / 50px 22px no-repeat,
+    linear-gradient(90deg, #c4a882 0 9px, transparent 9px 11px) 19px 0 / 50px 22px no-repeat,
+    linear-gradient(90deg, #8899bb 0 6px, transparent 6px 8px) 30px 0 / 50px 22px no-repeat,
+    linear-gradient(90deg, var(--ink) 0 8px, transparent 8px 10px) 38px 0 / 50px 22px no-repeat,
+    linear-gradient(90deg, #d4c4a8 0 7px, transparent 7px 9px) 0 28px / 50px 22px no-repeat,
+    linear-gradient(90deg, #e8a0b4 0 9px, transparent 9px 11px) 9px 28px / 50px 22px no-repeat,
+    linear-gradient(90deg, #8899bb 0 8px, transparent 8px 10px) 20px 28px / 50px 22px no-repeat,
+    linear-gradient(90deg, #7a9e7a 0 6px, transparent 6px 8px) 30px 28px / 50px 22px no-repeat,
+    linear-gradient(90deg, #c4a882 0 10px, transparent 10px 12px) 38px 28px / 50px 22px no-repeat;
+}
+
+.nav-icon-trees {
+  height: 64px;
+  background:
+    radial-gradient(ellipse 11px 15px at 14px 26px, #6b9e6b 99%, transparent),
+    linear-gradient(#8b6914, #8b6914) 12px 38px / 4px 16px no-repeat,
+    radial-gradient(ellipse 13px 17px at 36px 22px, #5a8a5a 99%, transparent),
+    linear-gradient(#7a5c12, #7a5c12) 34px 36px / 5px 18px no-repeat,
+    radial-gradient(ellipse 10px 14px at 54px 28px, #7aad7a 99%, transparent),
+    linear-gradient(#8b6914, #8b6914) 52px 40px / 4px 14px no-repeat,
+    linear-gradient(rgba(17, 17, 17, 0.15), rgba(17, 17, 17, 0.15)) 2px 56px / 64px 3px no-repeat;
+}
+
+.nav-icon-tower {
+  height: 68px;
+}
+.nav-icon-tower::before {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 48px solid var(--ink);
+  opacity: 0.9;
+}
+.nav-icon-tower::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 48px;
+  background:
+    repeating-linear-gradient(
+      165deg,
+      transparent 0 6px,
+      rgba(255, 255, 255, 0.55) 6px 7px,
+      transparent 7px 14px
+    ),
+    repeating-linear-gradient(
+      -165deg,
+      transparent 0 6px,
+      rgba(255, 255, 255, 0.55) 6px 7px,
+      transparent 7px 14px
+    );
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  pointer-events: none;
+}
+.nav-icon-tower .icon-signal {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--pink);
+  border-color: var(--pink) transparent transparent transparent;
+  border-radius: 50% 50% 0 0;
+  transform: rotate(-45deg);
+  opacity: 0.85;
+  box-shadow:
+    -6px -6px 0 -4px transparent,
+    -6px -6px 0 -2px var(--pink);
+}
+.nav-icon-tower .icon-signal::before,
+.nav-icon-tower .icon-signal::after {
+  content: '';
+  position: absolute;
+  border: 2px solid var(--pink);
+  border-color: var(--pink) transparent transparent transparent;
+  border-radius: 50% 50% 0 0;
+  transform: rotate(0deg);
+}
+.nav-icon-tower .icon-signal::before {
+  top: -8px;
+  left: -8px;
+  width: 14px;
+  height: 14px;
+  opacity: 0.7;
+}
+.nav-icon-tower .icon-signal::after {
+  top: -14px;
+  left: -14px;
+  width: 8px;
+  height: 8px;
+  opacity: 0.5;
+}
 
 .nav-card-en {
   font-size: 0.7rem; letter-spacing: 0.1em;
@@ -374,8 +617,11 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   font-weight: 400; line-height: 1.6; margin-top: 4px;
 }
 .nav-card-arrow {
-  position: absolute; bottom: 24px; right: 24px;
-  font-size: 1rem; color: var(--ink-faint);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 1rem;
+  color: var(--ink-faint);
   transition: all 0.2s;
 }
 .nav-card:hover .nav-card-arrow { transform: translateX(4px); color: var(--ink); }
@@ -773,6 +1019,12 @@ html[lang="en"] .countdown-label-row-en { display: block; }
     grid-template-areas: "about" "games" "archive" "wilds" "contact";
   }
   .nav-card { padding: 20px; }
+  .nav-card-icon { width: 56px; }
+  .nav-icon-notepad { height: 54px; }
+  .nav-icon-gamepad { height: 50px; }
+  .nav-icon-bookshelf { height: 58px; }
+  .nav-icon-trees { height: 54px; }
+  .nav-icon-tower { height: 58px; }
   .rec-slide { padding: 18px 48px 18px 16px; }
   .rec-slide-thumb { width: 72px; height: 72px; font-size: 0.72rem; }
   .rec-slide-title { font-size: 0.95rem; }
@@ -929,58 +1181,73 @@ html[lang="en"] .countdown-label-row-en { display: block; }
     <div class="nav-grid">
 
       <a class="nav-card area-about" href="about.html">
-        <span class="nav-card-en">About Us</span>
-        <span class="nav-card-zh">
-          <span class="lang-zh-inline">异味须知</span>
-          <span class="lang-en-inline">About Us</span>
-        </span>
-        <span class="nav-card-desc lang-zh">我们是谁，我们在做什么，异味是从哪里传出来的？</span>
-        <span class="nav-card-desc lang-en">Who we are, what we do, and where the smell comes from.</span>
-        <span class="nav-card-arrow">→</span>
+        <div class="nav-card-body">
+          <span class="nav-card-en">About Us</span>
+          <span class="nav-card-zh">
+            <span class="lang-zh-inline">异味须知</span>
+            <span class="lang-en-inline">About Us</span>
+          </span>
+          <span class="nav-card-desc lang-zh">我们是谁，我们在做什么，异味是从哪里传出来的？</span>
+          <span class="nav-card-desc lang-en">Who we are, what we do, and where the smell comes from.</span>
+          <span class="nav-card-arrow">→</span>
+        </div>
+        <span class="nav-card-icon nav-icon-notepad" aria-hidden="true"><span class="icon-binding"></span><span class="icon-lines"></span></span>
       </a>
 
       <a class="nav-card area-games" href="#">
-        <span class="nav-card-en">Supported Games</span>
-        <span class="nav-card-zh">
-          <span class="lang-zh-inline">合作游戏</span>
-          <span class="lang-en-inline">Supported Games</span>
-        </span>
-        <span class="nav-card-desc lang-zh">异味优选，不一定是完美的精品，但一定散发异味</span>
-        <span class="nav-card-desc lang-en">Not necessarily flawless, but always unmistakably weird.</span>
-        <span class="nav-card-arrow">→</span>
+        <div class="nav-card-body">
+          <span class="nav-card-en">Supported Games</span>
+          <span class="nav-card-zh">
+            <span class="lang-zh-inline">合作游戏</span>
+            <span class="lang-en-inline">Supported Games</span>
+          </span>
+          <span class="nav-card-desc lang-zh">异味优选，不一定是完美的精品，但一定散发异味</span>
+          <span class="nav-card-desc lang-en">Not necessarily flawless, but always unmistakably weird.</span>
+          <span class="nav-card-arrow">→</span>
+        </div>
+        <span class="nav-card-icon nav-icon-gamepad" aria-hidden="true"></span>
       </a>
 
       <a class="nav-card area-archive" href="archive.html">
-        <span class="nav-card-en">Weird Gems Archives</span>
-        <span class="nav-card-zh">
-          <span class="lang-zh-inline">异味档案</span>
-          <span class="lang-en-inline">Weird Gems Archives</span>
-        </span>
-        <span class="nav-card-desc lang-zh">铁鼠也啃噬不尽的独游文字记录，采访和测评都在这里</span>
-        <span class="nav-card-desc lang-en">Interviews and reviews that even Tesso can't chew through.</span>
-        <span class="nav-card-arrow">→</span>
+        <div class="nav-card-body">
+          <span class="nav-card-en">Weird Gems Archives</span>
+          <span class="nav-card-zh">
+            <span class="lang-zh-inline">异味档案</span>
+            <span class="lang-en-inline">Weird Gems Archives</span>
+          </span>
+          <span class="nav-card-desc lang-zh">铁鼠也啃噬不尽的独游文字记录，采访和测评都在这里</span>
+          <span class="nav-card-desc lang-en">Interviews and reviews that even the iron rat can't chew through.</span>
+          <span class="nav-card-arrow">→</span>
+        </div>
+        <span class="nav-card-icon nav-icon-bookshelf" aria-hidden="true"></span>
       </a>
 
       <a class="nav-card area-wilds" href="forest.html">
-        <span class="nav-card-en">The Humid Wilds</span>
-        <span class="nav-card-zh">
-          <span class="lang-zh-inline">异味林地</span>
-          <span class="lang-en-inline">The Humid Wilds</span>
-        </span>
-        <span class="nav-card-desc lang-zh">菌丝悄然蔓延，野菌即将破土而出……</span>
-        <span class="nav-card-desc lang-en">Mycelium spreads quietly. The mushrooms are almost here.</span>
-        <span class="nav-card-arrow">→</span>
+        <div class="nav-card-body">
+          <span class="nav-card-en">The Humid Wilds</span>
+          <span class="nav-card-zh">
+            <span class="lang-zh-inline">异味林地</span>
+            <span class="lang-en-inline">The Humid Wilds</span>
+          </span>
+          <span class="nav-card-desc lang-zh">菌丝悄然蔓延，野菌即将破土而出……</span>
+          <span class="nav-card-desc lang-en">Mycelium spreads quietly. The mushrooms are almost here.</span>
+          <span class="nav-card-arrow">→</span>
+        </div>
+        <span class="nav-card-icon nav-icon-trees" aria-hidden="true"></span>
       </a>
 
       <a class="nav-card area-contact" id="contactLink" href="https://difficult-snowshoe-651.notion.site/3757a80dce1180018e24f9f298233120">
-        <span class="nav-card-en">Contact</span>
-        <span class="nav-card-zh">
-          <span class="lang-zh-inline">信号联络</span>
-          <span class="lang-en-inline">Contact</span>
-        </span>
-        <span class="nav-card-desc lang-zh">想合作？信号接收器功率全开！</span>
-        <span class="nav-card-desc lang-en">Want to collab? Just want to say hello? </span>
-        <span class="nav-card-arrow">→</span>
+        <div class="nav-card-body">
+          <span class="nav-card-en">Contact</span>
+          <span class="nav-card-zh">
+            <span class="lang-zh-inline">信号联络</span>
+            <span class="lang-en-inline">Contact</span>
+          </span>
+          <span class="nav-card-desc lang-zh">想合作？信号接收器功率全开！</span>
+          <span class="nav-card-desc lang-en">Want to collab? Our signal receiver is wide open.</span>
+          <span class="nav-card-arrow">→</span>
+        </div>
+        <span class="nav-card-icon nav-icon-tower" aria-hidden="true"><span class="icon-signal"></span></span>
       </a>
 
     </div>
@@ -995,7 +1262,7 @@ html[lang="en"] .countdown-label-row-en { display: block; }
       <div class="side-profile-text">
         <div class="side-profile-name">
           <span class="lang-zh-inline">何异味……</span>
-          <span class="lang-en-inline">wtf</span>
+          <span class="lang-en-inline">What's the weird smell…</span>
         </div>
         <div class="side-profile-sub">
           <span class="lang-zh-inline">已收容 12 款异味游戏</span>
@@ -1004,37 +1271,7 @@ html[lang="en"] .countdown-label-row-en { display: block; }
       </div>
     </div>
 
-    <!-- 关注我们大色块入口 -->
-    <div class="side-card">
-      <div class="side-card-title">
-        <span class="lang-zh-inline">关注我们</span>
-        <span class="lang-en-inline">Find Us</span>
-      </div>
-      <div class="side-links">
-        <a class="side-btn btn-weibo" href="https://weibo.com/u/2416997860" target="_blank" rel="noopener">
-          <span class="lang-zh-inline">微博</span>
-          <span class="lang-en-inline">Weibo</span>
-        </a>
-        <a class="side-btn btn-gcores" href="https://www.gcores.com/users/523089/talks" target="_blank" rel="noopener">
-          <span class="lang-zh-inline">机核 Gcores</span>
-          <span class="lang-en-inline">Gcores</span>
-        </a>
-        <a class="side-btn btn-afdian" href="https://afdian.com/a/manwithouttalent" target="_blank" rel="noopener">
-          <span class="lang-zh-inline">☕️ 请我们喝杯咖啡或者吃盘萨莉亚意面</span>
-          <span class="lang-en-inline">☕️ 𝙵𝚞𝚎𝚕 𝚘𝚞𝚛 𝚗𝚎𝚡𝚝 𝚙𝚛𝚘𝚓𝚎𝚌𝚝 𝚠𝚒𝚝𝚑 𝚊 𝚌𝚘𝚏𝚏𝚎𝚎!</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- 可点击跳转的鸣谢按钮 -->
-    <a class="side-credit-btn" href="credits.html" id="creditLink">
-      <span>
-        <span class="lang-zh-inline"> 网站素材鸣谢</span>
-        <span class="lang-en-inline">Credits</span>
-      </span>
-      <span class="side-credit-arrow">→</span>
-    </a>
-
+    <!-- 内容推荐 -->
     <div class="side-card">
       <div class="side-card-title">
         <span class="lang-zh-inline">内容推荐</span>
@@ -1080,6 +1317,37 @@ html[lang="en"] .countdown-label-row-en { display: block; }
         <div class="rec-carousel-dots" id="recCarouselDots"></div>
       </div>
     </div>
+
+    <!-- 关注我们 -->
+    <div class="side-card">
+      <div class="side-card-title">
+        <span class="lang-zh-inline">关注我们</span>
+        <span class="lang-en-inline">Find Us</span>
+      </div>
+      <div class="side-links">
+        <a class="side-btn btn-weibo" href="https://weibo.com/u/2416997860" target="_blank" rel="noopener">
+          <span class="lang-zh-inline">微博</span>
+          <span class="lang-en-inline">Weibo</span>
+        </a>
+        <a class="side-btn btn-gcores" href="https://www.gcores.com/users/523089/talks" target="_blank" rel="noopener">
+          <span class="lang-zh-inline">机核 Gcores</span>
+          <span class="lang-en-inline">Gcores</span>
+        </a>
+        <a class="side-btn btn-afdian" href="https://afdian.com/a/manwithouttalent" target="_blank" rel="noopener">
+          <span class="lang-zh-inline">⚡ 爱发电支持</span>
+          <span class="lang-en-inline">⚡ Support via Afdian</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 网站素材鸣谢 -->
+    <a class="side-credit-btn" href="credits.html" id="creditLink">
+      <span>
+        <span class="lang-zh-inline">🎨 网站素材鸣谢</span>
+        <span class="lang-en-inline">🎨 Art Credits</span>
+      </span>
+      <span class="side-credit-arrow">→</span>
+    </a>
 
   </div>
 </div>
