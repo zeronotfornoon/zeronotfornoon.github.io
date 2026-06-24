@@ -622,10 +622,6 @@
     border-bottom: 1px solid rgba(106, 143, 110, 0.2);
     font-size: 0.88rem;
     color: #d8e4d0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
   }
   .sponsor-list li:last-child { border-bottom: none; }
   .sponsor-name { color: var(--pale-mushroom); font-weight: 600; }
@@ -654,8 +650,13 @@
   }
   .sponsor-link:hover { text-decoration: underline; }
 
-  .explore-modal { max-width: 460px; text-align: left; }
-  .explore-intro-text { text-align: left; font-size: 0.9rem; line-height: 1.85; }
+  .explore-modal { max-width: 460px; }
+  #exploreIntroModal .modal-title,
+  .explore-intro-text,
+  .explore-ps {
+    text-align: center;
+  }
+  .explore-intro-text { font-size: 0.9rem; line-height: 1.85; }
   .explore-ps {
     display: block;
     margin-top: 12px;
@@ -887,7 +888,7 @@
     <div id="sponsorContent">
       <div class="sponsor-loading">正在同步爱发电数据……</div>
     </div>
-    <button class="modal-btn" onclick="closeSponsorModal()">关闭</button>
+    <button class="modal-btn" type="button" onclick="closeSponsorModal()">返回林地</button>
   </div>
 </div>
 
@@ -1571,17 +1572,10 @@
       ul.className = 'sponsor-list';
       sponsors.forEach(function(s) {
         const li = document.createElement('li');
-        const nameSpan = document.createElement('span');
-        nameSpan.className = 'sponsor-name';
-        nameSpan.textContent = s.name || s.user_name || '匿名资助人';
-        li.appendChild(nameSpan);
-        const amt = s.amount || (s.all_sum_amount ? '累计 ¥' + s.all_sum_amount : '');
-        if (amt) {
-          const amtSpan = document.createElement('span');
-          amtSpan.className = 'sponsor-amount';
-          amtSpan.textContent = amt;
-          li.appendChild(amtSpan);
-        }
+        const idSpan = document.createElement('span');
+        idSpan.className = 'sponsor-name';
+        idSpan.textContent = s.id || s.user_id || s.name || s.user_name || '匿名资助人';
+        li.appendChild(idSpan);
         ul.appendChild(li);
       });
       container.innerHTML = '';
