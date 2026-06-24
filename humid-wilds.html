@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>异味林地 | The Humid Wilds</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;700&family=Press+Start+2P&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;700;900&family=Press+Start+2P&display=swap');
 
   :root {
     --bg: #0d110e;
@@ -17,9 +17,19 @@
     --text-dim: #7a9070;
     --panel: rgba(8, 12, 8, 0.72);
     --border: rgba(106, 143, 110, 0.45);
+    --label: #f4e9c9;
+    --label-accent: #e8d5a8;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .field-label {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 700;
+    color: var(--label);
+    letter-spacing: 0.08em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  }
 
   body {
     background: var(--bg);
@@ -108,7 +118,7 @@
     max-width: 720px;
     width: 100%;
     margin: 0 auto;
-    padding: 24px 20px calc(118px + env(safe-area-inset-bottom));
+    padding: 24px 20px calc(148px + env(safe-area-inset-bottom));
     animation: fadeIn 1.2s ease;
   }
   @keyframes fadeIn {
@@ -157,10 +167,15 @@
     color: #d8e4d0;
     margin-bottom: 4px;
   }
-  .weather-label { color: var(--text-dim); }
+  .weather-label {
+    font-size: 0.95rem;
+    color: var(--label);
+  }
   .weather-value {
-    font-weight: 600;
-    color: var(--pale-mushroom);
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 700;
+    color: var(--label-accent);
+    font-size: 1rem;
   }
   .weather-icon { margin-right: 6px; }
 
@@ -222,8 +237,16 @@
     margin-bottom: 6px;
     color: #d8e4d0;
   }
-  .stat-name { color: var(--text-dim); }
-  .stat-pct { color: var(--pale-mushroom); font-weight: 600; }
+  .stat-name {
+    font-size: 0.95rem;
+    color: var(--label);
+  }
+  .stat-pct {
+    font-family: 'Noto Sans SC', sans-serif;
+    color: var(--label-accent);
+    font-weight: 700;
+    font-size: 1rem;
+  }
   .stat-bar {
     height: 10px;
     background: rgba(0, 0, 0, 0.35);
@@ -277,48 +300,154 @@
     left: 0;
     right: 0;
     z-index: 10;
-    background: rgba(8, 12, 8, 0.92);
+    background: rgba(5, 8, 5, 0.94);
     border-top: 1px solid var(--border);
-    backdrop-filter: blur(8px);
-    padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+    backdrop-filter: blur(10px);
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
   }
   .member-card-inner {
     max-width: 720px;
     width: 100%;
     margin: 0 auto;
     display: flex;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .id-card {
+    flex: 1;
+    min-width: 0;
+    border: 2px solid rgba(106, 143, 110, 0.55);
+    border-radius: 8px;
+    background:
+      repeating-linear-gradient(135deg, rgba(106, 143, 110, 0.04) 0px, rgba(106, 143, 110, 0.04) 2px, transparent 2px, transparent 8px),
+      linear-gradient(160deg, rgba(18, 28, 18, 0.95) 0%, rgba(10, 16, 10, 0.98) 100%);
+    box-shadow: inset 0 0 0 1px rgba(200, 169, 110, 0.12), 0 4px 16px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    position: relative;
+  }
+  .id-card.manager {
+    border-color: rgba(200, 169, 110, 0.65);
+    box-shadow: inset 0 0 0 1px rgba(200, 169, 110, 0.25), 0 4px 20px rgba(200, 169, 110, 0.12);
+  }
+  .id-card::before, .id-card::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(200, 169, 110, 0.35);
+    pointer-events: none;
+  }
+  .id-card::before { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+  .id-card::after { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+  .id-card-header {
+    display: flex;
     align-items: center;
-    gap: 14px;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px 6px;
+    border-bottom: 1px solid rgba(106, 143, 110, 0.35);
+    background: rgba(0, 0, 0, 0.2);
   }
-  .member-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--moss);
-    flex-shrink: 0;
-  }
-  .member-info { flex: 1; min-width: 0; }
-  .member-name {
+  .id-card-brand {
     font-family: 'Noto Sans SC', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #f4e9c9;
-    margin-bottom: 2px;
+    font-weight: 900;
+    font-size: 0.82rem;
+    color: var(--label);
+    letter-spacing: 0.12em;
   }
-  .member-tag {
-    font-size: 0.75rem;
-    color: var(--text-dim);
+  .id-card-type {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: var(--label-accent);
     letter-spacing: 0.06em;
+    text-align: right;
+    line-height: 1.35;
+  }
+  .id-card.manager .id-card-type {
+    color: #f0c878;
+    text-shadow: 0 0 8px rgba(200, 169, 110, 0.35);
+  }
+  .id-card-body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+  }
+  .id-card-photo-wrap {
+    flex-shrink: 0;
+    padding: 3px;
+    border: 2px solid rgba(106, 143, 110, 0.5);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.25);
+  }
+  .id-card-photo {
+    width: 52px;
+    height: 64px;
+    object-fit: cover;
+    display: block;
+    border-radius: 2px;
+  }
+  .id-card-details {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .id-card-field {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+  .id-card-field .field-label {
+    font-size: 0.72rem;
+    color: var(--label-accent);
+    flex-shrink: 0;
+    min-width: 42px;
+  }
+  .id-card-value {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 700;
+    color: var(--label);
+    font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .id-card-no {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.04em;
+  }
+  .member-logout-btn {
+    flex-shrink: 0;
+    align-self: center;
+    background: rgba(58, 92, 62, 0.3);
+    border: 1px solid var(--moss);
+    color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.78rem;
+    padding: 10px 12px;
+    min-height: 44px;
+    cursor: pointer;
+    border-radius: 6px;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .member-logout-btn:hover {
+    border-color: var(--pale-moss);
+    color: #f4e9c9;
+    background: rgba(58, 92, 62, 0.5);
   }
 
-  /* ── 音乐开关 ── */
-  .music-toggle {
+  .home-link, .music-toggle {
     position: fixed;
-    top: calc(12px + env(safe-area-inset-top));
-    right: calc(12px + env(safe-area-inset-right));
     z-index: 20;
-    background: rgba(8, 12, 8, 0.8);
+    background: rgba(8, 12, 8, 0.85);
     border: 1px solid var(--moss);
     color: var(--text);
     font-family: 'Noto Sans SC', sans-serif;
@@ -328,11 +457,24 @@
     border-radius: 4px;
     letter-spacing: 0.06em;
     transition: all 0.2s;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
-  .music-toggle:hover {
+  .home-link {
+    top: calc(12px + env(safe-area-inset-top));
+    left: calc(12px + env(safe-area-inset-left));
+  }
+  .music-toggle {
+    top: calc(12px + env(safe-area-inset-top));
+    right: calc(12px + env(safe-area-inset-right));
+  }
+  .home-link:hover, .music-toggle:hover {
     border-color: var(--pale-moss);
     color: #f4e9c9;
   }
+
+  /* ── 音乐开关（样式见 .home-link, .music-toggle） ── */
 
   /* ── 弹窗 ── */
   .modal-overlay {
@@ -408,6 +550,22 @@
   }
   .avatar-option:hover { opacity: 1; }
 
+  .input-group { margin-bottom: 14px; text-align: left; }
+  .input-label {
+    display: block;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--label);
+    margin-bottom: 6px;
+    letter-spacing: 0.06em;
+  }
+  .input-hint {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    margin-top: 5px;
+    line-height: 1.5;
+  }
   .name-input {
     width: 100%;
     background: rgba(0, 0, 0, 0.35);
@@ -417,7 +575,6 @@
     font-size: 0.9rem;
     padding: 10px 14px;
     border-radius: 4px;
-    margin-bottom: 20px;
     outline: none;
   }
   .name-input:focus { border-color: var(--pale-moss); }
@@ -552,7 +709,7 @@
 
   @media (max-width: 600px) {
     .forest-bg { background-position: center 85%; }
-    .wilds-wrap { padding: 16px 14px calc(108px + env(safe-area-inset-bottom)); }
+    .wilds-wrap { padding: 16px 14px calc(138px + env(safe-area-inset-bottom)); }
     .panel { padding: 18px 16px; margin-bottom: 12px; }
     .wilds-title { font-size: clamp(1.35rem, 6vw, 1.85rem); }
     .weather-row { font-size: 0.88rem; }
@@ -564,15 +721,17 @@
     .modal { padding: 22px 18px; max-height: calc(100vh - 32px); }
     .sponsor-modal { max-height: calc(100vh - 40px); }
     .avatar-option { width: 60px; height: 60px; }
-    .member-card-inner { gap: 10px; }
-    .member-avatar { width: 42px; height: 42px; }
-    .member-name { font-size: 0.88rem; }
-    .music-toggle { font-size: 0.7rem; padding: 7px 12px; }
+    .id-card-photo { width: 46px; height: 56px; }
+    .id-card-type { font-size: 0.66rem; }
+    .member-logout-btn { font-size: 0.72rem; padding: 8px 10px; }
+    .home-link, .music-toggle { font-size: 0.7rem; padding: 7px 12px; }
   }
 
   @media (max-width: 360px) {
     .action-btn { font-size: 0.78rem; padding: 11px 6px; }
     .action-btn.cooldown { font-size: 0.72rem; line-height: 1.35; }
+    .id-card-field .field-label { min-width: 36px; font-size: 0.66rem; }
+    .id-card-value { font-size: 0.82rem; }
   }
 </style>
 </head>
@@ -582,6 +741,7 @@
   <div class="mist-layer"></div>
 </div>
 
+<a class="home-link" href="https://zeronotfornoon.github.io/" rel="noopener">← 返回主页</a>
 <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">♪ 音乐开启</button>
 
 <audio id="forestAudio" loop preload="auto">
@@ -594,7 +754,7 @@
     <div class="wilds-subtitle">THE HUMID WILDS</div>
 
     <div class="weather-row">
-      <span class="weather-label">当前天气</span>
+      <span class="weather-label field-label">当前天气</span>
       <span class="weather-value" id="weatherDisplay">
         <span class="weather-icon" id="weatherIcon">☀</span>
         <span id="weatherText">晴</span>
@@ -615,7 +775,7 @@
 
     <div class="stat-row">
       <div class="stat-header">
-        <span class="stat-name">湿度</span>
+        <span class="stat-name field-label">湿度</span>
         <span class="stat-pct" id="humidityPct">20%</span>
       </div>
       <div class="stat-bar">
@@ -624,7 +784,7 @@
     </div>
     <div class="stat-row">
       <div class="stat-header">
-        <span class="stat-name">菌丝活力</span>
+        <span class="stat-name field-label">菌丝活力</span>
         <span class="stat-pct" id="myceliumPct">20%</span>
       </div>
       <div class="stat-bar">
@@ -645,11 +805,28 @@
 
 <div class="member-card-bar" id="memberCardBar" style="display:none;">
   <div class="member-card-inner">
-    <img class="member-avatar" id="memberAvatar" src="" alt="头像">
-    <div class="member-info">
-      <div class="member-name" id="memberName"></div>
-      <div class="member-tag">异味林地访客会员卡</div>
+    <div class="id-card" id="idCard">
+      <div class="id-card-header">
+        <span class="id-card-brand">异味林地 · MEMBER ID</span>
+        <span class="id-card-type field-label" id="memberTag">异味林地访客会员卡</span>
+      </div>
+      <div class="id-card-body">
+        <div class="id-card-photo-wrap">
+          <img class="id-card-photo" id="memberAvatar" src="" alt="头像">
+        </div>
+        <div class="id-card-details">
+          <div class="id-card-field">
+            <span class="field-label">姓名</span>
+            <span class="id-card-value" id="memberName"></span>
+          </div>
+          <div class="id-card-field">
+            <span class="field-label">会员号</span>
+            <span class="id-card-value id-card-no" id="memberNoDisplay"></span>
+          </div>
+        </div>
+      </div>
     </div>
+    <button class="member-logout-btn" type="button" onclick="logoutMember()">退出</button>
   </div>
 </div>
 
@@ -657,7 +834,7 @@
 <div class="modal-overlay" id="createCardModal">
   <div class="modal">
     <div class="modal-title">请创建会员卡</div>
-    <div class="modal-desc">选择你的林地形象，留下一个名字吧</div>
+    <div class="modal-desc">选择你的林地形象，留下名字与会员号</div>
     <div class="avatar-picker" id="avatarPicker">
       <div class="avatar-option selected" data-avatar="character1.jpg" onclick="selectAvatar(this)">
         <img src="character1.jpg" alt="角色1">
@@ -669,7 +846,15 @@
         <img src="character3.jpg" alt="角色3">
       </div>
     </div>
-    <input class="name-input" id="nameInput" type="text" placeholder="输入你的名字" maxlength="20">
+    <div class="input-group">
+      <label class="input-label" for="nameInput">你的名字</label>
+      <input class="name-input" id="nameInput" type="text" placeholder="输入你的名字" maxlength="20">
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="memberNoInput">会员号</label>
+      <input class="name-input" id="memberNoInput" type="text" placeholder="输入会员号（可自由填写数字）" maxlength="32">
+      <div class="input-hint">可填写任意数字；管理人凭专属会员号登录。</div>
+    </div>
     <button class="modal-btn" id="createCardBtn" onclick="createCard()">创建会员卡</button>
   </div>
 </div>
@@ -908,13 +1093,33 @@
     selectedAvatar = el.dataset.avatar;
   }
 
+  function resetCreateCardForm() {
+    document.getElementById('nameInput').value = '';
+    document.getElementById('memberNoInput').value = '';
+    selectedAvatar = 'character1.jpg';
+    document.querySelectorAll('.avatar-option').forEach(function(a) {
+      a.classList.toggle('selected', a.dataset.avatar === 'character1.jpg');
+    });
+  }
+
+  function isManagerCode(code) {
+    return code.trim() === MANAGER_CODE;
+  }
+
   function createCard() {
     const name = document.getElementById('nameInput').value.trim();
+    const memberNo = document.getElementById('memberNoInput').value.trim();
     if (!name) {
       document.getElementById('nameInput').focus();
       return;
     }
-    const card = { name, avatar: selectedAvatar };
+    const isManager = isManagerCode(memberNo);
+    const card = {
+      name: name,
+      avatar: selectedAvatar,
+      memberNo: memberNo || String(Math.floor(100000 + Math.random() * 900000)),
+      isManager: isManager
+    };
     localStorage.setItem(CARD_KEY, JSON.stringify(card));
     document.getElementById('createCardModal').classList.add('hidden');
     showMemberCard(card);
@@ -922,15 +1127,37 @@
   }
 
   function showMemberCard(card) {
+    const idCard = document.getElementById('idCard');
     document.getElementById('memberAvatar').src = card.avatar;
     document.getElementById('memberName').textContent = card.name;
+    document.getElementById('memberNoDisplay').textContent = card.memberNo || '—';
+    document.getElementById('memberTag').textContent = card.isManager
+      ? '异味林地管理人'
+      : '异味林地访客会员卡';
+    idCard.classList.toggle('manager', card.isManager);
     document.getElementById('memberCardBar').style.display = 'block';
+  }
+
+  function logoutMember() {
+    localStorage.removeItem(CARD_KEY);
+    document.getElementById('memberCardBar').style.display = 'none';
+    resetCreateCardForm();
+    document.getElementById('createCardModal').classList.remove('hidden');
   }
 
   function checkMemberCard() {
     const saved = localStorage.getItem(CARD_KEY);
     if (saved) {
-      showMemberCard(JSON.parse(saved));
+      const card = JSON.parse(saved);
+      if (!card.memberNo) {
+        card.memberNo = String(Math.floor(100000 + Math.random() * 900000));
+        localStorage.setItem(CARD_KEY, JSON.stringify(card));
+      }
+      if (card.isManager == null && isManagerCode(card.memberNo || '')) {
+        card.isManager = true;
+        localStorage.setItem(CARD_KEY, JSON.stringify(card));
+      }
+      showMemberCard(card);
       document.getElementById('createCardModal').classList.add('hidden');
       tryPlayMusic();
     } else {
