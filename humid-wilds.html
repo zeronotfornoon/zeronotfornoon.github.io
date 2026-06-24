@@ -485,6 +485,71 @@
   }
   .sponsor-link:hover { text-decoration: underline; }
 
+  .explore-modal { max-width: 460px; text-align: left; }
+  .explore-intro-text { text-align: left; font-size: 0.9rem; line-height: 1.85; }
+  .explore-ps {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: var(--mushroom);
+    line-height: 1.7;
+  }
+  .explore-result-type {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 700;
+    color: #e8d5a8;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+  }
+  .explore-items {
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(106, 143, 110, 0.35);
+    border-radius: 4px;
+  }
+  .explore-items-title {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #f4e9c9;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+  }
+  .explore-item-row {
+    font-size: 0.88rem;
+    color: #d8e4d0;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(106, 143, 110, 0.15);
+  }
+  .explore-item-row:last-child { border-bottom: none; }
+  .explore-empty-note { font-size: 0.85rem; color: var(--text-dim); font-style: italic; }
+  .modal-btn-secondary {
+    background: transparent;
+    margin-top: 10px;
+    border-color: rgba(106, 143, 110, 0.45);
+  }
+  .modal-btn-secondary:hover { background: rgba(58, 92, 62, 0.2); }
+  .backpack-items {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: #d8e4d0;
+    line-height: 1.75;
+    text-align: left;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+  .backpack-item-tag {
+    display: inline-block;
+    margin: 3px 6px 3px 0;
+    padding: 3px 8px;
+    background: rgba(58, 92, 62, 0.35);
+    border: 1px solid rgba(106, 143, 110, 0.35);
+    border-radius: 3px;
+    font-size: 0.78rem;
+  }
+  .backpack-empty-hint { font-size: 0.8rem; color: var(--text-dim); margin-top: 6px; }
+
   @media (max-width: 600px) {
     .forest-bg { background-position: center 85%; }
     .wilds-wrap { padding: 16px 14px calc(108px + env(safe-area-inset-bottom)); }
@@ -542,7 +607,7 @@
       <button class="action-btn" id="btnCompost" onclick="doCompost()">堆肥</button>
       <button class="action-btn" onclick="showComingSoon('捡果子')">捡果子</button>
       <button class="action-btn" onclick="showComingSoon('动物小屋')">动物小屋</button>
-      <button class="action-btn" onclick="showComingSoon('探索林地')">探索林地</button>
+      <button class="action-btn" id="btnExplore" onclick="openExplore()">探索林地</button>
       <button class="action-btn" onclick="showWildMushroom()">采野菌</button>
     </div>
 
@@ -574,6 +639,7 @@
     <div class="backpack-info">
       背包：<span class="backpack-count" id="backpackCount">0</span> / <span id="backpackMax">50</span>
     </div>
+    <div class="backpack-items" id="backpackItems"><span class="backpack-empty-hint">背包还是空的……</span></div>
   </div>
 </div>
 
@@ -628,12 +694,40 @@
   </div>
 </div>
 
+<div class="modal-overlay hidden" id="exploreIntroModal">
+  <div class="modal explore-modal">
+    <div class="modal-title">探索须知</div>
+    <div class="modal-text explore-intro-text">
+      林地深处似乎有什么在等着你……<br><br>
+      出发后需要等待一小时，关掉页面也没关系，回来再看收获就行。<br>
+      一天只能探索一次，好好珍惜机会。<br>
+      <span class="explore-ps">PS：爱护林地，人人有责，请勿随意使用大规模爆破法术或道具，违者没收探索林地所得！</span>
+    </div>
+    <button class="modal-btn" type="button" onclick="startExplore()">开始探索</button>
+    <button class="modal-btn modal-btn-secondary" type="button" onclick="closeExploreIntro()">先不去了</button>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="exploreResultModal">
+  <div class="modal explore-modal">
+    <div class="modal-title">探索收获</div>
+    <div class="explore-result-type" id="exploreResultType"></div>
+    <div class="modal-text" id="exploreResultText"></div>
+    <div class="explore-items" id="exploreResultItems"></div>
+    <button class="modal-btn" type="button" onclick="claimExplore()">收下收获</button>
+  </div>
+</div>
+
 <script>
   const STORAGE_KEY = 'humidWildsState';
   const CARD_KEY = 'humidWildsCard';
   const MUSIC_KEY = 'humidWildsMusic';
   const BACKPACK_MAX = 50;
   const COMPOST_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+  const WEATHER_REFRESH_MS = 24 * 60 * 60 * 1000;
+  const EXPLORE_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+  const EXPLORE_DURATION_MS = 60 * 60 * 1000;
+  const MANAGER_CODE = 'Kakihara000';
 
   // 爱发电用户 ID（manwithouttalent）
   // 若 API 无法直接调用，可改用同目录下的 sponsors.json 作为备用数据源
@@ -650,6 +744,8 @@
   let selectedAvatar = 'character1.jpg';
   let state = null;
   let compostTimer = null;
+  let weatherTimer = null;
+  let exploreTimer = null;
 
   function generateForest() {
     const bg = document.getElementById('forestBg');
@@ -711,32 +807,69 @@
     return Math.min(max, Math.max(min, val));
   }
 
+  function migrateWeatherState(state) {
+    const today = todayStr();
+    if (!state.weatherDate) state.weatherDate = state.date || today;
+    if (state.lastWeatherAt == null) {
+      state.lastWeatherAt = (state.date && state.date === today) ? Date.now() : 0;
+    }
+    if (state.date) delete state.date;
+  }
+
+  function needsWeatherRefresh() {
+    const today = todayStr();
+    if (state.weatherDate !== today) return true;
+    if (!state.lastWeatherAt) return true;
+    return Date.now() - state.lastWeatherAt >= WEATHER_REFRESH_MS;
+  }
+
+  function refreshWeather() {
+    state.weather = pickWeather();
+    state.humidity = calcBaseHumidity(state.weather);
+    state.weatherDate = todayStr();
+    state.lastWeatherAt = Date.now();
+  }
+
+  function startWeatherWatch() {
+    if (weatherTimer) clearInterval(weatherTimer);
+    weatherTimer = setInterval(function() {
+      if (needsWeatherRefresh()) {
+        refreshWeather();
+        saveState();
+        renderState();
+      }
+    }, 60000);
+  }
+
   function initState() {
     const saved = localStorage.getItem(STORAGE_KEY);
-    const today = todayStr();
 
     if (saved) {
       state = JSON.parse(saved);
-      migrateCompostState(state, today);
-      if (state.date !== today) {
-        state.date = today;
-        state.weather = pickWeather();
-        state.humidity = calcBaseHumidity(state.weather);
-      }
+      migrateCompostState(state, todayStr());
+      migrateWeatherState(state);
+      migrateExploreState(state);
+      if (needsWeatherRefresh()) refreshWeather();
     } else {
       const weather = pickWeather();
       state = {
-        date: today,
+        weatherDate: todayStr(),
+        lastWeatherAt: Date.now(),
         weather: weather,
         humidity: calcBaseHumidity(weather),
         mycelium: randomAround(20, 3),
         lastCompostAt: 0,
+        backpack: {},
         backpackCount: 0,
-        backpackMax: BACKPACK_MAX
+        backpackMax: BACKPACK_MAX,
+        exploreStartedAt: 0,
+        lastExploreAt: 0,
+        exploreResult: null
       };
     }
     saveState();
     renderState();
+    startWeatherWatch();
   }
 
   function pickWeather() {
@@ -764,8 +897,9 @@
     document.getElementById('myceliumBar').style.width = state.mycelium + '%';
     document.getElementById('backpackCount').textContent = state.backpackCount;
     document.getElementById('backpackMax').textContent = state.backpackMax;
-
+    renderBackpack();
     renderCompostButton();
+    renderExploreButton();
   }
 
   function selectAvatar(el) {
@@ -875,6 +1009,258 @@
 
   function showWildMushroom() {
     showAlert('野菌还未破土而出，请耐心等待……');
+  }
+
+  const EXPLORE_OUTCOMES = [
+    { weight: 28, type: '空手而归', items: {}, texts: [
+      '转了一圈，什么都没找到，只带回了一身泥。',
+      '你被林地里的猛兽追赶，不得已之下使用了召唤火球的卷轴。命保住了，但因为破坏林地生态，你辛苦半天捡到的一兜浆果都被没收了。',
+      '你好不容易采了几株草药，想拿去找人换钱，路过河边脚下一滑，摔进了河里，爬上来后发现草药都让河水冲走了。',
+      '你捡了满满一筐野果，累得要死，想着先在树下打个盹再回去，一觉醒来发现野果都让林地里的小动物瓜分了。',
+      '你捡到了几根树枝，回去时却迷路了，不得已把树枝放在地上当记号。等你走出林地，那几根树枝早就让风刮跑了，捡也捡不回来。',
+      '你又累又渴，吃了颗没见过的浆果，没走多久便恶心想吐，被人抬出了林地，什么都没得到。'
+    ]},
+    { weight: 12, type: '捡到树枝', items: { '树枝': 2 }, texts: [
+      '你在不知道是什么动物的巢穴旁边捡到了几根结实的树枝。',
+      '就在你以为今天只能空手而归时，风吹落了几根树枝。',
+      '你跟在小动物后面，捡了几根它们不要的树枝。'
+    ]},
+    { weight: 5, type: '摘到浆果', items: { '浆果': 3 }, texts: [
+      '你运气很好，找到了浆果丛，摘到了好几颗浆果。小动物一定喜欢。'
+    ]},
+    { weight: 6, type: '捡到浆果', items: { '浆果': 2 }, texts: [
+      '鸟儿从你头顶飞过，或许是看你累了大半天，于心不忍，扔了两颗浆果给你。'
+    ]},
+    { weight: 7, type: '捡到浆果', items: { '浆果': 1 }, texts: [
+      '你捡到了一颗不知道是人还是动物吃剩下的浆果。'
+    ]},
+    { weight: 3, type: '捡到羽毛', items: { '蓝色羽毛': 1 }, texts: ['你在草丛中捡到了根蓝色的羽毛。'] },
+    { weight: 3, type: '捡到羽毛', items: { '红色羽毛': 1 }, texts: ['你在草丛中捡到了根红色的羽毛。'] },
+    { weight: 3, type: '捡到羽毛', items: { '白色羽毛': 1 }, texts: ['你在草丛中捡到了根白色的羽毛。'] },
+    { weight: 3, type: '捡到羽毛', items: { '灰色羽毛': 1 }, texts: ['你在草丛中捡到了根灰色的羽毛。'] },
+    { weight: 3, type: '捡到羽毛', items: { '粉色羽毛': 1 }, texts: ['你在草丛中捡到了根粉色的羽毛。'] },
+    { weight: 1, type: '挖到宝石', items: { '蓝色宝石': 1 }, texts: ['你挖出了一颗蓝色宝石。'] },
+    { weight: 1, type: '挖到宝石', items: { '红色宝石': 1 }, texts: ['你挖出了一颗红色宝石。'] },
+    { weight: 1, type: '挖到宝石', items: { '白色宝石': 1 }, texts: ['你挖出了一颗白色宝石。'] },
+    { weight: 1, type: '挖到宝石', items: { '绿色宝石': 1 }, texts: ['你挖出了一颗绿色宝石。'] },
+    { weight: 1, type: '挖到宝石', items: { '粉色宝石': 1 }, texts: ['你挖出了一颗粉色宝石。'] },
+    { weight: 6, type: '捡到草药', items: { '草药': 2 }, texts: [
+      '林地的小动物生了病，慢吞吞地钻进树丛里找草药吃，你跟在后面，捡到了两株草药。'
+    ]},
+    { weight: 4, type: '捡到草药', items: { '草药': 1 }, texts: [
+      '不知道是谁走得太急，竟然掉了一株草药，让你捡到了。'
+    ]},
+    { weight: 4, type: '采到草药', items: { '草药': 1 }, texts: [
+      '路过河边，看到了熟悉的草药，赶紧摘下来放进了筐里。'
+    ]},
+    { weight: 4, type: '捡到草药', items: { '草药': 1 }, texts: [
+      '你发现了个树洞，伸手进去摸了摸，摸到了一株草药。'
+    ]}
+  ];
+
+  function migrateExploreState(state) {
+    if (!state.backpack) state.backpack = {};
+    if (state.exploreStartedAt == null) state.exploreStartedAt = 0;
+    if (state.lastExploreAt == null) state.lastExploreAt = 0;
+    if (state.exploreResult === undefined) state.exploreResult = null;
+    state.backpackCount = getBackpackTotal(state.backpack);
+  }
+
+  function getBackpackTotal(backpack) {
+    return Object.values(backpack).reduce(function(sum, n) { return sum + n; }, 0);
+  }
+
+  function renderBackpack() {
+    var container = document.getElementById('backpackItems');
+    if (!container) return;
+    var entries = Object.entries(state.backpack || {}).filter(function(e) { return e[1] > 0; });
+    if (entries.length === 0) {
+      container.innerHTML = '<span class="backpack-empty-hint">背包还是空的……</span>';
+      return;
+    }
+    container.innerHTML = entries
+      .sort(function(a, b) { return a[0].localeCompare(b[0], 'zh'); })
+      .map(function(e) { return '<span class="backpack-item-tag">' + e[0] + ' ×' + e[1] + '</span>'; })
+      .join('');
+  }
+
+  function rollExploreOutcome() {
+    var totalWeight = EXPLORE_OUTCOMES.reduce(function(s, o) { return s + o.weight; }, 0);
+    var roll = Math.random() * totalWeight;
+    for (var i = 0; i < EXPLORE_OUTCOMES.length; i++) {
+      var outcome = EXPLORE_OUTCOMES[i];
+      roll -= outcome.weight;
+      if (roll <= 0) {
+        return {
+          type: outcome.type,
+          items: Object.assign({}, outcome.items),
+          text: outcome.texts[Math.floor(Math.random() * outcome.texts.length)]
+        };
+      }
+    }
+    var fb = EXPLORE_OUTCOMES[0];
+    return { type: fb.type, items: Object.assign({}, fb.items), text: fb.texts[0] };
+  }
+
+  function isExploreActive() {
+    return state.exploreStartedAt > 0 && state.exploreResult;
+  }
+
+  function isExploreComplete() {
+    return isExploreActive() && Date.now() - state.exploreStartedAt >= EXPLORE_DURATION_MS;
+  }
+
+  function isExploring() {
+    return isExploreActive() && !isExploreComplete();
+  }
+
+  function canClaimExplore() {
+    return isExploreComplete();
+  }
+
+  function canStartExplore() {
+    if (isExploreActive()) return false;
+    if (!state.lastExploreAt) return true;
+    return Date.now() - state.lastExploreAt >= EXPLORE_COOLDOWN_MS;
+  }
+
+  function getExploreRemainMs() {
+    if (!isExploring()) return 0;
+    var remain = EXPLORE_DURATION_MS - (Date.now() - state.exploreStartedAt);
+    return remain > 0 ? remain : 0;
+  }
+
+  function getExploreCooldownRemainMs() {
+    if (!state.lastExploreAt) return 0;
+    var remain = EXPLORE_COOLDOWN_MS - (Date.now() - state.lastExploreAt);
+    return remain > 0 ? remain : 0;
+  }
+
+  function formatExploreRemain(ms) {
+    var totalSec = Math.ceil(ms / 1000);
+    var h = Math.floor(totalSec / 3600);
+    var m = Math.floor((totalSec % 3600) / 60);
+    if (h > 0) return h + '小时' + m + '分';
+    if (m > 0) return m + '分钟';
+    return totalSec + '秒';
+  }
+
+  function openExplore() {
+    if (canClaimExplore()) {
+      showExploreResult();
+      return;
+    }
+    if (isExploring()) {
+      showAlert('你还在林地深处探索，大约还需 ' + formatExploreRemain(getExploreRemainMs()) + ' 才能归来。');
+      return;
+    }
+    if (!canStartExplore()) {
+      showAlert('今天已经探索过了，' + formatExploreRemain(getExploreCooldownRemainMs()) + ' 后才能再次出发。');
+      return;
+    }
+    document.getElementById('exploreIntroModal').classList.remove('hidden');
+  }
+
+  function closeExploreIntro() {
+    document.getElementById('exploreIntroModal').classList.add('hidden');
+  }
+
+  function startExplore() {
+    if (!canStartExplore() || isExploreActive()) return;
+    state.exploreStartedAt = Date.now();
+    state.lastExploreAt = Date.now();
+    state.exploreResult = rollExploreOutcome();
+    saveState();
+    closeExploreIntro();
+    renderExploreButton();
+    showAlert('你踏上了探索林地的路途……一小时后再回来查看收获吧。');
+  }
+
+  function showExploreResult() {
+    if (!canClaimExplore()) return;
+    var result = state.exploreResult;
+    document.getElementById('exploreResultType').textContent = '【' + result.type + '】';
+    document.getElementById('exploreResultText').textContent = result.text;
+    var itemsBox = document.getElementById('exploreResultItems');
+    var itemEntries = Object.entries(result.items || {});
+    if (itemEntries.length === 0) {
+      itemsBox.innerHTML = '<div class="explore-empty-note">本次没有获得物品。</div>';
+    } else {
+      itemsBox.innerHTML = '<div class="explore-items-title">获得物品</div>' +
+        itemEntries.map(function(e) {
+          return '<div class="explore-item-row">' + e[0] + ' ×' + e[1] + '</div>';
+        }).join('');
+    }
+    document.getElementById('exploreResultModal').classList.remove('hidden');
+  }
+
+  function addToBackpack(items) {
+    var skipped = 0;
+    for (var name in items) {
+      var qty = items[name];
+      for (var i = 0; i < qty; i++) {
+        if (getBackpackTotal(state.backpack) >= state.backpackMax) {
+          skipped += qty - i;
+          break;
+        }
+        state.backpack[name] = (state.backpack[name] || 0) + 1;
+      }
+    }
+    state.backpackCount = getBackpackTotal(state.backpack);
+    return { skipped: skipped };
+  }
+
+  function claimExplore() {
+    if (!canClaimExplore()) return;
+    var result = state.exploreResult;
+    var overflowMsg = '';
+    if (result.items && Object.keys(result.items).length > 0) {
+      var packResult = addToBackpack(result.items);
+      if (packResult.skipped > 0) {
+        overflowMsg = '背包已满，有 ' + packResult.skipped + ' 件物品未能装入。';
+      }
+    }
+    state.exploreStartedAt = 0;
+    state.exploreResult = null;
+    saveState();
+    renderState();
+    document.getElementById('exploreResultModal').classList.add('hidden');
+    if (overflowMsg) showAlert(overflowMsg);
+  }
+
+  function renderExploreButton() {
+    var btn = document.getElementById('btnExplore');
+    if (!btn) return;
+    if (canClaimExplore()) {
+      btn.disabled = false;
+      btn.classList.remove('cooldown');
+      btn.textContent = '查看收获';
+      if (exploreTimer) { clearInterval(exploreTimer); exploreTimer = null; }
+      return;
+    }
+    if (isExploring()) {
+      btn.disabled = false;
+      btn.classList.add('cooldown');
+      btn.textContent = formatExploreRemain(getExploreRemainMs()) + '后归来';
+      if (!exploreTimer) {
+        exploreTimer = setInterval(function() {
+          if (canClaimExplore()) renderExploreButton();
+          else if (isExploring()) btn.textContent = formatExploreRemain(getExploreRemainMs()) + '后归来';
+          else renderExploreButton();
+        }, 30000);
+      }
+      return;
+    }
+    btn.disabled = !canStartExplore();
+    if (!canStartExplore()) {
+      btn.classList.add('cooldown');
+      btn.textContent = formatExploreRemain(getExploreCooldownRemainMs()) + '后可探索';
+      if (!exploreTimer) exploreTimer = setInterval(renderExploreButton, 30000);
+    } else {
+      btn.classList.remove('cooldown');
+      btn.textContent = '探索林地';
+      if (exploreTimer) { clearInterval(exploreTimer); exploreTimer = null; }
+    }
   }
 
   function showComingSoon(feature) {
