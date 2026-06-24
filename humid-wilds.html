@@ -118,7 +118,7 @@
     max-width: 720px;
     width: 100%;
     margin: 0 auto;
-    padding: 24px 20px calc(148px + env(safe-area-inset-bottom));
+    padding: 24px 20px calc(118px + env(safe-area-inset-bottom));
     animation: fadeIn 1.2s ease;
   }
   @keyframes fadeIn {
@@ -293,29 +293,22 @@
     font-weight: 600;
   }
 
-  /* ── 会员卡（底部固定） ── */
+  /* ── 会员卡（底部居中浮动） ── */
   .member-card-bar {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 10;
-    background: rgba(5, 8, 5, 0.94);
-    border-top: 1px solid var(--border);
-    backdrop-filter: blur(10px);
-    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    width: min(400px, calc(100vw - 28px));
+    padding: 0;
+    pointer-events: none;
   }
-  .member-card-inner {
-    max-width: 720px;
-    width: 100%;
-    margin: 0 auto;
-    display: flex;
-    align-items: stretch;
-    gap: 10px;
+  .member-card-bar .id-card {
+    pointer-events: auto;
   }
   .id-card {
-    flex: 1;
-    min-width: 0;
+    width: 100%;
     border: 2px solid rgba(106, 143, 110, 0.55);
     border-radius: 8px;
     background:
@@ -423,25 +416,24 @@
     letter-spacing: 0.04em;
   }
   .member-logout-btn {
-    flex-shrink: 0;
-    align-self: center;
-    background: rgba(58, 92, 62, 0.3);
-    border: 1px solid var(--moss);
-    color: var(--text);
+    display: block;
+    width: 100%;
+    margin-top: 2px;
+    background: transparent;
+    border: none;
+    border-top: 1px solid rgba(106, 143, 110, 0.25);
+    color: var(--text-dim);
     font-family: 'Noto Sans SC', sans-serif;
-    font-size: 0.78rem;
-    padding: 10px 12px;
-    min-height: 44px;
+    font-size: 0.72rem;
+    padding: 7px 12px;
     cursor: pointer;
-    border-radius: 6px;
-    letter-spacing: 0.06em;
-    transition: all 0.2s;
+    letter-spacing: 0.08em;
+    transition: color 0.2s, background 0.2s;
     -webkit-tap-highlight-color: transparent;
   }
   .member-logout-btn:hover {
-    border-color: var(--pale-moss);
     color: #f4e9c9;
-    background: rgba(58, 92, 62, 0.5);
+    background: rgba(58, 92, 62, 0.25);
   }
 
   .home-link, .music-toggle {
@@ -605,16 +597,42 @@
   /* ── 资助人列表弹窗 ── */
   .sponsor-modal {
     max-width: 480px;
-    max-height: 70vh;
+    max-height: min(85vh, calc(100vh - 32px));
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    text-align: center;
+  }
+  .sponsor-back-btn {
+    flex-shrink: 0;
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid rgba(106, 143, 110, 0.45);
+    color: var(--mushroom);
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .sponsor-back-btn:hover {
+    color: #f4e9c9;
+    border-color: var(--pale-moss);
+    background: rgba(58, 92, 62, 0.25);
+  }
+  #sponsorContent {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .sponsor-list {
     list-style: none;
-    overflow-y: auto;
-    max-height: 50vh;
-    margin-bottom: 16px;
+    margin-bottom: 0;
     text-align: left;
   }
   .sponsor-list li {
@@ -649,6 +667,16 @@
     text-decoration: none;
   }
   .sponsor-link:hover { text-decoration: underline; }
+  .sponsor-modal-footer {
+    flex-shrink: 0;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(106, 143, 110, 0.25);
+  }
+  .sponsor-modal-footer .modal-btn {
+    width: 100%;
+    display: block;
+  }
 
   .explore-modal { max-width: 460px; }
   #exploreIntroModal .modal-title,
@@ -722,7 +750,7 @@
 
   @media (max-width: 600px) {
     .forest-bg { background-position: center 85%; }
-    .wilds-wrap { padding: 16px 14px calc(138px + env(safe-area-inset-bottom)); }
+    .wilds-wrap { padding: 16px 14px calc(108px + env(safe-area-inset-bottom)); }
     .panel { padding: 18px 16px; margin-bottom: 12px; }
     .wilds-title { font-size: clamp(1.35rem, 6vw, 1.85rem); }
     .weather-row { font-size: 0.88rem; }
@@ -736,7 +764,7 @@
     .avatar-option { width: 60px; height: 60px; }
     .id-card-photo { width: 46px; height: 56px; }
     .id-card-type { font-size: 0.66rem; }
-    .member-logout-btn { font-size: 0.72rem; padding: 8px 10px; }
+    .member-logout-btn { font-size: 0.68rem; padding: 6px 10px; }
     .home-link, .music-toggle { font-size: 0.7rem; padding: 7px 12px; }
   }
 
@@ -817,25 +845,23 @@
 </div>
 
 <div class="member-card-bar" id="memberCardBar" style="display:none;">
-  <div class="member-card-inner">
-    <div class="id-card" id="idCard">
-      <div class="id-card-header">
-        <span class="id-card-brand">异味林地 · MEMBER ID</span>
-        <span class="id-card-type field-label" id="memberTag">异味林地访客会员卡</span>
+  <div class="id-card" id="idCard">
+    <div class="id-card-header">
+      <span class="id-card-brand">异味林地 · MEMBER ID</span>
+      <span class="id-card-type field-label" id="memberTag">异味林地访客会员卡</span>
+    </div>
+    <div class="id-card-body">
+      <div class="id-card-photo-wrap">
+        <img class="id-card-photo" id="memberAvatar" src="" alt="头像">
       </div>
-      <div class="id-card-body">
-        <div class="id-card-photo-wrap">
-          <img class="id-card-photo" id="memberAvatar" src="" alt="头像">
+      <div class="id-card-details">
+        <div class="id-card-field">
+          <span class="field-label">姓名</span>
+          <span class="id-card-value" id="memberName"></span>
         </div>
-        <div class="id-card-details">
-          <div class="id-card-field">
-            <span class="field-label">姓名</span>
-            <span class="id-card-value" id="memberName"></span>
-          </div>
-          <div class="id-card-field">
-            <span class="field-label">会员号</span>
-            <span class="id-card-value id-card-no" id="memberNoDisplay"></span>
-          </div>
+        <div class="id-card-field">
+          <span class="field-label">会员号</span>
+          <span class="id-card-value id-card-no" id="memberNoDisplay"></span>
         </div>
       </div>
     </div>
@@ -883,12 +909,15 @@
 <!-- 资助人弹窗 -->
 <div class="modal-overlay hidden" id="sponsorModal">
   <div class="modal sponsor-modal">
+    <button class="sponsor-back-btn" type="button" onclick="closeSponsorModal()">← 点击返回</button>
     <div class="modal-title">异味林地资助人</div>
     <div class="sponsor-thanks" id="sponsorThanks">感谢你们，没有你们就没有异味林地！</div>
     <div id="sponsorContent">
       <div class="sponsor-loading">正在同步爱发电数据……</div>
     </div>
-    <button class="modal-btn" type="button" onclick="closeSponsorModal()">返回林地</button>
+    <div class="sponsor-modal-footer">
+      <button class="modal-btn" type="button" onclick="closeSponsorModal()">点击返回</button>
+    </div>
   </div>
 </div>
 
