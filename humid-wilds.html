@@ -944,9 +944,20 @@
   <span class="back-to-top-triangle"></span>
 </button>
 
-<!-- 创建会员卡弹窗 -->
-<div class="modal-overlay" id="createCardModal">
+<!-- 会员卡入口（创建 / 登录） -->
+<div class="modal-overlay hidden" id="memberEntryModal">
   <div class="modal">
+    <div class="modal-title">林地访客登记</div>
+    <div class="modal-desc">创建新会员卡，或使用已有会员卡登录</div>
+    <button class="modal-btn" type="button" onclick="openCreateCard()">创建会员卡</button>
+    <button class="modal-btn modal-btn-secondary" type="button" onclick="openLoginCard()">已有会员卡，登录</button>
+  </div>
+</div>
+
+<!-- 创建会员卡弹窗 -->
+<div class="modal-overlay hidden" id="createCardModal">
+  <div class="modal">
+    <button class="sponsor-back-btn" type="button" onclick="backToMemberEntry()">← 点击返回</button>
     <div class="modal-title">请创建会员卡</div>
     <div class="modal-desc">选择你的林地形象，留下名字与会员号</div>
     <div class="avatar-picker" id="avatarPicker">
@@ -969,7 +980,37 @@
       <input class="name-input" id="memberNoInput" type="text" placeholder="输入会员号（可自由填写数字）" maxlength="32">
       <div class="input-hint">可填写任意数字；管理人凭专属会员号登录。</div>
     </div>
-    <button class="modal-btn" id="createCardBtn" onclick="createCard()">创建会员卡</button>
+    <button class="modal-btn" id="createCardBtn" type="button" onclick="createCard()">创建会员卡</button>
+  </div>
+</div>
+
+<!-- 登录会员卡弹窗 -->
+<div class="modal-overlay hidden" id="loginCardModal">
+  <div class="modal">
+    <button class="sponsor-back-btn" type="button" onclick="backToMemberEntry()">← 点击返回</button>
+    <div class="modal-title">登录会员卡</div>
+    <div class="modal-desc">选择头像，填写名字与会员号以登录</div>
+    <div class="avatar-picker" id="loginAvatarPicker">
+      <div class="avatar-option selected" data-avatar="character1.jpg" onclick="selectLoginAvatar(this)">
+        <img src="character1.jpg" alt="角色1">
+      </div>
+      <div class="avatar-option" data-avatar="character2.jpg" onclick="selectLoginAvatar(this)">
+        <img src="character2.jpg" alt="角色2">
+      </div>
+      <div class="avatar-option" data-avatar="character3.jpg" onclick="selectLoginAvatar(this)">
+        <img src="character3.jpg" alt="角色3">
+      </div>
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="loginNameInput">你的名字</label>
+      <input class="name-input" id="loginNameInput" type="text" placeholder="输入你的名字" maxlength="20">
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="loginMemberNoInput">会员号</label>
+      <input class="name-input" id="loginMemberNoInput" type="text" placeholder="输入你的会员号" maxlength="32">
+      <div class="input-hint">请填写创建会员卡时使用的会员号。</div>
+    </div>
+    <button class="modal-btn" type="button" onclick="loginCard()">登录</button>
   </div>
 </div>
 
@@ -1039,6 +1080,7 @@
   ];
 
   let selectedAvatar = 'character1.jpg';
+  let selectedLoginAvatar = 'character1.jpg';
   let state = null;
   let compostTimer = null;
   let weatherTimer = null;
@@ -1200,18 +1242,67 @@
   }
 
   function selectAvatar(el) {
-    document.querySelectorAll('.avatar-option').forEach(a => a.classList.remove('selected'));
+    document.querySelectorAll('#avatarPicker .avatar-option').forEach(a => a.classList.remove('selected'));
     el.classList.add('selected');
     selectedAvatar = el.dataset.avatar;
+  }
+
+  function selectLoginAvatar(el) {
+    document.querySelectorAll('#loginAvatarPicker .avatar-option').forEach(a => a.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedLoginAvatar = el.dataset.avatar;
   }
 
   function resetCreateCardForm() {
     document.getElementById('nameInput').value = '';
     document.getElementById('memberNoInput').value = '';
     selectedAvatar = 'character1.jpg';
-    document.querySelectorAll('.avatar-option').forEach(function(a) {
+    document.querySelectorAll('#avatarPicker .avatar-option').forEach(function(a) {
       a.classList.toggle('selected', a.dataset.avatar === 'character1.jpg');
     });
+  }
+
+  function resetLoginCardForm() {
+    document.getElementById('loginNameInput').value = '';
+    document.getElementById('loginMemberNoInput').value = '';
+    selectedLoginAvatar = 'character1.jpg';
+    document.querySelectorAll('#loginAvatarPicker .avatar-option').forEach(function(a) {
+      a.classList.toggle('selected', a.dataset.avatar === 'character1.jpg');
+    });
+  }
+
+  function hideAllMemberModals() {
+    document.getElementById('memberEntryModal').classList.add('hidden');
+    document.getElementById('createCardModal').classList.add('hidden');
+    document.getElementById('loginCardModal').classList.add('hidden');
+  }
+
+  function showMemberEntryModal() {
+    hideAllMemberModals();
+    document.getElementById('memberEntryModal').classList.remove('hidden');
+  }
+
+  function openCreateCard() {
+    hideAllMemberModals();
+    resetCreateCardForm();
+    document.getElementById('createCardModal').classList.remove('hidden');
+  }
+
+  function openLoginCard() {
+    hideAllMemberModals();
+    resetLoginCardForm();
+    document.getElementById('loginCardModal').classList.remove('hidden');
+  }
+
+  function backToMemberEntry() {
+    showMemberEntryModal();
+  }
+
+  function saveMemberCard(card) {
+    localStorage.setItem(CARD_KEY, JSON.stringify(card));
+    hideAllMemberModals();
+    showMemberCard(card);
+    tryPlayMusic();
   }
 
   function isManagerCode(code) {
@@ -1232,10 +1323,27 @@
       memberNo: memberNo || String(Math.floor(100000 + Math.random() * 900000)),
       isManager: isManager
     };
-    localStorage.setItem(CARD_KEY, JSON.stringify(card));
-    document.getElementById('createCardModal').classList.add('hidden');
-    showMemberCard(card);
-    tryPlayMusic();
+    saveMemberCard(card);
+  }
+
+  function loginCard() {
+    const name = document.getElementById('loginNameInput').value.trim();
+    const memberNo = document.getElementById('loginMemberNoInput').value.trim();
+    if (!name) {
+      document.getElementById('loginNameInput').focus();
+      return;
+    }
+    if (!memberNo) {
+      document.getElementById('loginMemberNoInput').focus();
+      return;
+    }
+    const card = {
+      name: name,
+      avatar: selectedLoginAvatar,
+      memberNo: memberNo,
+      isManager: isManagerCode(memberNo)
+    };
+    saveMemberCard(card);
   }
 
   function showMemberCard(card) {
@@ -1256,7 +1364,8 @@
     document.getElementById('memberCardBar').style.display = 'none';
     syncBackToTopPosition();
     resetCreateCardForm();
-    document.getElementById('createCardModal').classList.remove('hidden');
+    resetLoginCardForm();
+    showMemberEntryModal();
   }
 
   function checkMemberCard() {
@@ -1271,11 +1380,11 @@
         card.isManager = true;
         localStorage.setItem(CARD_KEY, JSON.stringify(card));
       }
+      hideAllMemberModals();
       showMemberCard(card);
-      document.getElementById('createCardModal').classList.add('hidden');
       tryPlayMusic();
     } else {
-      document.getElementById('createCardModal').classList.remove('hidden');
+      showMemberEntryModal();
     }
   }
 
