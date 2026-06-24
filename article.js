@@ -158,4 +158,8 @@ function onLangChange(lang) {
 
 window.articleOnLangChange = onLangChange;
 
-document.addEventListener('DOMContentLoaded', loadArticle);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadArticle);
+} else {
+  loadArticle();
+}
