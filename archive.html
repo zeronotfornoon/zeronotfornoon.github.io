@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>异味档案 | Weird Gems Archives — Weird Games Club</title>
+<script src="js/site.js"></script>
+<script>
+setSiteMeta({
+  path: 'archive.html',
+  title: '异味档案 | Weird Gems Archives — Weird Games Club',
+  description: '游戏考据、开发者采访与独立游戏资讯——铁鼠也啃噬不尽的独游文字记录。'
+});
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Noto+Serif+SC:wght@400;600&family=Press+Start+2P&display=swap');
+
+@font-face {
+  font-family: 'UranusPixel';
+  src: url('Uranus_Pixel_11Px.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root {
+  --white: #ffffff;
+  --off-white: #f5f5f7;
+  --ink: #111111;
+  --ink-dim: #444444;
+  --ink-faint: #888888;
+  --pink: #e8a0b4;
+  --pink-light: #f5d6e0;
+  --pink-bg: #fdf0f4;
+  --pink-deep: #d4607e;
+  --border: #e2e2e5;
+  --border-dark: #111111;
+  --cat-research: #5c7a9e;
+  --cat-interview: #d4607e;
+  --cat-news: #6a8f6e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--off-white);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── 顶部栏 ── */
+.lang-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  backdrop-filter: blur(8px);
+}
+.lang-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.lang-bar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.lang-bar-logo:hover { transform: translateY(-1px); }
+.site-logo-img {
+  height: 58px;
+  width: auto;
+  max-width: 260px;
+  display: block;
+  object-fit: contain;
+  animation: logo-neon-flicker 3.5s infinite;
+}
+@keyframes logo-neon-flicker {
+  0%,18%,20%,22%,53%,55%,100% {
+    filter:
+      drop-shadow(0 0 2px var(--pink))
+      drop-shadow(0 0 8px var(--pink))
+      drop-shadow(0 0 18px rgba(232, 160, 180, 0.9))
+      drop-shadow(0 0 30px rgba(232, 160, 180, 0.5));
+  }
+  19%,21%,54% {
+    filter: drop-shadow(0 0 1px rgba(232, 160, 180, 0.2));
+  }
+}
+.bar-title {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+.lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
+.lang-btn {
+  background: none; border: none;
+  padding: 5px 14px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; cursor: pointer;
+  color: var(--ink-dim); transition: all 0.15s;
+}
+.lang-btn.active { background: var(--ink); color: var(--white); }
+
+/* ── Hero ── */
+.hero {
+  margin-top: 72px;
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--pink-bg) 0%, var(--off-white) 50%, #eef0f5 100%);
+  border-bottom: 1px solid var(--border);
+}
+.hero-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 48px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.hero-page-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.5rem;
+  color: var(--pink-deep);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.hero-title {
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+}
+.hero-desc {
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  font-weight: 300;
+  max-width: 560px;
+  line-height: 1.75;
+}
+
+/* ── 主体 ── */
+.page-body {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 36px 24px 80px;
+}
+
+/* ── 精选区 ── */
+.featured-section {
+  margin-bottom: 40px;
+}
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::before {
+  content: '';
+  width: 4px;
+  height: 14px;
+  background: var(--pink);
+  border-radius: 2px;
+}
+.featured-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 16px;
+}
+.featured-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.featured-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+.featured-card-hero {
+  grid-row: span 2;
+}
+.featured-thumb {
+  height: 140px;
+  background: linear-gradient(145deg, var(--pink-light) 0%, var(--pink-bg) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.featured-thumb.has-cover,
+.feed-cover.has-cover {
+  background: #eaeaea;
+}
+.featured-thumb.has-cover img,
+.feed-cover.has-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.featured-thumb.has-cover .featured-thumb-label {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  background: rgba(17, 17, 17, 0.72);
+  color: var(--white);
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 1;
+}
+.featured-card-hero .featured-thumb { height: 200px; }
+.featured-thumb-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.55rem;
+  color: var(--pink-deep);
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+.featured-body {
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.featured-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.featured-card-hero .featured-title { font-size: 1.15rem; }
+.featured-excerpt {
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  font-weight: 300;
+  line-height: 1.75;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── 分类标签 ── */
+.article-cat {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 3px;
+  color: var(--white);
+  width: fit-content;
+}
+.cat-research { background: var(--cat-research); }
+.cat-interview { background: var(--cat-interview); }
+.cat-news { background: var(--cat-news); }
+
+.article-meta {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-weight: 400;
+  margin-top: auto;
+}
+.meta-sep { margin: 0 6px; }
+
+/* ── 筛选栏 ── */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.filter-tab {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 7px 18px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-tab:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.filter-tab.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--white);
+}
+
+/* ── 文章列表 ── */
+.feed-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.feed-item {
+  border-bottom: 1px solid var(--border);
+}
+.feed-item:last-child { border-bottom: none; }
+.feed-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 28px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.15s;
+}
+.feed-cover {
+  width: 112px;
+  min-height: 84px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  align-self: center;
+}
+.feed-cover:not(.has-cover) { display: none; }
+.feed-link:hover { background: var(--off-white); }
+.feed-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.feed-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.feed-date {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  font-weight: 400;
+}
+.feed-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.feed-excerpt {
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  font-weight: 300;
+  line-height: 1.75;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.feed-foot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.feed-author {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+.feed-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.article-tag {
+  font-size: 0.72rem;
+  color: var(--pink-deep);
+  background: var(--pink-bg);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+.feed-arrow {
+  font-size: 1.1rem;
+  color: var(--ink-faint);
+  flex-shrink: 0;
+  transition: transform 0.2s, color 0.2s;
+}
+.feed-link:hover .feed-arrow {
+  transform: translateX(4px);
+  color: var(--ink);
+}
+
+/* ── 加载更多 / 空状态 ── */
+.load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+.load-more-btn {
+  background: var(--white);
+  border: 1px solid var(--border-dark);
+  border-radius: 6px;
+  padding: 12px 32px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: all 0.15s;
+}
+.load-more-btn:hover {
+  background: var(--ink);
+  color: var(--white);
+}
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--ink-faint);
+  font-size: 0.9rem;
+}
+.hidden { display: none !important; }
+
+/* ── 底部 ── */
+.page-footer {
+  text-align: center;
+  padding: 32px 24px 48px;
+  border-top: 1px solid var(--border);
+  max-width: 960px;
+  margin: 0 auto;
+}
+.footer-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--ink-dim);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  transition: color 0.15s;
+}
+.footer-back:hover { color: var(--ink); }
+.footer-copy {
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  font-weight: 300;
+  margin-top: 12px;
+}
+
+/* ── 返回顶部 ── */
+.back-to-top {
+  position: fixed;
+  right: calc(18px + env(safe-area-inset-right));
+  bottom: calc(22px + env(safe-area-inset-bottom));
+  z-index: 90;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-dark);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s, visibility 0.25s, transform 0.2s;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.back-to-top:hover { transform: translateY(-2px); }
+.back-to-top-triangle {
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 9px solid var(--ink);
+  margin-top: -2px;
+}
+
+/* ── 响应式 ── */
+@media (max-width: 768px) {
+  .featured-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .featured-card-hero { grid-row: auto; }
+  .featured-card-hero .featured-thumb { height: 140px; }
+  .feed-link { padding: 18px 20px; }
+  .feed-arrow { display: none; }
+}
+
+@media (max-width: 576px) {
+  .lang-bar { padding: 8px 16px; }
+  .site-logo-img { height: 44px; max-width: 200px; }
+  .bar-title { display: none; }
+  .hero { height: 220px; }
+  .hero-inner { padding: 32px 16px 24px; }
+  .page-body { padding: 24px 16px 60px; }
+}
+
+/* ── 双语 ── */
+.lang-zh-inline, .lang-en-inline { display: none; }
+.lang-zh-inline.visible, .lang-en-inline.visible { display: inline; }
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <div class="lang-bar-left">
+    <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
+      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    </a>
+    <span class="bar-title">
+      <span class="lang-zh-inline">异味档案</span>
+      <span class="lang-en-inline">Weird Gems Archives</span>
+    </span>
+  </div>
+  <div class="lang-switch">
+    <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
+    <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-page-label">
+      <span class="lang-zh-inline">ARCHIVE</span>
+      <span class="lang-en-inline">ARCHIVE</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="lang-zh-inline">异味档案</span>
+      <span class="lang-en-inline">Weird Gems Archives</span>
+    </h1>
+    <p class="hero-desc">
+      <span class="lang-zh-inline">游戏考据、开发者采访与独立游戏资讯——铁鼠也啃噬不尽的独游文字记录。</span>
+      <span class="lang-en-inline">Game research, developer interviews, and indie news — written records even the iron rat can't chew through.</span>
+    </p>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <section class="featured-section" id="featuredSection">
+    <div class="section-label">
+      <span class="lang-zh-inline">精选</span>
+      <span class="lang-en-inline">Featured</span>
+    </div>
+    <div class="featured-grid" id="featuredGrid"></div>
+  </section>
+
+  <section class="feed-section">
+    <div class="section-label">
+      <span class="lang-zh-inline">全部文章</span>
+      <span class="lang-en-inline">All Posts</span>
+    </div>
+
+    <div class="filter-bar" role="tablist">
+      <button class="filter-tab active" data-filter="all" type="button">
+        <span class="lang-zh-inline">全部</span>
+        <span class="lang-en-inline">All</span>
+      </button>
+      <button class="filter-tab" data-filter="research" type="button">
+        <span class="lang-zh-inline">考据</span>
+        <span class="lang-en-inline">Research</span>
+      </button>
+      <button class="filter-tab" data-filter="interview" type="button">
+        <span class="lang-zh-inline">采访</span>
+        <span class="lang-en-inline">Interviews</span>
+      </button>
+      <button class="filter-tab" data-filter="news" type="button">
+        <span class="lang-zh-inline">资讯</span>
+        <span class="lang-en-inline">News</span>
+      </button>
+    </div>
+
+    <ul class="feed-list" id="feedList"></ul>
+
+    <div class="empty-state hidden" id="emptyState">
+      <span class="lang-zh-inline">暂无文章，野菌还在酝酿中……</span>
+      <span class="lang-en-inline">No posts yet — the mushrooms are still brewing…</span>
+    </div>
+
+    <div class="load-more-wrap">
+      <button class="load-more-btn hidden" id="loadMoreBtn" type="button">
+        <span class="lang-zh-inline">加载更多</span>
+        <span class="lang-en-inline">Load More</span>
+      </button>
+    </div>
+  </section>
+
+</div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="back-to-top-triangle"></span>
+</button>
+
+<div class="page-footer">
+  <a class="footer-back" href="index.html">
+    ← <span class="lang-zh-inline">返回主页</span><span class="lang-en-inline">Back to Home</span>
+  </a>
+  <div class="footer-copy">© 2026 异味游戏同好会 Weird Games Club</div>
+</div>
+
+<script src="js/images.js"></script>
+<script src="archive.js"></script>
+<script>
+function setLang(lang) {
+  const isZH = lang === 'zh';
+  document.documentElement.lang = isZH ? 'zh' : 'en';
+  document.getElementById('btnZH').classList.toggle('active', isZH);
+  document.getElementById('btnEN').classList.toggle('active', !isZH);
+  document.querySelectorAll('.lang-zh-inline').forEach(el => el.classList.toggle('visible', isZH));
+  document.querySelectorAll('.lang-en-inline').forEach(el => el.classList.toggle('visible', !isZH));
+  if (window.archiveOnLangChange) window.archiveOnLangChange(lang);
+}
+setLang('zh');
+(function() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  const toggle = () => btn.classList.toggle('visible', window.scrollY > 280);
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
+</script>
+</body>
+</html>
