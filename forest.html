@@ -29,6 +29,93 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: calc(72px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));
+  }
+
+  /* ── 顶部栏（返回同好会主页） ── */
+  .wilds-top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: calc(10px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 10px calc(16px + env(safe-area-inset-left));
+    background: rgba(8, 12, 8, 0.92);
+    border-bottom: 1px solid rgba(106, 143, 110, 0.45);
+    backdrop-filter: blur(8px);
+  }
+  .lang-bar-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    line-height: 0;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .lang-bar-logo:hover { transform: translateY(-1px); }
+  .neon-sign-board {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 16px 11px;
+    background: linear-gradient(165deg, #1c1c1c 0%, #0a0a0a 55%, #141414 100%);
+    border: 2px solid #e8a0b4;
+    border-radius: 8px;
+    box-shadow:
+      0 2px 10px rgba(0, 0, 0, 0.45),
+      0 0 14px rgba(232, 160, 180, 0.55),
+      inset 0 0 16px rgba(232, 160, 180, 0.12);
+    animation: neon-sign-flicker 3.5s infinite;
+    position: relative;
+  }
+  .neon-sign-board::before,
+  .neon-sign-board::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid rgba(245, 214, 224, 0.55);
+    pointer-events: none;
+  }
+  .neon-sign-board::before {
+    top: 5px;
+    left: 5px;
+    border-right: none;
+    border-bottom: none;
+  }
+  .neon-sign-board::after {
+    bottom: 5px;
+    right: 5px;
+    border-left: none;
+    border-top: none;
+  }
+  .site-logo-img {
+    height: 52px;
+    width: auto;
+    max-width: 220px;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(232, 160, 180, 0.55));
+  }
+  @keyframes neon-sign-flicker {
+    0%,18%,20%,22%,53%,55%,100% {
+      border-color: #f5c8d6;
+      box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.4),
+        0 0 16px rgba(232, 160, 180, 0.95),
+        0 0 32px rgba(232, 160, 180, 0.55),
+        inset 0 0 18px rgba(232, 160, 180, 0.16);
+    }
+    19%,21%,54% {
+      border-color: rgba(232, 160, 180, 0.35);
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.5),
+        inset 0 0 10px rgba(0, 0, 0, 0.4);
+    }
   }
 
   /* ── 背景图片 ── */
@@ -195,10 +282,61 @@
   @media (max-width: 480px) {
     .gate { padding: 32px 22px; }
     .gate-text { font-size: 0.86rem; }
+    .site-logo-img { height: 40px; max-width: 168px; }
+    .neon-sign-board { padding: 7px 12px 9px; }
+    .back-to-top { width: 34px; height: 34px; }
+  }
+
+  /* ── 返回顶部 ── */
+  .back-to-top {
+    position: fixed;
+    right: calc(18px + env(safe-area-inset-right));
+    bottom: calc(22px + env(safe-area-inset-bottom));
+    z-index: 25;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(106, 143, 110, 0.55);
+    background: rgba(12, 18, 12, 0.94);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s, visibility 0.25s, transform 0.2s, border-color 0.2s;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .back-to-top:hover {
+    transform: translateY(-2px);
+    border-color: var(--pale-moss);
+  }
+  .back-to-top-triangle {
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 9px solid #f4e9c9;
+    margin-top: -2px;
   }
 </style>
 </head>
 <body>
+
+<div class="wilds-top-bar">
+  <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
+    <span class="neon-sign-board">
+      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    </span>
+  </a>
+</div>
 
 <div class="forest-bg" id="forestBg">
   <div class="mist-layer"></div>
@@ -219,6 +357,10 @@
 
   <button class="gate-enter" onclick="enterWilds()"><span>我愿温和地踏入那个捡果子的黄昏</span></button>
 </div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="back-to-top-triangle"></span>
+</button>
 
 <script>
   function generateForest() {
@@ -280,6 +422,14 @@
     // 点击后跳转到正式的林地页面
     window.location.href = "humid-wilds.html";
   }
+
+  (function() {
+    const btn = document.getElementById('backToTop');
+    if (!btn) return;
+    const toggle = () => btn.classList.toggle('visible', window.scrollY > 200);
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
+  })();
 </script>
 </body>
 </html>

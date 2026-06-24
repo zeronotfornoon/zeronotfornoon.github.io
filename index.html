@@ -62,26 +62,67 @@ body {
   text-decoration: none;
   line-height: 0;
   flex-shrink: 0;
-  animation: neon-glow-flicker 3.5s infinite;
-  transition: opacity 0.2s;
+  transition: transform 0.2s;
 }
-.lang-bar-logo:hover { opacity: 0.92; }
+.lang-bar-logo:hover { transform: translateY(-1px); }
+.neon-sign-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px 11px;
+  background: linear-gradient(165deg, #1c1c1c 0%, #0a0a0a 55%, #141414 100%);
+  border: 2px solid var(--pink);
+  border-radius: 8px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.25),
+    0 0 12px rgba(232, 160, 180, 0.45),
+    inset 0 0 16px rgba(232, 160, 180, 0.1);
+  animation: neon-sign-flicker 3.5s infinite;
+  position: relative;
+}
+.neon-sign-board::before,
+.neon-sign-board::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(245, 214, 224, 0.55);
+  pointer-events: none;
+}
+.neon-sign-board::before {
+  top: 5px;
+  left: 5px;
+  border-right: none;
+  border-bottom: none;
+}
+.neon-sign-board::after {
+  bottom: 5px;
+  right: 5px;
+  border-left: none;
+  border-top: none;
+}
 .site-logo-img {
-  height: 38px;
+  height: 52px;
   width: auto;
-  max-width: 168px;
+  max-width: 220px;
   display: block;
   object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(232, 160, 180, 0.55));
 }
-@keyframes neon-glow-flicker {
+@keyframes neon-sign-flicker {
   0%,18%,20%,22%,53%,55%,100% {
-    filter:
-      drop-shadow(0 0 3px var(--pink))
-      drop-shadow(0 0 10px var(--pink))
-      drop-shadow(0 0 18px var(--pink));
+    border-color: #f5c8d6;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      0 0 14px rgba(232, 160, 180, 0.9),
+      0 0 28px rgba(232, 160, 180, 0.5),
+      inset 0 0 18px rgba(232, 160, 180, 0.14);
   }
   19%,21%,54% {
-    filter: none;
+    border-color: rgba(232, 160, 180, 0.35);
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.3),
+      inset 0 0 10px rgba(0, 0, 0, 0.35);
   }
 }
 .lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
@@ -176,6 +217,50 @@ body {
   border-radius: 16px;
   width: 100%;
   max-width: 900px;
+  overflow: hidden;
+}
+.countdown-label-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  max-width: 100%;
+}
+.glow-mushroom {
+  width: 22px;
+  height: 26px;
+  flex-shrink: 0;
+  position: relative;
+  animation: mush-glow-pulse 2.4s ease-in-out infinite;
+}
+.glow-mushroom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1px;
+  width: 20px;
+  height: 13px;
+  background: #e8a0b4;
+  border-radius: 50% 50% 38% 38%;
+  box-shadow:
+    4px 3px 0 1px rgba(255, 255, 255, 0.45),
+    11px 5px 0 1px rgba(255, 255, 255, 0.28),
+    0 0 8px #f5c8d6,
+    0 0 16px rgba(232, 160, 180, 0.75);
+}
+.glow-mushroom::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 7px;
+  width: 8px;
+  height: 11px;
+  background: linear-gradient(180deg, #f5e6ec 0%, #dcc4d0 100%);
+  border-radius: 2px 2px 3px 3px;
+}
+@keyframes mush-glow-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.4); }
 }
 .countdown-label {
   font-family: 'Press Start 2P', monospace;
@@ -462,9 +547,25 @@ body {
   letter-spacing: 0.04em;
 }
 
-/* ── 主栏内容推荐轮播 ── */
-.rec-carousel-section {
-  margin-bottom: 32px;
+/* ── 侧栏 New 资讯轮播 ── */
+.new-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.megaphone-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.megaphone-icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 .rec-carousel {
   position: relative;
@@ -571,6 +672,65 @@ body {
   background: var(--ink);
   transform: scale(1.15);
 }
+.side-rec-carousel .rec-carousel-track { min-height: 108px; }
+.side-rec-carousel .rec-slide {
+  padding: 12px 34px 12px 10px;
+  gap: 10px;
+}
+.side-rec-carousel .rec-slide-thumb {
+  width: 50px;
+  height: 50px;
+  font-size: 0.66rem;
+}
+.side-rec-carousel .rec-slide-title { font-size: 0.86rem; }
+.side-rec-carousel .rec-slide-meta { font-size: 0.74rem; }
+.side-rec-carousel .rec-carousel-btn {
+  width: 26px;
+  height: 26px;
+  font-size: 0.9rem;
+}
+.side-rec-carousel .rec-carousel-btn.prev { left: 4px; }
+.side-rec-carousel .rec-carousel-btn.next { right: 4px; }
+
+/* ── 返回顶部 ── */
+.back-to-top {
+  position: fixed;
+  right: calc(18px + env(safe-area-inset-right));
+  bottom: calc(22px + env(safe-area-inset-bottom));
+  z-index: 90;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-dark);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s, visibility 0.25s, transform 0.2s, border-color 0.2s;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  -webkit-tap-highlight-color: transparent;
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.back-to-top:hover {
+  transform: translateY(-2px);
+  border-color: var(--ink);
+}
+.back-to-top-triangle {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 9px solid var(--ink);
+  margin-top: -2px;
+}
 
 /* ── 响应式设计：手机端自动折叠与流式适配 ── */
 @media (max-width: 992px) {
@@ -590,7 +750,8 @@ body {
 
 @media (max-width: 576px) {
   .lang-bar { padding: 8px 16px; }
-  .site-logo-img { height: 30px; max-width: 132px; }
+  .site-logo-img { height: 40px; max-width: 168px; }
+  .neon-sign-board { padding: 7px 12px 9px; }
   .hero-bg { height: 240px; object-position: center 30%; }
   .hero-overlay { padding: 16px; }
   .hero-title-zh { font-size: 1.6rem; padding: 8px 16px; }
@@ -604,6 +765,7 @@ body {
   .rec-slide-thumb { width: 72px; height: 72px; font-size: 0.72rem; }
   .rec-slide-title { font-size: 0.95rem; }
   .rec-carousel-btn { width: 32px; height: 32px; font-size: 1rem; }
+  .back-to-top { width: 34px; height: 34px; }
 }
 
 /* ── 双语切换核心控制 ── */
@@ -618,7 +780,9 @@ body {
 <!-- 顶部语言栏 -->
 <div class="lang-bar">
   <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
-    <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    <span class="neon-sign-board">
+      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    </span>
   </a>
   <div class="lang-switch">
     <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
@@ -647,9 +811,12 @@ body {
 <!-- 倒计时条 -->
 <div class="countdown-wrap">
 <div class="countdown-strip">
-  <div class="countdown-label">
-    <span class="lang-zh-inline">野菌即将破土而出……</span>
-    <span class="lang-en-inline">The mushrooms are about to emerge…</span>
+  <div class="countdown-label-wrap">
+    <span class="glow-mushroom" aria-hidden="true"></span>
+    <div class="countdown-label">
+      <span class="lang-zh-inline">野菌即将破土而出……</span>
+      <span class="lang-en-inline">The mushrooms are about to emerge…</span>
+    </div>
   </div>
   <div class="countdown-timer">
     <div class="cd-unit">
@@ -680,52 +847,6 @@ body {
 
   <!-- 左：主内容区 -->
   <div class="main-col">
-
-    <div class="rec-carousel-section">
-      <div class="nav-section-title">
-        <span class="lang-zh-inline">内容推荐</span>
-        <span class="lang-en-inline">Recommended</span>
-      </div>
-      <div class="rec-carousel" id="recCarousel">
-        <div class="rec-carousel-track">
-          <a class="rec-slide active" href="#">
-            <div class="rec-slide-thumb">
-              <span class="lang-zh-inline">最新<br>文章</span>
-              <span class="lang-en-inline">Post</span>
-            </div>
-            <div class="rec-slide-info">
-              <div class="rec-slide-title">
-                <span class="lang-zh-inline">【独立游戏评测】最新更新占位</span>
-                <span class="lang-en-inline">New Review Heading Placeholder</span>
-              </div>
-              <div class="rec-slide-meta">
-                <span class="lang-zh-inline">评测 · 待更新</span>
-                <span class="lang-en-inline">Review · Update Soon</span>
-              </div>
-            </div>
-          </a>
-          <a class="rec-slide" href="#">
-            <div class="rec-slide-thumb">
-              <span class="lang-zh-inline">独家<br>采访</span>
-              <span class="lang-en-inline">Interv.</span>
-            </div>
-            <div class="rec-slide-info">
-              <div class="rec-slide-title">
-                <span class="lang-zh-inline">【开发者专访】核心篇章占位</span>
-                <span class="lang-en-inline">Developer Interview Placeholder</span>
-              </div>
-              <div class="rec-slide-meta">
-                <span class="lang-zh-inline">采访 · 待更新</span>
-                <span class="lang-en-inline">Interview · Update Soon</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <button class="rec-carousel-btn prev" type="button" aria-label="上一条" onclick="moveRecCarousel(-1)">‹</button>
-        <button class="rec-carousel-btn next" type="button" aria-label="下一条" onclick="moveRecCarousel(1)">›</button>
-        <div class="rec-carousel-dots" id="recCarouselDots"></div>
-      </div>
-    </div>
 
     <div class="nav-section-title">
       <span class="lang-zh-inline">探索更多</span>
@@ -766,7 +887,7 @@ body {
         <span class="nav-card-arrow">→</span>
       </a>
 
-      <a class="nav-card area-wilds" href="index.html">
+      <a class="nav-card area-wilds" href="forest.html">
         <span class="nav-card-en">The Humid Wilds</span>
         <span class="nav-card-zh">
           <span class="lang-zh-inline">异味林地</span>
@@ -840,8 +961,60 @@ body {
       <span class="side-credit-arrow">→</span>
     </a>
 
+    <div class="side-card">
+      <div class="side-card-title new-section-title">
+        <span class="megaphone-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 11c0-1.1-.9-2-2-2H8.5L5 4H3v12h2l3.5-5H16c1.1 0 2-.9 2-2v-1l4 2v-6l-4 2v-1z"/></svg>
+        </span>
+        New
+      </div>
+      <div class="rec-carousel side-rec-carousel" id="recCarousel">
+        <div class="rec-carousel-track">
+          <a class="rec-slide active" href="#">
+            <div class="rec-slide-thumb">
+              <span class="lang-zh-inline">汉化<br>追踪</span>
+              <span class="lang-en-inline">Loc.</span>
+            </div>
+            <div class="rec-slide-info">
+              <div class="rec-slide-title">
+                <span class="lang-zh-inline">【资讯占位】某款独立游戏中文本地化更新跟踪中</span>
+                <span class="lang-en-inline">Placeholder: indie game localization update incoming</span>
+              </div>
+              <div class="rec-slide-meta">
+                <span class="lang-zh-inline">资讯 · 待更新</span>
+                <span class="lang-en-inline">News · Update Soon</span>
+              </div>
+            </div>
+          </a>
+          <a class="rec-slide" href="#">
+            <div class="rec-slide-thumb">
+              <span class="lang-zh-inline">补丁<br>速递</span>
+              <span class="lang-en-inline">Patch</span>
+            </div>
+            <div class="rec-slide-info">
+              <div class="rec-slide-title">
+                <span class="lang-zh-inline">【资讯占位】模组与汉化补丁汇总即将上线</span>
+                <span class="lang-en-inline">Placeholder: mod & patch localization digest coming</span>
+              </div>
+              <div class="rec-slide-meta">
+                <span class="lang-zh-inline">资讯 · 待更新</span>
+                <span class="lang-en-inline">News · Update Soon</span>
+              </div>
+            </div>
+          </a>
+        </div>
+        <button class="rec-carousel-btn prev" type="button" aria-label="上一条" onclick="moveRecCarousel(-1)">‹</button>
+        <button class="rec-carousel-btn next" type="button" aria-label="下一条" onclick="moveRecCarousel(1)">›</button>
+        <div class="rec-carousel-dots" id="recCarouselDots"></div>
+      </div>
+    </div>
+
   </div>
 </div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="返回顶部" onclick="scrollToTop()">
+  <span class="back-to-top-triangle"></span>
+</button>
 
 <!-- 底部 -->
 <div class="footer">
@@ -928,6 +1101,17 @@ function restartRecCarouselAuto() {
 
 buildRecCarouselDots();
 restartRecCarouselAuto();
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+(function initBackToTop() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  const toggle = () => btn.classList.toggle('visible', window.scrollY > 280);
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
 
 setLang('zh');
 </script>

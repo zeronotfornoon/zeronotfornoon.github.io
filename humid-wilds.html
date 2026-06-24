@@ -118,7 +118,7 @@
     max-width: 720px;
     width: 100%;
     margin: 0 auto;
-    padding: calc(64px + env(safe-area-inset-top)) 20px calc(118px + env(safe-area-inset-bottom));
+    padding: calc(72px + env(safe-area-inset-top)) 20px calc(118px + env(safe-area-inset-bottom));
     animation: fadeIn 1.2s ease;
   }
   @keyframes fadeIn {
@@ -458,26 +458,67 @@
     text-decoration: none;
     line-height: 0;
     flex-shrink: 0;
-    animation: neon-glow-flicker 3.5s infinite;
-    transition: opacity 0.2s;
+    transition: transform 0.2s;
   }
-  .lang-bar-logo:hover { opacity: 0.92; }
+  .lang-bar-logo:hover { transform: translateY(-1px); }
+  .neon-sign-board {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 16px 11px;
+    background: linear-gradient(165deg, #1c1c1c 0%, #0a0a0a 55%, #141414 100%);
+    border: 2px solid #e8a0b4;
+    border-radius: 8px;
+    box-shadow:
+      0 2px 10px rgba(0, 0, 0, 0.45),
+      0 0 14px rgba(232, 160, 180, 0.55),
+      inset 0 0 16px rgba(232, 160, 180, 0.12);
+    animation: neon-sign-flicker 3.5s infinite;
+    position: relative;
+  }
+  .neon-sign-board::before,
+  .neon-sign-board::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid rgba(245, 214, 224, 0.55);
+    pointer-events: none;
+  }
+  .neon-sign-board::before {
+    top: 5px;
+    left: 5px;
+    border-right: none;
+    border-bottom: none;
+  }
+  .neon-sign-board::after {
+    bottom: 5px;
+    right: 5px;
+    border-left: none;
+    border-top: none;
+  }
   .site-logo-img {
-    height: 38px;
+    height: 52px;
     width: auto;
-    max-width: 168px;
+    max-width: 220px;
     display: block;
     object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(232, 160, 180, 0.55));
   }
-  @keyframes neon-glow-flicker {
+  @keyframes neon-sign-flicker {
     0%,18%,20%,22%,53%,55%,100% {
-      filter:
-        drop-shadow(0 0 3px #e8a0b4)
-        drop-shadow(0 0 10px #e8a0b4)
-        drop-shadow(0 0 18px rgba(232, 160, 180, 0.85));
+      border-color: #f5c8d6;
+      box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.4),
+        0 0 16px rgba(232, 160, 180, 0.95),
+        0 0 32px rgba(232, 160, 180, 0.55),
+        inset 0 0 18px rgba(232, 160, 180, 0.16);
     }
     19%,21%,54% {
-      filter: none;
+      border-color: rgba(232, 160, 180, 0.35);
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.5),
+        inset 0 0 10px rgba(0, 0, 0, 0.4);
     }
   }
   .wilds-music-btn {
@@ -780,9 +821,52 @@
   }
   .backpack-empty-hint { font-size: 0.8rem; color: var(--text-dim); margin-top: 6px; }
 
+  /* ── 返回顶部 ── */
+  .back-to-top {
+    position: fixed;
+    right: calc(18px + env(safe-area-inset-right));
+    bottom: calc(130px + env(safe-area-inset-bottom));
+    z-index: 25;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(106, 143, 110, 0.55);
+    background: rgba(12, 18, 12, 0.94);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s, visibility 0.25s, transform 0.2s, border-color 0.2s;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .back-to-top.no-member-card {
+    bottom: calc(22px + env(safe-area-inset-bottom));
+  }
+  .back-to-top:hover {
+    transform: translateY(-2px);
+    border-color: var(--pale-moss);
+  }
+  .back-to-top-triangle {
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 9px solid #f4e9c9;
+    margin-top: -2px;
+  }
+
   @media (max-width: 600px) {
     .forest-bg { background-position: center 85%; }
-    .wilds-wrap { padding: calc(56px + env(safe-area-inset-top)) 14px calc(108px + env(safe-area-inset-bottom)); }
+    .wilds-wrap { padding: calc(68px + env(safe-area-inset-top)) 14px calc(108px + env(safe-area-inset-bottom)); }
     .panel { padding: 18px 16px; margin-bottom: 12px; }
     .wilds-title { font-size: clamp(1.35rem, 6vw, 1.85rem); }
     .weather-row { font-size: 0.88rem; }
@@ -798,7 +882,8 @@
     .id-card-type { font-size: 0.66rem; }
     .member-logout-btn { font-size: 0.68rem; padding: 6px 10px; }
     .wilds-music-btn { font-size: 0.68rem; padding: 6px 10px; }
-    .site-logo-img { height: 30px; max-width: 132px; }
+    .site-logo-img { height: 40px; max-width: 168px; }
+    .neon-sign-board { padding: 7px 12px 9px; }
   }
 
   @media (max-width: 360px) {
@@ -817,7 +902,9 @@
 
 <div class="wilds-top-bar">
   <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
-    <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    <span class="neon-sign-board">
+      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    </span>
   </a>
   <button class="wilds-music-btn" id="musicToggle" type="button" onclick="toggleMusic()">♪ 音乐开启</button>
 </div>
@@ -905,6 +992,10 @@
     <button class="member-logout-btn" type="button" onclick="logoutMember()">退出</button>
   </div>
 </div>
+
+<button class="back-to-top no-member-card" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="back-to-top-triangle"></span>
+</button>
 
 <!-- 创建会员卡弹窗 -->
 <div class="modal-overlay" id="createCardModal">
@@ -1213,11 +1304,13 @@
       : '异味林地访客会员卡';
     idCard.classList.toggle('manager', card.isManager);
     document.getElementById('memberCardBar').style.display = 'block';
+    syncBackToTopPosition();
   }
 
   function logoutMember() {
     localStorage.removeItem(CARD_KEY);
     document.getElementById('memberCardBar').style.display = 'none';
+    syncBackToTopPosition();
     resetCreateCardForm();
     document.getElementById('createCardModal').classList.remove('hidden');
   }
@@ -1666,10 +1759,26 @@
     }
   }
 
+  function syncBackToTopPosition() {
+    const btn = document.getElementById('backToTop');
+    const bar = document.getElementById('memberCardBar');
+    if (btn && bar) {
+      btn.classList.toggle('no-member-card', bar.style.display === 'none');
+    }
+  }
+
   generateForest();
   generateTitleSpores();
   initState();
   checkMemberCard();
+  syncBackToTopPosition();
+  (function() {
+    const btn = document.getElementById('backToTop');
+    if (!btn) return;
+    const toggle = () => btn.classList.toggle('visible', window.scrollY > 200);
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
+  })();
 </script>
 </body>
 </html>

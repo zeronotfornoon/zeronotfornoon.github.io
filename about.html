@@ -63,26 +63,67 @@ body {
   text-decoration: none;
   line-height: 0;
   flex-shrink: 0;
-  animation: neon-glow-flicker 3.5s infinite;
-  transition: opacity 0.2s;
+  transition: transform 0.2s;
 }
-.lang-bar-logo:hover { opacity: 0.92; }
+.lang-bar-logo:hover { transform: translateY(-1px); }
+.neon-sign-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px 11px;
+  background: linear-gradient(165deg, #1c1c1c 0%, #0a0a0a 55%, #141414 100%);
+  border: 2px solid var(--pink);
+  border-radius: 8px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.25),
+    0 0 12px rgba(232, 160, 180, 0.45),
+    inset 0 0 16px rgba(232, 160, 180, 0.1);
+  animation: neon-sign-flicker 3.5s infinite;
+  position: relative;
+}
+.neon-sign-board::before,
+.neon-sign-board::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(245, 214, 224, 0.55);
+  pointer-events: none;
+}
+.neon-sign-board::before {
+  top: 5px;
+  left: 5px;
+  border-right: none;
+  border-bottom: none;
+}
+.neon-sign-board::after {
+  bottom: 5px;
+  right: 5px;
+  border-left: none;
+  border-top: none;
+}
 .site-logo-img {
-  height: 38px;
+  height: 52px;
   width: auto;
-  max-width: 168px;
+  max-width: 220px;
   display: block;
   object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(232, 160, 180, 0.55));
 }
-@keyframes neon-glow-flicker {
+@keyframes neon-sign-flicker {
   0%,18%,20%,22%,53%,55%,100% {
-    filter:
-      drop-shadow(0 0 3px var(--pink))
-      drop-shadow(0 0 10px var(--pink))
-      drop-shadow(0 0 18px var(--pink));
+    border-color: #f5c8d6;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      0 0 14px rgba(232, 160, 180, 0.9),
+      0 0 28px rgba(232, 160, 180, 0.5),
+      inset 0 0 18px rgba(232, 160, 180, 0.14);
   }
   19%,21%,54% {
-    filter: none;
+    border-color: rgba(232, 160, 180, 0.35);
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.3),
+      inset 0 0 10px rgba(0, 0, 0, 0.35);
   }
 }
 .bar-title {
@@ -104,7 +145,7 @@ body {
 
 /* ── 主视觉区 ── */
 .hero {
-  margin-top: 49px;
+  margin-top: 72px;
   position: relative;
   width: 100%;
   height: 380px;
@@ -407,10 +448,51 @@ body {
   margin-top: 12px;
 }
 
+/* ── 返回顶部 ── */
+.back-to-top {
+  position: fixed;
+  right: calc(18px + env(safe-area-inset-right));
+  bottom: calc(22px + env(safe-area-inset-bottom));
+  z-index: 90;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-dark);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s, visibility 0.25s, transform 0.2s, border-color 0.2s;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  -webkit-tap-highlight-color: transparent;
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.back-to-top:hover {
+  transform: translateY(-2px);
+  border-color: var(--ink);
+}
+.back-to-top-triangle {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 9px solid var(--ink);
+  margin-top: -2px;
+}
+
 /* ── 响应式 ── */
 @media (max-width: 640px) {
   .lang-bar { padding: 8px 16px; }
-  .site-logo-img { height: 30px; max-width: 132px; }
+  .site-logo-img { height: 40px; max-width: 168px; }
+  .neon-sign-board { padding: 7px 12px 9px; }
   .bar-title { display: none; }
   .hero { height: 260px; }
   .page-body { padding: 32px 16px 60px; gap: 32px; }
@@ -436,7 +518,9 @@ body {
 <div class="lang-bar">
   <div class="lang-bar-left">
     <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
-      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+      <span class="neon-sign-board">
+        <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+      </span>
     </a>
     <span class="bar-title">
       <span class="lang-zh-inline">异味须知</span>
@@ -684,9 +768,13 @@ body {
 
 </div>
 
+<button class="back-to-top" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="back-to-top-triangle"></span>
+</button>
+
 <!-- 底部 -->
 <div class="page-footer">
-  <a class="footer-back" href="home.html">
+  <a class="footer-back" href="index.html">
     ← <span class="lang-zh-inline">返回主页</span><span class="lang-en-inline">Back to Home</span>
   </a>
   <div class="footer-copy">© 2025 异味游戏同好会 Weird Games Club</div>
@@ -706,6 +794,13 @@ function setLang(lang) {
   document.querySelectorAll('.lang-en-flex').forEach(el => el.classList.toggle('visible', !isZH));
 }
 setLang('zh');
+(function() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  const toggle = () => btn.classList.toggle('visible', window.scrollY > 280);
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
 </script>
 </body>
 </html>
