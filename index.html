@@ -448,7 +448,7 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 }
 
 .nav-icon-gamepad {
-  height: 64px;
+  height: 68px;
   width: 72px;
 }
 .nav-icon-gamepad .gp-shell {
@@ -456,7 +456,7 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   top: 2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 58px;
+  width: 62px;
   height: 36px;
   background: linear-gradient(180deg, #5a5a5a 0%, #383838 52%, #2a2a2a 100%);
   border-radius: 22px 22px 14px 14px;
@@ -469,36 +469,36 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   content: '';
   position: absolute;
   bottom: -13px;
-  width: 21px;
+  width: 22px;
   height: 20px;
   background: linear-gradient(180deg, #3a3a3a 0%, #222 100%);
   border-radius: 0 0 16px 16px;
 }
 .nav-icon-gamepad .gp-shell::before {
-  left: 1px;
+  left: 0;
   transform: rotate(14deg);
   transform-origin: top center;
 }
 .nav-icon-gamepad .gp-shell::after {
-  right: 1px;
+  right: 0;
   transform: rotate(-14deg);
   transform-origin: top center;
 }
 .nav-icon-gamepad .gp-dpad {
   position: absolute;
-  top: 16px;
-  left: 9px;
-  width: 20px;
-  height: 20px;
+  top: 17px;
+  left: 11px;
+  width: 18px;
+  height: 18px;
   z-index: 2;
 }
 .nav-icon-gamepad .gp-dpad::before {
   content: '';
   position: absolute;
-  left: 7px;
+  left: 6px;
   top: 0;
   width: 6px;
-  height: 20px;
+  height: 18px;
   background: #8a8a8a;
   border-radius: 2px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
@@ -507,8 +507,8 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   content: '';
   position: absolute;
   left: 0;
-  top: 7px;
-  width: 20px;
+  top: 6px;
+  width: 18px;
   height: 6px;
   background: #8a8a8a;
   border-radius: 2px;
@@ -516,17 +516,17 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 }
 .nav-icon-gamepad .gp-face {
   position: absolute;
-  top: 16px;
-  right: 9px;
-  width: 8px;
-  height: 8px;
+  top: 19px;
+  right: 15px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: #66bb6a;
   z-index: 2;
   box-shadow:
-    0 13px 0 0 #ef5350,
-    -12px 6px 0 0 #42a5f5,
-    12px 6px 0 0 #ffca28;
+    0 8px 0 0 #ef5350,
+    -6px 4px 0 0 #42a5f5,
+    6px 4px 0 0 #ffca28;
 }
 
 .nav-icon-bookshelf {
@@ -576,86 +576,106 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 }
 
 .nav-icon-tower {
-  height: 80px;
-  width: 80px;
+  height: 68px;
+  width: 72px;
 }
-.nav-card.area-contact .nav-card-icon {
-  width: 80px;
-}
-.nav-icon-tower::before {
-  content: '';
+.nav-icon-tower .tw-body {
   position: absolute;
-  bottom: 4px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 64px solid var(--ink);
-  opacity: 0.92;
+  width: 56px;
+  height: 58px;
+  background: #dedee2;
+  clip-path: polygon(50% 0%, 96% 100%, 4% 100%);
+  overflow: hidden;
 }
-.nav-icon-tower::after {
+.nav-icon-tower .tw-body::before {
   content: '';
   position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70px;
-  height: 64px;
+  inset: 0;
   background:
     repeating-linear-gradient(
-      165deg,
-      transparent 0 7px,
-      rgba(255, 255, 255, 0.55) 7px 8px,
-      transparent 8px 16px
+      180deg,
+      transparent 0 8px,
+      rgba(17, 17, 17, 0.2) 8px 9px,
+      transparent 9px 18px
     ),
     repeating-linear-gradient(
-      -165deg,
-      transparent 0 7px,
-      rgba(255, 255, 255, 0.55) 7px 8px,
-      transparent 8px 16px
+      58deg,
+      transparent 0 8px,
+      rgba(17, 17, 17, 0.16) 8px 9px,
+      transparent 9px 18px
+    ),
+    repeating-linear-gradient(
+      -58deg,
+      transparent 0 8px,
+      rgba(17, 17, 17, 0.16) 8px 9px,
+      transparent 9px 18px
     );
-  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-  pointer-events: none;
 }
-.nav-icon-tower .icon-signal {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 28px;
-  height: 28px;
-  border: 2.5px solid var(--pink);
-  border-color: var(--pink) transparent transparent transparent;
-  border-radius: 50% 50% 0 0;
-  transform: rotate(-45deg);
-  opacity: 0.88;
-  box-shadow:
-    -8px -8px 0 -4px transparent,
-    -8px -8px 0 -2px var(--pink);
-}
-.nav-icon-tower .icon-signal::before,
-.nav-icon-tower .icon-signal::after {
+.nav-icon-tower .tw-body::after {
   content: '';
   position: absolute;
-  border: 2.5px solid var(--pink);
-  border-color: var(--pink) transparent transparent transparent;
-  border-radius: 50% 50% 0 0;
-  transform: rotate(0deg);
+  inset: 0;
+  background:
+    linear-gradient(135deg, transparent 46%, var(--ink) 46%, var(--ink) 47.5%, transparent 47.5%) 0 0 / 14px 14px,
+    linear-gradient(45deg, transparent 46%, var(--ink) 46%, var(--ink) 47.5%, transparent 47.5%) 7px 7px / 14px 14px;
+  opacity: 0.12;
 }
-.nav-icon-tower .icon-signal::before {
-  top: -10px;
-  left: -10px;
-  width: 18px;
-  height: 18px;
+.nav-icon-tower .tw-deck {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  border-radius: 1px;
+  z-index: 2;
+}
+.nav-icon-tower .tw-deck-1 {
+  top: 9px;
+  width: 36px;
+  height: 4px;
+  box-shadow: 0 5px 0 var(--ink);
+}
+.nav-icon-tower .tw-deck-2 {
+  top: 16px;
+  width: 30px;
+  height: 3px;
+  opacity: 0.88;
+}
+.nav-icon-tower .tw-deck-3 {
+  top: 22px;
+  width: 24px;
+  height: 3px;
   opacity: 0.72;
 }
-.nav-icon-tower .icon-signal::after {
-  top: -18px;
-  left: -18px;
-  width: 10px;
-  height: 10px;
-  opacity: 0.52;
+.nav-icon-tower .tw-antennas {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 9px;
+  background: var(--ink);
+  border-radius: 1px;
+  z-index: 3;
+}
+.nav-icon-tower .tw-antennas::before,
+.nav-icon-tower .tw-antennas::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 2px;
+  background: var(--ink);
+  border-radius: 1px;
+}
+.nav-icon-tower .tw-antennas::before {
+  left: -7px;
+  height: 6px;
+}
+.nav-icon-tower .tw-antennas::after {
+  right: -7px;
+  height: 8px;
 }
 
 .nav-card-en {
@@ -1076,19 +1096,23 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   .nav-card-icon { width: 56px; }
   .nav-icon-notepad { height: 54px; }
   .nav-icon-gamepad { height: 56px; width: 64px; }
-  .nav-icon-gamepad .gp-shell { width: 50px; height: 30px; }
+  .nav-icon-gamepad .gp-shell { width: 54px; height: 30px; }
   .nav-icon-gamepad .gp-shell::before,
   .nav-icon-gamepad .gp-shell::after { width: 18px; height: 16px; bottom: -11px; }
-  .nav-icon-gamepad .gp-dpad { top: 14px; left: 7px; width: 17px; height: 17px; }
-  .nav-icon-gamepad .gp-dpad::before { left: 6px; height: 17px; width: 5px; }
-  .nav-icon-gamepad .gp-dpad::after { top: 6px; width: 17px; height: 5px; }
-  .nav-icon-gamepad .gp-face { top: 14px; right: 7px; width: 7px; height: 7px; box-shadow: 0 11px 0 0 #ef5350, -10px 5px 0 0 #42a5f5, 10px 5px 0 0 #ffca28; }
+  .nav-icon-gamepad .gp-dpad { top: 15px; left: 9px; width: 16px; height: 16px; }
+  .nav-icon-gamepad .gp-dpad::before { left: 5px; height: 16px; width: 5px; }
+  .nav-icon-gamepad .gp-dpad::after { top: 5px; width: 16px; height: 5px; }
+  .nav-icon-gamepad .gp-face { top: 16px; right: 12px; width: 4px; height: 4px; box-shadow: 0 7px 0 0 #ef5350, -5px 3px 0 0 #42a5f5, 5px 3px 0 0 #ffca28; }
   .nav-icon-bookshelf { height: 58px; }
   .nav-icon-trees { height: 54px; }
-  .nav-icon-tower { height: 68px; width: 68px; }
-  .nav-card.area-contact .nav-card-icon { width: 68px; }
-  .nav-icon-tower::before { border-left-width: 8px; border-right-width: 8px; border-bottom-width: 54px; }
-  .nav-icon-tower::after { width: 58px; height: 54px; }
+  .nav-icon-tower { height: 58px; width: 64px; }
+  .nav-icon-tower .tw-body { width: 48px; height: 50px; }
+  .nav-icon-tower .tw-deck-1 { top: 7px; width: 30px; box-shadow: 0 4px 0 var(--ink); }
+  .nav-icon-tower .tw-deck-2 { top: 13px; width: 26px; }
+  .nav-icon-tower .tw-deck-3 { top: 18px; width: 22px; }
+  .nav-icon-tower .tw-antennas { height: 7px; }
+  .nav-icon-tower .tw-antennas::before { left: -6px; height: 5px; }
+  .nav-icon-tower .tw-antennas::after { right: -6px; height: 6px; }
   .rec-slide { padding: 18px 48px 18px 16px; }
   .rec-slide-thumb { width: 72px; height: 72px; font-size: 0.72rem; }
   .rec-slide-title { font-size: 0.95rem; }
@@ -1311,7 +1335,7 @@ html[lang="en"] .countdown-label-row-en { display: block; }
           <span class="nav-card-desc lang-en">Want to collab? Our signal receiver is wide open.</span>
           <span class="nav-card-arrow">→</span>
         </div>
-        <span class="nav-card-icon nav-icon-tower" aria-hidden="true"><span class="icon-signal"></span></span>
+        <span class="nav-card-icon nav-icon-tower" aria-hidden="true"><span class="tw-body"></span><span class="tw-deck tw-deck-1"></span><span class="tw-deck tw-deck-2"></span><span class="tw-deck tw-deck-3"></span><span class="tw-antennas"></span></span>
       </a>
 
     </div>
