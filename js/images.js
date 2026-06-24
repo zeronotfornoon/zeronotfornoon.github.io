@@ -20,8 +20,8 @@ function resolveBodyImages(body, articleId) {
   });
 
   result = result.replace(
-    /(<img\s[^>]*\ssrc=["'])([^"']+)(["'][^>]*>)/gi,
-    (match, before, src, after) => before + resolveArticleImage(articleId, src) + after
+    /(<img\b[^>]*\bsrc=)(["'])([^"']+)\2/gi,
+    (match, prefix, quote, src) => prefix + quote + resolveArticleImage(articleId, src) + quote
   );
 
   return result;
