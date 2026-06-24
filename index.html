@@ -65,64 +65,38 @@ body {
   transition: transform 0.2s;
 }
 .lang-bar-logo:hover { transform: translateY(-1px); }
-.neon-sign-board {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 9px 16px 11px;
-  background: linear-gradient(165deg, #1c1c1c 0%, #0a0a0a 55%, #141414 100%);
-  border: 2px solid var(--pink);
-  border-radius: 8px;
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.25),
-    0 0 12px rgba(232, 160, 180, 0.45),
-    inset 0 0 16px rgba(232, 160, 180, 0.1);
-  animation: neon-sign-flicker 3.5s infinite;
-  position: relative;
-}
-.neon-sign-board::before,
-.neon-sign-board::after {
-  content: '';
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border: 1px solid rgba(245, 214, 224, 0.55);
-  pointer-events: none;
-}
-.neon-sign-board::before {
-  top: 5px;
-  left: 5px;
-  border-right: none;
-  border-bottom: none;
-}
-.neon-sign-board::after {
-  bottom: 5px;
-  right: 5px;
-  border-left: none;
-  border-top: none;
-}
 .site-logo-img {
-  height: 52px;
+  height: 58px;
   width: auto;
-  max-width: 220px;
+  max-width: 260px;
   display: block;
   object-fit: contain;
-  filter: drop-shadow(0 0 8px rgba(232, 160, 180, 0.55));
+  animation: logo-neon-flicker 3.5s infinite;
 }
-@keyframes neon-sign-flicker {
+.hero-en-logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+.lang-en.visible.hero-en-logo-wrap { display: flex; }
+.hero-logo-large {
+  height: clamp(72px, 14vw, 118px);
+  width: auto;
+  max-width: min(92vw, 440px);
+  display: block;
+  object-fit: contain;
+  animation: logo-neon-flicker 3.5s infinite;
+}
+@keyframes logo-neon-flicker {
   0%,18%,20%,22%,53%,55%,100% {
-    border-color: #f5c8d6;
-    box-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.2),
-      0 0 14px rgba(232, 160, 180, 0.9),
-      0 0 28px rgba(232, 160, 180, 0.5),
-      inset 0 0 18px rgba(232, 160, 180, 0.14);
+    filter:
+      drop-shadow(0 0 2px var(--pink))
+      drop-shadow(0 0 8px var(--pink))
+      drop-shadow(0 0 18px rgba(232, 160, 180, 0.9))
+      drop-shadow(0 0 30px rgba(232, 160, 180, 0.5));
   }
   19%,21%,54% {
-    border-color: rgba(232, 160, 180, 0.35);
-    box-shadow:
-      0 2px 6px rgba(0, 0, 0, 0.3),
-      inset 0 0 10px rgba(0, 0, 0, 0.35);
+    filter: drop-shadow(0 0 1px rgba(232, 160, 180, 0.2));
   }
 }
 .lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
@@ -208,17 +182,43 @@ body {
 .countdown-strip {
   background: var(--ink);
   color: var(--white);
-  padding: 20px 40px;
+  padding: 20px 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 20px;
   flex-wrap: wrap;
   border-radius: 16px;
   width: 100%;
   max-width: 900px;
   overflow: hidden;
 }
+.countdown-mushroom-slot {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+}
+html[lang="en"] .countdown-mushroom-slot { display: flex; }
+.countdown-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+.countdown-label-row-zh {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+html[lang="en"] .countdown-label-row-zh { display: none; }
+.countdown-label-row-en { display: none; flex-shrink: 0; }
+html[lang="en"] .countdown-label-row-en { display: block; }
 .countdown-label-wrap {
   display: flex;
   align-items: center;
@@ -227,8 +227,8 @@ body {
   max-width: 100%;
 }
 .glow-mushroom {
-  width: 22px;
-  height: 26px;
+  width: 28px;
+  height: 34px;
   flex-shrink: 0;
   position: relative;
   animation: mush-glow-pulse 2.4s ease-in-out infinite;
@@ -238,23 +238,23 @@ body {
   position: absolute;
   top: 0;
   left: 1px;
-  width: 20px;
-  height: 13px;
+  width: 26px;
+  height: 16px;
   background: #e8a0b4;
   border-radius: 50% 50% 38% 38%;
   box-shadow:
-    4px 3px 0 1px rgba(255, 255, 255, 0.45),
-    11px 5px 0 1px rgba(255, 255, 255, 0.28),
-    0 0 8px #f5c8d6,
-    0 0 16px rgba(232, 160, 180, 0.75);
+    5px 4px 0 1px rgba(255, 255, 255, 0.45),
+    13px 6px 0 1px rgba(255, 255, 255, 0.28),
+    0 0 10px #f5c8d6,
+    0 0 20px rgba(232, 160, 180, 0.8);
 }
 .glow-mushroom::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 7px;
-  width: 8px;
-  height: 11px;
+  left: 9px;
+  width: 10px;
+  height: 14px;
   background: linear-gradient(180deg, #f5e6ec 0%, #dcc4d0 100%);
   border-radius: 2px 2px 3px 3px;
 }
@@ -333,6 +333,70 @@ body {
   border: 1px solid transparent;
   transition: all 0.2s ease;
   position: relative;
+  overflow: hidden;
+  min-height: 148px;
+}
+.nav-card > * { position: relative; z-index: 1; }
+.nav-card::after {
+  content: '';
+  position: absolute;
+  right: 18px;
+  bottom: 24px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.26;
+}
+.nav-card.area-about::after {
+  width: 54px;
+  height: 38px;
+  background:
+    linear-gradient(135deg, transparent 42%, #999 42%, #999 58%, transparent 58%),
+    linear-gradient(90deg, #d8d8d8 0%, #d8d8d8 47%, #666 47%, #666 53%, #d8d8d8 53%);
+  border-radius: 3px;
+  transform: rotate(-8deg);
+}
+.nav-card.area-games::after {
+  width: 52px;
+  height: 34px;
+  background: #5a5a5a;
+  border-radius: 14px;
+  box-shadow:
+    inset 0 0 0 2px #888,
+    -12px -8px 0 -6px #999,
+    12px -8px 0 -6px #999,
+    -12px 8px 0 -6px #999,
+    12px 8px 0 -6px #999,
+    0 -10px 0 -8px #777;
+  transform: none;
+}
+.nav-card.area-archive::after {
+  width: 58px;
+  height: 42px;
+  background:
+    repeating-linear-gradient(180deg, #8b7355 0, #8b7355 3px, transparent 3px, transparent 9px),
+    linear-gradient(90deg, #6a5040, #a08060);
+  border: 2px solid #5a4030;
+  border-radius: 2px;
+  transform: none;
+}
+.nav-card.area-wilds::after {
+  width: 58px;
+  height: 42px;
+  background: linear-gradient(to bottom, #e8a050 0%, #e8a050 38%, #5a4030 38%, #2a3828 100%);
+  border-radius: 2px;
+  box-shadow: inset 14px 0 0 -9px #1a2818, inset -10px 0 0 -7px #1a2818;
+  transform: none;
+}
+.nav-card.area-contact::after {
+  width: 40px;
+  height: 48px;
+  opacity: 0.32;
+  background:
+    linear-gradient(#aaa, #aaa) center 2px / 8px 26px no-repeat,
+    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(232,160,180,0.55) 3px, rgba(232,160,180,0.55) 7px);
+  background-position: center 2px, center bottom;
+  background-size: 8px 26px, 44px 14px;
+  transform: none;
 }
 .nav-card:hover {
   background: var(--white);
@@ -547,7 +611,11 @@ body {
   letter-spacing: 0.04em;
 }
 
-/* ── 侧栏 New 资讯轮播 ── */
+/* ── 主栏 News 轮播 ── */
+.rec-carousel-section {
+  margin-bottom: 28px;
+}
+.main-rec-carousel .rec-carousel-track { min-height: 132px; }
 .new-section-title {
   display: flex;
   align-items: center;
@@ -750,8 +818,8 @@ body {
 
 @media (max-width: 576px) {
   .lang-bar { padding: 8px 16px; }
-  .site-logo-img { height: 40px; max-width: 168px; }
-  .neon-sign-board { padding: 7px 12px 9px; }
+  .site-logo-img { height: 44px; max-width: 200px; }
+  .hero-logo-large { height: clamp(56px, 12vw, 88px); }
   .hero-bg { height: 240px; object-position: center 30%; }
   .hero-overlay { padding: 16px; }
   .hero-title-zh { font-size: 1.6rem; padding: 8px 16px; }
@@ -780,9 +848,7 @@ body {
 <!-- 顶部语言栏 -->
 <div class="lang-bar">
   <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
-    <span class="neon-sign-board">
-      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
-    </span>
+    <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
   </a>
   <div class="lang-switch">
     <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
@@ -798,8 +864,9 @@ body {
     <div class="lang-zh" style="display:flex;flex-direction:column;align-items:center;gap:12px;">
       <div class="hero-title-zh">异味游戏同好会</div>
     </div>
-    <!-- 英文版：主视觉区仅保留副标题 -->
-    <div class="lang-en" style="display:flex;flex-direction:column;align-items:center;">
+    <!-- 英文版：大号霓虹 Logo 作为标题 -->
+    <div class="lang-en hero-en-logo-wrap">
+      <img class="hero-logo-large" src="logo2.png" alt="Weird Games Club">
     </div>
     <div class="hero-tagline">
       <span class="lang-zh-inline">独立游戏不是流水线产品，每一份异味都值得深尝</span>
@@ -811,14 +878,22 @@ body {
 <!-- 倒计时条 -->
 <div class="countdown-wrap">
 <div class="countdown-strip">
-  <div class="countdown-label-wrap">
+  <div class="countdown-mushroom-slot">
     <span class="glow-mushroom" aria-hidden="true"></span>
-    <div class="countdown-label">
-      <span class="lang-zh-inline">野菌即将破土而出……</span>
-      <span class="lang-en-inline">The mushrooms are about to emerge…</span>
-    </div>
   </div>
-  <div class="countdown-timer">
+  <div class="countdown-body">
+    <div class="countdown-label-row-zh">
+      <span class="glow-mushroom" aria-hidden="true"></span>
+      <div class="countdown-label">
+        <span class="lang-zh-inline">野菌即将破土而出……</span>
+      </div>
+    </div>
+    <div class="countdown-label-row-en">
+      <div class="countdown-label">
+        <span class="lang-en-inline">The mushrooms are about to emerge…</span>
+      </div>
+    </div>
+    <div class="countdown-timer">
     <div class="cd-unit">
       <div class="cd-num" id="cdDays">00</div>
       <div class="cd-lbl"><span class="lang-zh-inline">天</span><span class="lang-en-inline">days</span></div>
@@ -838,6 +913,7 @@ body {
       <div class="cd-num" id="cdSecs">00</div>
       <div class="cd-lbl"><span class="lang-zh-inline">秒</span><span class="lang-en-inline">sec</span></div>
     </div>
+    </div>
   </div>
 </div>
 </div>
@@ -847,6 +923,54 @@ body {
 
   <!-- 左：主内容区 -->
   <div class="main-col">
+
+    <div class="rec-carousel-section">
+      <div class="nav-section-title new-section-title">
+        <span class="megaphone-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 11c0-1.1-.9-2-2-2H8.5L5 4H3v12h2l3.5-5H16c1.1 0 2-.9 2-2v-1l4 2v-6l-4 2v-1z"/></svg>
+        </span>
+        News
+      </div>
+      <div class="rec-carousel main-rec-carousel" id="newsCarousel">
+        <div class="rec-carousel-track">
+          <a class="rec-slide active" href="#">
+            <div class="rec-slide-thumb">
+              <span class="lang-zh-inline">汉化<br>追踪</span>
+              <span class="lang-en-inline">Loc.</span>
+            </div>
+            <div class="rec-slide-info">
+              <div class="rec-slide-title">
+                <span class="lang-zh-inline">【资讯占位】某款独立游戏中文本地化更新跟踪中</span>
+                <span class="lang-en-inline">Placeholder: indie game localization update incoming</span>
+              </div>
+              <div class="rec-slide-meta">
+                <span class="lang-zh-inline">资讯 · 待更新</span>
+                <span class="lang-en-inline">News · Update Soon</span>
+              </div>
+            </div>
+          </a>
+          <a class="rec-slide" href="#">
+            <div class="rec-slide-thumb">
+              <span class="lang-zh-inline">补丁<br>速递</span>
+              <span class="lang-en-inline">Patch</span>
+            </div>
+            <div class="rec-slide-info">
+              <div class="rec-slide-title">
+                <span class="lang-zh-inline">【资讯占位】模组与汉化补丁汇总即将上线</span>
+                <span class="lang-en-inline">Placeholder: mod & patch localization digest coming</span>
+              </div>
+              <div class="rec-slide-meta">
+                <span class="lang-zh-inline">资讯 · 待更新</span>
+                <span class="lang-en-inline">News · Update Soon</span>
+              </div>
+            </div>
+          </a>
+        </div>
+        <button class="rec-carousel-btn prev" type="button" aria-label="上一条" onclick="moveNewsCarousel(-1)">‹</button>
+        <button class="rec-carousel-btn next" type="button" aria-label="下一条" onclick="moveNewsCarousel(1)">›</button>
+        <div class="rec-carousel-dots" id="newsCarouselDots"></div>
+      </div>
+    </div>
 
     <div class="nav-section-title">
       <span class="lang-zh-inline">探索更多</span>
@@ -962,43 +1086,41 @@ body {
     </a>
 
     <div class="side-card">
-      <div class="side-card-title new-section-title">
-        <span class="megaphone-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 11c0-1.1-.9-2-2-2H8.5L5 4H3v12h2l3.5-5H16c1.1 0 2-.9 2-2v-1l4 2v-6l-4 2v-1z"/></svg>
-        </span>
-        New
+      <div class="side-card-title">
+        <span class="lang-zh-inline">内容推荐</span>
+        <span class="lang-en-inline">Recommended</span>
       </div>
       <div class="rec-carousel side-rec-carousel" id="recCarousel">
         <div class="rec-carousel-track">
           <a class="rec-slide active" href="#">
             <div class="rec-slide-thumb">
-              <span class="lang-zh-inline">汉化<br>追踪</span>
-              <span class="lang-en-inline">Loc.</span>
+              <span class="lang-zh-inline">最新<br>文章</span>
+              <span class="lang-en-inline">Post</span>
             </div>
             <div class="rec-slide-info">
               <div class="rec-slide-title">
-                <span class="lang-zh-inline">【资讯占位】某款独立游戏中文本地化更新跟踪中</span>
-                <span class="lang-en-inline">Placeholder: indie game localization update incoming</span>
+                <span class="lang-zh-inline">【独立游戏评测】最新更新占位</span>
+                <span class="lang-en-inline">New Review Heading Placeholder</span>
               </div>
               <div class="rec-slide-meta">
-                <span class="lang-zh-inline">资讯 · 待更新</span>
-                <span class="lang-en-inline">News · Update Soon</span>
+                <span class="lang-zh-inline">评测 · 待更新</span>
+                <span class="lang-en-inline">Review · Update Soon</span>
               </div>
             </div>
           </a>
           <a class="rec-slide" href="#">
             <div class="rec-slide-thumb">
-              <span class="lang-zh-inline">补丁<br>速递</span>
-              <span class="lang-en-inline">Patch</span>
+              <span class="lang-zh-inline">独家<br>采访</span>
+              <span class="lang-en-inline">Interv.</span>
             </div>
             <div class="rec-slide-info">
               <div class="rec-slide-title">
-                <span class="lang-zh-inline">【资讯占位】模组与汉化补丁汇总即将上线</span>
-                <span class="lang-en-inline">Placeholder: mod & patch localization digest coming</span>
+                <span class="lang-zh-inline">【开发者专访】核心篇章占位</span>
+                <span class="lang-en-inline">Developer Interview Placeholder</span>
               </div>
               <div class="rec-slide-meta">
-                <span class="lang-zh-inline">资讯 · 待更新</span>
-                <span class="lang-en-inline">News · Update Soon</span>
+                <span class="lang-zh-inline">采访 · 待更新</span>
+                <span class="lang-en-inline">Interview · Update Soon</span>
               </div>
             </div>
           </a>
@@ -1058,49 +1180,65 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// 内容推荐轮播
-let recCarouselIndex = 0;
-let recCarouselTimer = null;
-const recSlides = () => document.querySelectorAll('#recCarousel .rec-slide');
-const recDotsContainer = document.getElementById('recCarouselDots');
+// 双轮播：News（主栏）+ 内容推荐（侧栏）
+const carouselStates = {};
 
-function buildRecCarouselDots() {
-  if (!recDotsContainer) return;
-  recDotsContainer.innerHTML = '';
-  recSlides().forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.type = 'button';
-    dot.className = 'rec-carousel-dot' + (i === recCarouselIndex ? ' active' : '');
-    dot.setAttribute('aria-label', '第 ' + (i + 1) + ' 条');
-    dot.addEventListener('click', () => goRecCarousel(i));
-    recDotsContainer.appendChild(dot);
-  });
-}
+function initCarousel(rootId, dotsId) {
+  const root = document.getElementById(rootId);
+  const dotsEl = document.getElementById(dotsId);
+  if (!root || !dotsEl) return;
 
-function goRecCarousel(index) {
-  const slides = recSlides();
-  if (!slides.length) return;
-  recCarouselIndex = ((index % slides.length) + slides.length) % slides.length;
-  slides.forEach((slide, i) => slide.classList.toggle('active', i === recCarouselIndex));
-  recDotsContainer.querySelectorAll('.rec-carousel-dot').forEach((dot, i) => {
-    dot.classList.toggle('active', i === recCarouselIndex);
-  });
-}
+  const state = { index: 0, timer: null };
+  const slides = () => root.querySelectorAll('.rec-slide');
 
-function moveRecCarousel(step) {
-  goRecCarousel(recCarouselIndex + step);
-  restartRecCarouselAuto();
-}
-
-function restartRecCarouselAuto() {
-  if (recCarouselTimer) clearInterval(recCarouselTimer);
-  if (recSlides().length > 1) {
-    recCarouselTimer = setInterval(() => moveRecCarousel(1), 6000);
+  function buildDots() {
+    dotsEl.innerHTML = '';
+    slides().forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'rec-carousel-dot' + (i === state.index ? ' active' : '');
+      dot.setAttribute('aria-label', '第 ' + (i + 1) + ' 条');
+      dot.addEventListener('click', () => go(i));
+      dotsEl.appendChild(dot);
+    });
   }
+
+  function go(index) {
+    const list = slides();
+    if (!list.length) return;
+    state.index = ((index % list.length) + list.length) % list.length;
+    list.forEach((slide, i) => slide.classList.toggle('active', i === state.index));
+    dotsEl.querySelectorAll('.rec-carousel-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === state.index);
+    });
+  }
+
+  function move(step) {
+    go(state.index + step);
+    restart();
+  }
+
+  function restart() {
+    if (state.timer) clearInterval(state.timer);
+    if (slides().length > 1) {
+      state.timer = setInterval(() => move(1), 6000);
+    }
+  }
+
+  carouselStates[rootId] = { move };
+  buildDots();
+  restart();
 }
 
-buildRecCarouselDots();
-restartRecCarouselAuto();
+function moveNewsCarousel(step) {
+  carouselStates.newsCarousel?.move(step);
+}
+function moveRecCarousel(step) {
+  carouselStates.recCarousel?.move(step);
+}
+
+initCarousel('newsCarousel', 'newsCarouselDots');
+initCarousel('recCarousel', 'recCarouselDots');
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });

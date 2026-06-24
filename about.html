@@ -66,64 +66,24 @@ body {
   transition: transform 0.2s;
 }
 .lang-bar-logo:hover { transform: translateY(-1px); }
-.neon-sign-board {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 9px 16px 11px;
-  background: linear-gradient(165deg, #1c1c1c 0%, #0a0a0a 55%, #141414 100%);
-  border: 2px solid var(--pink);
-  border-radius: 8px;
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.25),
-    0 0 12px rgba(232, 160, 180, 0.45),
-    inset 0 0 16px rgba(232, 160, 180, 0.1);
-  animation: neon-sign-flicker 3.5s infinite;
-  position: relative;
-}
-.neon-sign-board::before,
-.neon-sign-board::after {
-  content: '';
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border: 1px solid rgba(245, 214, 224, 0.55);
-  pointer-events: none;
-}
-.neon-sign-board::before {
-  top: 5px;
-  left: 5px;
-  border-right: none;
-  border-bottom: none;
-}
-.neon-sign-board::after {
-  bottom: 5px;
-  right: 5px;
-  border-left: none;
-  border-top: none;
-}
 .site-logo-img {
-  height: 52px;
+  height: 58px;
   width: auto;
-  max-width: 220px;
+  max-width: 260px;
   display: block;
   object-fit: contain;
-  filter: drop-shadow(0 0 8px rgba(232, 160, 180, 0.55));
+  animation: logo-neon-flicker 3.5s infinite;
 }
-@keyframes neon-sign-flicker {
+@keyframes logo-neon-flicker {
   0%,18%,20%,22%,53%,55%,100% {
-    border-color: #f5c8d6;
-    box-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.2),
-      0 0 14px rgba(232, 160, 180, 0.9),
-      0 0 28px rgba(232, 160, 180, 0.5),
-      inset 0 0 18px rgba(232, 160, 180, 0.14);
+    filter:
+      drop-shadow(0 0 2px var(--pink))
+      drop-shadow(0 0 8px var(--pink))
+      drop-shadow(0 0 18px rgba(232, 160, 180, 0.9))
+      drop-shadow(0 0 30px rgba(232, 160, 180, 0.5));
   }
   19%,21%,54% {
-    border-color: rgba(232, 160, 180, 0.35);
-    box-shadow:
-      0 2px 6px rgba(0, 0, 0, 0.3),
-      inset 0 0 10px rgba(0, 0, 0, 0.35);
+    filter: drop-shadow(0 0 1px rgba(232, 160, 180, 0.2));
   }
 }
 .bar-title {
@@ -491,8 +451,7 @@ body {
 /* ── 响应式 ── */
 @media (max-width: 640px) {
   .lang-bar { padding: 8px 16px; }
-  .site-logo-img { height: 40px; max-width: 168px; }
-  .neon-sign-board { padding: 7px 12px 9px; }
+  .site-logo-img { height: 44px; max-width: 200px; }
   .bar-title { display: none; }
   .hero { height: 260px; }
   .page-body { padding: 32px 16px 60px; gap: 32px; }
@@ -518,9 +477,7 @@ body {
 <div class="lang-bar">
   <div class="lang-bar-left">
     <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
-      <span class="neon-sign-board">
-        <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
-      </span>
+      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
     </a>
     <span class="bar-title">
       <span class="lang-zh-inline">异味须知</span>

@@ -118,7 +118,7 @@
     max-width: 720px;
     width: 100%;
     margin: 0 auto;
-    padding: calc(72px + env(safe-area-inset-top)) 20px calc(118px + env(safe-area-inset-bottom));
+    padding: calc(72px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));
     animation: fadeIn 1.2s ease;
   }
   @keyframes fadeIn {
@@ -293,16 +293,16 @@
     font-weight: 600;
   }
 
-  /* ── 会员卡（底部居中浮动） ── */
+  /* ── 会员卡（底部左侧，缩小） ── */
   .member-card-bar {
     position: fixed;
-    bottom: calc(12px + env(safe-area-inset-bottom));
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    left: calc(10px + env(safe-area-inset-left));
     z-index: 10;
-    width: min(400px, calc(100vw - 28px));
+    width: min(260px, calc(100vw - 70px));
     padding: 0;
     pointer-events: none;
+    transform: none;
   }
   .member-card-bar .id-card {
     pointer-events: auto;
@@ -336,15 +336,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
-    padding: 8px 12px 6px;
+    gap: 6px;
+    padding: 5px 8px 4px;
     border-bottom: 1px solid rgba(106, 143, 110, 0.35);
     background: rgba(0, 0, 0, 0.2);
   }
   .id-card-brand {
     font-family: 'Noto Sans SC', sans-serif;
     font-weight: 900;
-    font-size: 0.82rem;
+    font-size: 0.62rem;
     color: var(--label);
     letter-spacing: 0.12em;
   }
@@ -364,8 +364,8 @@
   .id-card-body {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
+    gap: 8px;
+    padding: 6px 8px;
   }
   .id-card-photo-wrap {
     flex-shrink: 0;
@@ -375,8 +375,8 @@
     background: rgba(0, 0, 0, 0.25);
   }
   .id-card-photo {
-    width: 52px;
-    height: 64px;
+    width: 40px;
+    height: 48px;
     object-fit: cover;
     display: block;
     border-radius: 2px;
@@ -461,64 +461,24 @@
     transition: transform 0.2s;
   }
   .lang-bar-logo:hover { transform: translateY(-1px); }
-  .neon-sign-board {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 9px 16px 11px;
-    background: linear-gradient(165deg, #1c1c1c 0%, #0a0a0a 55%, #141414 100%);
-    border: 2px solid #e8a0b4;
-    border-radius: 8px;
-    box-shadow:
-      0 2px 10px rgba(0, 0, 0, 0.45),
-      0 0 14px rgba(232, 160, 180, 0.55),
-      inset 0 0 16px rgba(232, 160, 180, 0.12);
-    animation: neon-sign-flicker 3.5s infinite;
-    position: relative;
-  }
-  .neon-sign-board::before,
-  .neon-sign-board::after {
-    content: '';
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border: 1px solid rgba(245, 214, 224, 0.55);
-    pointer-events: none;
-  }
-  .neon-sign-board::before {
-    top: 5px;
-    left: 5px;
-    border-right: none;
-    border-bottom: none;
-  }
-  .neon-sign-board::after {
-    bottom: 5px;
-    right: 5px;
-    border-left: none;
-    border-top: none;
-  }
   .site-logo-img {
-    height: 52px;
+    height: 58px;
     width: auto;
-    max-width: 220px;
+    max-width: 260px;
     display: block;
     object-fit: contain;
-    filter: drop-shadow(0 0 8px rgba(232, 160, 180, 0.55));
+    animation: logo-neon-flicker 3.5s infinite;
   }
-  @keyframes neon-sign-flicker {
+  @keyframes logo-neon-flicker {
     0%,18%,20%,22%,53%,55%,100% {
-      border-color: #f5c8d6;
-      box-shadow:
-        0 2px 10px rgba(0, 0, 0, 0.4),
-        0 0 16px rgba(232, 160, 180, 0.95),
-        0 0 32px rgba(232, 160, 180, 0.55),
-        inset 0 0 18px rgba(232, 160, 180, 0.16);
+      filter:
+        drop-shadow(0 0 2px #e8a0b4)
+        drop-shadow(0 0 8px #e8a0b4)
+        drop-shadow(0 0 18px rgba(232, 160, 180, 0.9))
+        drop-shadow(0 0 30px rgba(232, 160, 180, 0.5));
     }
     19%,21%,54% {
-      border-color: rgba(232, 160, 180, 0.35);
-      box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.5),
-        inset 0 0 10px rgba(0, 0, 0, 0.4);
+      filter: drop-shadow(0 0 1px rgba(232, 160, 180, 0.2));
     }
   }
   .wilds-music-btn {
@@ -740,16 +700,6 @@
     text-decoration: none;
   }
   .sponsor-link:hover { text-decoration: underline; }
-  .sponsor-modal-footer {
-    flex-shrink: 0;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(106, 143, 110, 0.25);
-  }
-  .sponsor-modal-footer .modal-btn {
-    width: 100%;
-    display: block;
-  }
 
   .explore-modal { max-width: 460px; }
   #exploreIntroModal .modal-title,
@@ -866,7 +816,7 @@
 
   @media (max-width: 600px) {
     .forest-bg { background-position: center 85%; }
-    .wilds-wrap { padding: calc(68px + env(safe-area-inset-top)) 14px calc(108px + env(safe-area-inset-bottom)); }
+    .wilds-wrap { padding: calc(68px + env(safe-area-inset-top)) 14px calc(96px + env(safe-area-inset-bottom)); }
     .panel { padding: 18px 16px; margin-bottom: 12px; }
     .wilds-title { font-size: clamp(1.35rem, 6vw, 1.85rem); }
     .weather-row { font-size: 0.88rem; }
@@ -882,8 +832,7 @@
     .id-card-type { font-size: 0.66rem; }
     .member-logout-btn { font-size: 0.68rem; padding: 6px 10px; }
     .wilds-music-btn { font-size: 0.68rem; padding: 6px 10px; }
-    .site-logo-img { height: 40px; max-width: 168px; }
-    .neon-sign-board { padding: 7px 12px 9px; }
+    .site-logo-img { height: 44px; max-width: 200px; }
   }
 
   @media (max-width: 360px) {
@@ -902,9 +851,7 @@
 
 <div class="wilds-top-bar">
   <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
-    <span class="neon-sign-board">
-      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
-    </span>
+    <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
   </a>
   <button class="wilds-music-btn" id="musicToggle" type="button" onclick="toggleMusic()">♪ 音乐开启</button>
 </div>
@@ -1041,10 +988,7 @@
     <div class="modal-title">异味林地资助人</div>
     <div class="sponsor-thanks" id="sponsorThanks">感谢你们，没有你们就没有异味林地！</div>
     <div id="sponsorContent">
-      <div class="sponsor-loading">正在同步爱发电数据……</div>
-    </div>
-    <div class="sponsor-modal-footer">
-      <button class="modal-btn" type="button" onclick="closeSponsorModal()">点击返回</button>
+      <div class="sponsor-loading">正在加载赞助人名单……</div>
     </div>
   </div>
 </div>
@@ -1719,38 +1663,49 @@
         const data = await localRes.json();
         if (Array.isArray(data)) {
           sponsors = data;
-        } else if (data.list && Array.isArray(data.list)) {
+        } else if (data && data.list && Array.isArray(data.list)) {
           sponsors = data.list;
           if (data.updated_at) syncHint = '同步于 ' + data.updated_at;
         }
       }
-    } catch (e) { /* ignore */ }
+    } catch (e) { /* ignore fetch/parse errors */ }
 
-    if (sponsors && sponsors.length > 0) {
-      const ul = document.createElement('ul');
-      ul.className = 'sponsor-list';
-      sponsors.forEach(function(s) {
-        const li = document.createElement('li');
-        const idSpan = document.createElement('span');
-        idSpan.className = 'sponsor-name';
-        idSpan.textContent = s.id || s.user_id || s.name || s.user_name || '匿名资助人';
-        li.appendChild(idSpan);
-        ul.appendChild(li);
-      });
-      container.innerHTML = '';
-      if (syncHint) {
-        const hint = document.createElement('div');
-        hint.className = 'sponsor-empty';
-        hint.style.padding = '0 12px 10px';
-        hint.style.fontSize = '0.75rem';
-        hint.textContent = syncHint;
-        container.appendChild(hint);
+    try {
+      if (sponsors && sponsors.length > 0) {
+        const ul = document.createElement('ul');
+        ul.className = 'sponsor-list';
+        sponsors.forEach(function(s) {
+          const li = document.createElement('li');
+          const idSpan = document.createElement('span');
+          idSpan.className = 'sponsor-name';
+          idSpan.textContent = s.id || s.user_id || s.name || s.user_name || '匿名资助人';
+          li.appendChild(idSpan);
+          ul.appendChild(li);
+        });
+        container.innerHTML = '';
+        if (syncHint) {
+          const hint = document.createElement('div');
+          hint.className = 'sponsor-empty';
+          hint.style.padding = '0 12px 10px';
+          hint.style.fontSize = '0.75rem';
+          hint.textContent = syncHint;
+          container.appendChild(hint);
+        }
+        container.appendChild(ul);
+      } else {
+        container.innerHTML = `
+          <div class="sponsor-empty">
+            暂无赞助人名单，或数据仍在同步中。<br>
+            也可前往
+            <a class="sponsor-link" href="https://afdian.com/a/${AFDIAN_SLUG}" target="_blank" rel="noopener">爱发电 · ${AFDIAN_SLUG}</a>
+            查看。
+          </div>
+        `;
       }
-      container.appendChild(ul);
-    } else {
+    } catch (e) {
       container.innerHTML = `
         <div class="sponsor-empty">
-          赞助人名单正在同步中，请稍后再试。<br>
+          赞助人名单加载失败，请稍后再试。<br>
           也可前往
           <a class="sponsor-link" href="https://afdian.com/a/${AFDIAN_SLUG}" target="_blank" rel="noopener">爱发电 · ${AFDIAN_SLUG}</a>
           查看。
