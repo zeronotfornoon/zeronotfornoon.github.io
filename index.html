@@ -38,12 +38,30 @@ setSiteMeta({
   --color-weibo: #df2029;
   --color-gcores: #fb5607;
   --color-afdian: #9466ff;
+
+  /* 分类标签色 */
+  --cat-interview: #d4607e;
+  --cat-research: #5c7a9e;
+  --cat-news: #6a8f6e;
+
+  /* 导航卡主题色 */
+  --card-about-bg: #faf6ef;
+  --card-about-accent: #c4a882;
+  --card-games-bg: #f2eef8;
+  --card-games-accent: #8b7aad;
+  --card-archive-bg: #f5f0e6;
+  --card-archive-accent: #9a7b4f;
+  --card-wilds-bg: #edf4ed;
+  --card-wilds-accent: #5a8a5a;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--off-white);
+  background-color: var(--off-white);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(17, 17, 17, 0.028) 1px, transparent 0);
+  background-size: 22px 22px;
   color: var(--ink);
   font-family: 'Noto Sans SC', sans-serif;
   overflow-x: hidden;
@@ -80,16 +98,6 @@ body {
   display: block;
   object-fit: contain;
   animation: logo-neon-flicker 3.5s infinite;
-}
-.hero-title-img {
-  display: block;
-  width: auto;
-  height: clamp(52px, 11vw, 96px);
-  max-width: min(92vw, 820px);
-  object-fit: contain;
-  filter:
-    drop-shadow(0 0 2px rgba(232, 160, 180, 0.35))
-    drop-shadow(0 2px 8px rgba(17, 17, 17, 0.12));
 }
 @keyframes logo-neon-flicker {
   0%,18%,20%,22%,53%,55%,100% {
@@ -128,22 +136,36 @@ body {
   object-fit: cover;
   /* 聚焦于头像区域，并给予适当的裁剪视口 */
   object-position: center 35%;
-  filter: brightness(0.95);
+  filter: brightness(1.04) contrast(1.02);
 }
 /* 渐变遮罩 */
 .hero-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(to bottom, rgba(245,245,247,0.05) 0%, rgba(245,245,247,0.55) 55%, var(--off-white) 100%);
+  background: linear-gradient(to bottom, rgba(245,245,247,0) 0%, rgba(245,245,247,0.18) 62%, rgba(245,245,247,0.72) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   padding: 40px 24px 28px;
   gap: 10px;
+  overflow: visible;
 }
-/* 副标题：使用自定义像素字体，字号加大 */
+.hero-title-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(92vw, 720px);
+  max-height: calc(100% - 3.5rem);
+  object-fit: contain;
+  object-position: center bottom;
+  flex-shrink: 0;
+  filter:
+    drop-shadow(0 0 2px rgba(232, 160, 180, 0.35))
+    drop-shadow(0 2px 8px rgba(17, 17, 17, 0.12));
+}
 .hero-tagline {
+  flex-shrink: 0;
   font-family: 'UranusPixel', 'Press Start 2P', monospace;
   font-size: clamp(1rem, 1.8vw, 1.25rem);
   color: var(--ink-dim);
@@ -162,27 +184,63 @@ body {
   margin: 20px 0;
 }
 .countdown-strip {
+  position: relative;
   background: var(--ink);
   color: var(--white);
-  padding: 20px 32px;
+  padding: 20px 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 12px;
+  flex-wrap: nowrap;
   border-radius: 16px;
   width: 100%;
   max-width: 900px;
   overflow: hidden;
+  box-shadow:
+    inset 8px 0 18px -10px rgba(232, 160, 180, 0.45),
+    inset -8px 0 18px -10px rgba(232, 160, 180, 0.45),
+    0 4px 24px rgba(17, 17, 17, 0.12);
+}
+.countdown-deco {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 36px;
+  position: relative;
+  height: 40px;
+}
+.countdown-deco-left { padding-right: 4px; }
+.countdown-deco-right { padding-left: 4px; flex-direction: row-reverse; }
+.glow-mushroom-sm {
+  transform: scale(0.72);
+  transform-origin: center bottom;
+  opacity: 0.9;
+}
+.cd-spore {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0 0 4px rgba(232, 160, 180, 0.9);
+  opacity: 0;
+  animation: spore-drift 3.2s ease-in-out infinite;
+}
+.cd-spore-a { top: 4px; left: 8px; animation-delay: 0s; }
+.cd-spore-b { top: 18px; left: 2px; animation-delay: 1.1s; width: 2px; height: 2px; }
+.cd-spore-c { top: 8px; right: 6px; animation-delay: 0.6s; }
+.cd-spore-d { top: 22px; right: 10px; animation-delay: 1.8s; width: 2px; height: 2px; }
+@keyframes spore-drift {
+  0%, 100% { opacity: 0; transform: translateY(0); }
+  20% { opacity: 0.85; }
+  80% { opacity: 0.5; transform: translateY(-10px); }
 }
 .countdown-mushroom-slot {
   display: none;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
 }
-html[lang="en"] .countdown-mushroom-slot { display: flex; }
 .countdown-body {
   display: flex;
   align-items: center;
@@ -296,6 +354,14 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   color: var(--ink-faint); text-transform: uppercase;
   margin-bottom: 24px; font-weight: 700;
 }
+.nav-section-title.explore-section-title {
+  font-family: 'UranusPixel', 'Press Start 2P', monospace;
+  font-size: clamp(0.82rem, 1.5vw, 1.05rem);
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+  text-transform: none;
+  font-weight: 400;
+}
 .nav-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -320,6 +386,40 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   position: relative;
   overflow: hidden;
 }
+.nav-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 8px 0 0 8px;
+  opacity: 0.85;
+}
+.nav-card.area-about {
+  grid-area: about;
+  background: var(--card-about-bg);
+}
+.nav-card.area-about::before { background: var(--card-about-accent); }
+.nav-card.area-about:hover { background: #fffdf8; border-color: var(--card-about-accent); }
+.nav-card.area-games {
+  grid-area: games;
+  background: var(--card-games-bg);
+}
+.nav-card.area-games::before { background: var(--card-games-accent); }
+.nav-card.area-games:hover { background: #faf8fd; border-color: var(--card-games-accent); }
+.nav-card.area-archive {
+  grid-area: archive;
+  background: var(--card-archive-bg);
+}
+.nav-card.area-archive::before { background: var(--card-archive-accent); }
+.nav-card.area-archive:hover { background: #faf7f0; border-color: var(--card-archive-accent); }
+.nav-card.area-wilds {
+  grid-area: wilds;
+  background: var(--card-wilds-bg);
+}
+.nav-card.area-wilds::before { background: var(--card-wilds-accent); }
+.nav-card.area-wilds:hover { background: #f5faf5; border-color: var(--card-wilds-accent); }
 .nav-card-body {
   display: flex;
   flex-direction: column;
@@ -341,26 +441,21 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   opacity: 1;
   transform: scale(1.04);
 }
-.nav-card:hover {
-  background: var(--white);
-  border-color: var(--ink);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
-}
-.nav-card.area-about   { grid-area: about; }
-.nav-card.area-games   { grid-area: games; }
-.nav-card.area-archive { grid-area: archive; }
-.nav-card.area-wilds   { grid-area: wilds; }
 .nav-card.area-contact {
   grid-area: contact;
   background: var(--pink-bg);
 }
+.nav-card.area-contact::before { background: var(--pink); }
 .nav-card.area-contact:hover { background: var(--pink-light); border-color: var(--pink); }
 .nav-card.area-contact .nav-card-body {
   align-items: center;
   text-align: center;
 }
 .nav-card.area-contact .nav-card-arrow { position: static; margin-top: 4px; }
+.nav-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
 
 /* ── 导航卡 CSS 图标 ── */
 .nav-icon-notepad {
@@ -787,18 +882,6 @@ html[lang="en"] .side-char-line {
   border-radius: 999px;
   line-height: 1.3;
 }
-.side-char-card .lang-zh,
-.side-char-card .lang-en {
-  display: none;
-}
-.side-char-card .lang-zh.visible,
-.side-char-card .lang-en.visible {
-  display: block;
-}
-.side-char-card .side-char-badge.lang-zh.visible,
-.side-char-card .side-char-badge.lang-en.visible {
-  display: inline-flex;
-}
 .side-char-badge .archived-count {
   color: var(--pink);
   font-family: 'Press Start 2P', monospace;
@@ -925,11 +1008,96 @@ html[lang="en"] .side-char-line {
 .rec-carousel-section {
   margin-bottom: 28px;
 }
-.main-rec-carousel .rec-carousel-track { min-height: 132px; }
+.main-rec-carousel .rec-carousel-track {
+  min-height: 168px;
+  position: relative;
+}
 .new-section-title {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+.rec-cat-tag {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+}
+.rec-cat-tag.tag-cat-news {
+  background: rgba(106, 143, 110, 0.14);
+  color: #3d6342;
+  border: 1px solid rgba(106, 143, 110, 0.35);
+}
+.rec-cat-tag.tag-cat-interview {
+  background: rgba(212, 96, 126, 0.12);
+  color: #9a3d55;
+  border: 1px solid rgba(212, 96, 126, 0.35);
+}
+.rec-cat-tag.tag-cat-research {
+  background: rgba(92, 122, 158, 0.12);
+  color: #3d5470;
+  border: 1px solid rgba(92, 122, 158, 0.35);
+}
+.main-rec-carousel .rec-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 18px;
+  padding: 18px 56px 18px 18px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.55s ease, visibility 0.55s ease;
+  z-index: 1;
+}
+.main-rec-carousel .rec-slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 2;
+}
+.main-rec-carousel .rec-slide-cover {
+  width: min(42%, 220px);
+  min-width: 140px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.main-rec-carousel .rec-slide-cover-inner {
+  width: 100%;
+  height: 100%;
+  min-height: 132px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.45;
+  padding: 12px;
+  color: var(--ink-dim);
+}
+.main-rec-carousel .rec-slide-cover-inner.tag-cat-news {
+  background: linear-gradient(145deg, rgba(106, 143, 110, 0.22) 0%, rgba(237, 244, 237, 0.95) 100%);
+}
+.main-rec-carousel .rec-slide-cover-inner.tag-cat-interview {
+  background: linear-gradient(145deg, rgba(212, 96, 126, 0.18) 0%, rgba(253, 240, 244, 0.95) 100%);
+}
+.main-rec-carousel .rec-slide-cover-inner.tag-cat-research {
+  background: linear-gradient(145deg, rgba(92, 122, 158, 0.18) 0%, rgba(238, 242, 248, 0.95) 100%);
+}
+.main-rec-carousel .rec-slide-info {
+  justify-content: center;
+  gap: 10px;
+}
+.main-rec-carousel .rec-slide-title {
+  font-size: 1.08rem;
 }
 .megaphone-icon {
   display: flex;
@@ -957,15 +1125,17 @@ html[lang="en"] .side-char-line {
   min-height: 148px;
 }
 .rec-slide {
-  display: none;
   align-items: center;
   gap: 16px;
   padding: 22px 56px 22px 22px;
   text-decoration: none;
   color: var(--ink);
+}
+.side-rec-carousel .rec-slide {
+  display: none;
   transition: opacity 0.35s ease;
 }
-.rec-slide.active {
+.side-rec-carousel .rec-slide.active {
   display: flex;
 }
 .rec-slide-thumb {
@@ -1129,10 +1299,26 @@ html[lang="en"] .side-char-line {
 @media (max-width: 576px) {
   .lang-bar { padding: 8px 16px; }
   .site-logo-img { height: 44px; max-width: 200px; }
-  .hero-title-img { height: clamp(40px, 10vw, 72px); max-width: min(94vw, 640px); }
+  .hero-title-img {
+    max-width: min(94vw, 480px);
+    max-height: calc(100% - 2.75rem);
+  }
   .hero-bg { height: 240px; object-position: center 30%; }
   .hero-overlay { padding: 16px; }
-  .countdown-strip { gap: 12px; padding: 16px; flex-direction: column; }
+  .countdown-strip { gap: 8px; padding: 16px 12px; flex-wrap: wrap; }
+  .countdown-deco { min-width: 28px; height: 32px; }
+  .countdown-deco .glow-mushroom-sm { transform: scale(0.58); }
+  .main-rec-carousel .rec-carousel-track { min-height: 220px; }
+  .main-rec-carousel .rec-slide {
+    flex-direction: column;
+    padding: 16px 44px 16px 16px;
+    gap: 12px;
+  }
+  .main-rec-carousel .rec-slide-cover {
+    width: 100%;
+    min-width: 0;
+  }
+  .main-rec-carousel .rec-slide-cover-inner { min-height: 100px; }
   .nav-grid {
     grid-template-columns: 1fr;
     grid-template-areas: "about" "games" "archive" "wilds" "contact";
@@ -1166,6 +1352,22 @@ html[lang="en"] .side-char-line {
 }
 
 /* ── 双语切换核心控制 ── */
+.lang-zh, .lang-en { display: none; }
+.side-char-card .lang-zh.visible,
+.side-char-card .lang-en.visible {
+  display: block;
+}
+.side-char-card .side-char-badge.lang-zh.visible,
+.side-char-card .side-char-badge.lang-en.visible {
+  display: inline-flex;
+}
+.nav-card .nav-card-desc.lang-zh.visible,
+.nav-card .nav-card-desc.lang-en.visible {
+  display: block;
+}
+.nav-card .nav-card-en.lang-zh.visible {
+  display: block;
+}
 .lang-zh-inline, .lang-en-inline { display: none; }
 .lang-zh-inline.visible, .lang-en-inline.visible { display: inline; }
 </style>
@@ -1198,8 +1400,10 @@ html[lang="en"] .side-char-line {
 <!-- 倒计时条 -->
 <div class="countdown-wrap">
 <div class="countdown-strip">
-  <div class="countdown-mushroom-slot">
-    <span class="glow-mushroom" aria-hidden="true"></span>
+  <div class="countdown-deco countdown-deco-left" aria-hidden="true">
+    <span class="glow-mushroom glow-mushroom-sm"></span>
+    <span class="cd-spore cd-spore-a"></span>
+    <span class="cd-spore cd-spore-b"></span>
   </div>
   <div class="countdown-body">
     <div class="countdown-label-row-zh">
@@ -1235,6 +1439,11 @@ html[lang="en"] .side-char-line {
     </div>
     </div>
   </div>
+  <div class="countdown-deco countdown-deco-right" aria-hidden="true">
+    <span class="glow-mushroom glow-mushroom-sm"></span>
+    <span class="cd-spore cd-spore-c"></span>
+    <span class="cd-spore cd-spore-d"></span>
+  </div>
 </div>
 </div>
 
@@ -1254,34 +1463,46 @@ html[lang="en"] .side-char-line {
       <div class="rec-carousel main-rec-carousel" id="newsCarousel">
         <div class="rec-carousel-track">
           <a class="rec-slide active" href="article.html?id=loc-update-placeholder">
-            <div class="rec-slide-thumb">
-              <span class="lang-zh-inline">汉化<br>追踪</span>
-              <span class="lang-en-inline">Loc.</span>
+            <div class="rec-slide-cover">
+              <div class="rec-slide-cover-inner tag-cat-news">
+                <span class="lang-zh-inline">汉化<br>追踪</span>
+                <span class="lang-en-inline">Loc.<br>Update</span>
+              </div>
             </div>
             <div class="rec-slide-info">
+              <span class="rec-cat-tag tag-cat-news">
+                <span class="lang-zh-inline">资讯</span>
+                <span class="lang-en-inline">News</span>
+              </span>
               <div class="rec-slide-title">
                 <span class="lang-zh-inline">【游戏资讯】某款异味独立游戏中文本地化更新跟踪中</span>
                 <span class="lang-en-inline">News: Simplified Chinese localization update in progress</span>
               </div>
               <div class="rec-slide-meta">
-                <span class="lang-zh-inline">资讯 · 2026-06-22</span>
-                <span class="lang-en-inline">News · Jun 22, 2026</span>
+                <span class="lang-zh-inline">2026-06-22</span>
+                <span class="lang-en-inline">Jun 22, 2026</span>
               </div>
             </div>
           </a>
           <a class="rec-slide" href="article.html?id=patch-digest">
-            <div class="rec-slide-thumb">
-              <span class="lang-zh-inline">补丁<br>速递</span>
-              <span class="lang-en-inline">Patch</span>
+            <div class="rec-slide-cover">
+              <div class="rec-slide-cover-inner tag-cat-news">
+                <span class="lang-zh-inline">补丁<br>速递</span>
+                <span class="lang-en-inline">Patch<br>Digest</span>
+              </div>
             </div>
             <div class="rec-slide-info">
+              <span class="rec-cat-tag tag-cat-news">
+                <span class="lang-zh-inline">资讯</span>
+                <span class="lang-en-inline">News</span>
+              </span>
               <div class="rec-slide-title">
                 <span class="lang-zh-inline">【游戏资讯】模组与汉化补丁汇总即将上线</span>
                 <span class="lang-en-inline">News: Mod & localization patch digest coming soon</span>
               </div>
               <div class="rec-slide-meta">
-                <span class="lang-zh-inline">资讯 · 2026-06-15</span>
-                <span class="lang-en-inline">News · Jun 15, 2026</span>
+                <span class="lang-zh-inline">2026-06-15</span>
+                <span class="lang-en-inline">Jun 15, 2026</span>
               </div>
             </div>
           </a>
@@ -1292,7 +1513,7 @@ html[lang="en"] .side-char-line {
       </div>
     </div>
 
-    <div class="nav-section-title">
+    <div class="nav-section-title explore-section-title">
       <span class="lang-zh-inline">探索更多</span>
       <span class="lang-en-inline">Explore</span>
     </div>
@@ -1300,7 +1521,7 @@ html[lang="en"] .side-char-line {
 
       <a class="nav-card area-about" href="about.html">
         <div class="nav-card-body">
-          <span class="nav-card-en">About Us</span>
+          <span class="nav-card-en lang-zh">About Us</span>
           <span class="nav-card-zh">
             <span class="lang-zh-inline">异味须知</span>
             <span class="lang-en-inline">About Us</span>
@@ -1314,7 +1535,7 @@ html[lang="en"] .side-char-line {
 
       <a class="nav-card area-games" href="#">
         <div class="nav-card-body">
-          <span class="nav-card-en">Supported Games</span>
+          <span class="nav-card-en lang-zh">Supported Games</span>
           <span class="nav-card-zh">
             <span class="lang-zh-inline">合作游戏</span>
             <span class="lang-en-inline">Supported Games</span>
@@ -1328,7 +1549,7 @@ html[lang="en"] .side-char-line {
 
       <a class="nav-card area-archive" href="archive.html">
         <div class="nav-card-body">
-          <span class="nav-card-en">Weird Gems Archives</span>
+          <span class="nav-card-en lang-zh">Weird Gems Archives</span>
           <span class="nav-card-zh">
             <span class="lang-zh-inline">异味档案</span>
             <span class="lang-en-inline">Weird Gems Archives</span>
@@ -1342,7 +1563,7 @@ html[lang="en"] .side-char-line {
 
       <a class="nav-card area-wilds" href="forest.html">
         <div class="nav-card-body">
-          <span class="nav-card-en">The Humid Wilds</span>
+          <span class="nav-card-en lang-zh">The Humid Wilds</span>
           <span class="nav-card-zh">
             <span class="lang-zh-inline">异味林地</span>
             <span class="lang-en-inline">The Humid Wilds</span>
@@ -1356,7 +1577,7 @@ html[lang="en"] .side-char-line {
 
       <a class="nav-card area-contact" id="contactLink" href="https://difficult-snowshoe-651.notion.site/3757a80dce1180018e24f9f298233120">
         <div class="nav-card-body">
-          <span class="nav-card-en">Contact</span>
+          <span class="nav-card-en lang-zh">Contact</span>
           <span class="nav-card-zh">
             <span class="lang-zh-inline">信号联络</span>
             <span class="lang-en-inline">Contact</span>
