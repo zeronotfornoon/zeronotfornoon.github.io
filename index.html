@@ -448,35 +448,85 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 }
 
 .nav-icon-gamepad {
-  height: 58px;
+  height: 64px;
+  width: 72px;
 }
-.nav-icon-gamepad::before {
-  content: '';
+.nav-icon-gamepad .gp-shell {
   position: absolute;
-  top: 14px;
-  left: 4px;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 58px;
-  height: 34px;
-  background: var(--ink);
-  border-radius: 18px;
-  box-shadow: inset 0 -4px 0 rgba(255, 255, 255, 0.08);
+  height: 36px;
+  background: linear-gradient(180deg, #5a5a5a 0%, #383838 52%, #2a2a2a 100%);
+  border-radius: 22px 22px 14px 14px;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.14),
+    0 2px 0 rgba(0, 0, 0, 0.18);
 }
-.nav-icon-gamepad::after {
+.nav-icon-gamepad .gp-shell::before,
+.nav-icon-gamepad .gp-shell::after {
   content: '';
   position: absolute;
-  top: 24px;
-  left: 14px;
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(255, 255, 255, 0.85);
+  bottom: -13px;
+  width: 21px;
+  height: 20px;
+  background: linear-gradient(180deg, #3a3a3a 0%, #222 100%);
+  border-radius: 0 0 16px 16px;
+}
+.nav-icon-gamepad .gp-shell::before {
+  left: 1px;
+  transform: rotate(14deg);
+  transform-origin: top center;
+}
+.nav-icon-gamepad .gp-shell::after {
+  right: 1px;
+  transform: rotate(-14deg);
+  transform-origin: top center;
+}
+.nav-icon-gamepad .gp-dpad {
+  position: absolute;
+  top: 16px;
+  left: 9px;
+  width: 20px;
+  height: 20px;
+  z-index: 2;
+}
+.nav-icon-gamepad .gp-dpad::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0;
+  width: 6px;
+  height: 20px;
+  background: #8a8a8a;
   border-radius: 2px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+.nav-icon-gamepad .gp-dpad::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 20px;
+  height: 6px;
+  background: #8a8a8a;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+.nav-icon-gamepad .gp-face {
+  position: absolute;
+  top: 16px;
+  right: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #66bb6a;
+  z-index: 2;
   box-shadow:
-    24px 0 0 -2px rgba(255, 255, 255, 0.85),
-    24px 0 0 0 rgba(255, 255, 255, 0.85),
-    36px -6px 0 0 #e8a0b4,
-    36px 6px 0 0 var(--white),
-    44px -6px 0 0 var(--white),
-    44px 6px 0 0 #e8a0b4;
+    0 13px 0 0 #ef5350,
+    -12px 6px 0 0 #42a5f5,
+    12px 6px 0 0 #ffca28;
 }
 
 .nav-icon-bookshelf {
@@ -526,82 +576,86 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 }
 
 .nav-icon-tower {
-  height: 68px;
+  height: 80px;
+  width: 80px;
+}
+.nav-card.area-contact .nav-card-icon {
+  width: 80px;
 }
 .nav-icon-tower::before {
   content: '';
   position: absolute;
-  bottom: 8px;
+  bottom: 4px;
   left: 50%;
   transform: translateX(-50%);
   width: 0;
   height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 48px solid var(--ink);
-  opacity: 0.9;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 64px solid var(--ink);
+  opacity: 0.92;
 }
 .nav-icon-tower::after {
   content: '';
   position: absolute;
-  bottom: 8px;
+  bottom: 4px;
   left: 50%;
   transform: translateX(-50%);
-  width: 52px;
-  height: 48px;
+  width: 70px;
+  height: 64px;
   background:
     repeating-linear-gradient(
       165deg,
-      transparent 0 6px,
-      rgba(255, 255, 255, 0.55) 6px 7px,
-      transparent 7px 14px
+      transparent 0 7px,
+      rgba(255, 255, 255, 0.55) 7px 8px,
+      transparent 8px 16px
     ),
     repeating-linear-gradient(
       -165deg,
-      transparent 0 6px,
-      rgba(255, 255, 255, 0.55) 6px 7px,
-      transparent 7px 14px
+      transparent 0 7px,
+      rgba(255, 255, 255, 0.55) 7px 8px,
+      transparent 8px 16px
     );
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
 }
 .nav-icon-tower .icon-signal {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 22px;
-  height: 22px;
-  border: 2px solid var(--pink);
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  border: 2.5px solid var(--pink);
   border-color: var(--pink) transparent transparent transparent;
   border-radius: 50% 50% 0 0;
   transform: rotate(-45deg);
-  opacity: 0.85;
+  opacity: 0.88;
   box-shadow:
-    -6px -6px 0 -4px transparent,
-    -6px -6px 0 -2px var(--pink);
+    -8px -8px 0 -4px transparent,
+    -8px -8px 0 -2px var(--pink);
 }
 .nav-icon-tower .icon-signal::before,
 .nav-icon-tower .icon-signal::after {
   content: '';
   position: absolute;
-  border: 2px solid var(--pink);
+  border: 2.5px solid var(--pink);
   border-color: var(--pink) transparent transparent transparent;
   border-radius: 50% 50% 0 0;
   transform: rotate(0deg);
 }
 .nav-icon-tower .icon-signal::before {
-  top: -8px;
-  left: -8px;
-  width: 14px;
-  height: 14px;
-  opacity: 0.7;
+  top: -10px;
+  left: -10px;
+  width: 18px;
+  height: 18px;
+  opacity: 0.72;
 }
 .nav-icon-tower .icon-signal::after {
-  top: -14px;
-  left: -14px;
-  width: 8px;
-  height: 8px;
-  opacity: 0.5;
+  top: -18px;
+  left: -18px;
+  width: 10px;
+  height: 10px;
+  opacity: 0.52;
 }
 
 .nav-card-en {
@@ -1021,10 +1075,20 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   .nav-card { padding: 20px; }
   .nav-card-icon { width: 56px; }
   .nav-icon-notepad { height: 54px; }
-  .nav-icon-gamepad { height: 50px; }
+  .nav-icon-gamepad { height: 56px; width: 64px; }
+  .nav-icon-gamepad .gp-shell { width: 50px; height: 30px; }
+  .nav-icon-gamepad .gp-shell::before,
+  .nav-icon-gamepad .gp-shell::after { width: 18px; height: 16px; bottom: -11px; }
+  .nav-icon-gamepad .gp-dpad { top: 14px; left: 7px; width: 17px; height: 17px; }
+  .nav-icon-gamepad .gp-dpad::before { left: 6px; height: 17px; width: 5px; }
+  .nav-icon-gamepad .gp-dpad::after { top: 6px; width: 17px; height: 5px; }
+  .nav-icon-gamepad .gp-face { top: 14px; right: 7px; width: 7px; height: 7px; box-shadow: 0 11px 0 0 #ef5350, -10px 5px 0 0 #42a5f5, 10px 5px 0 0 #ffca28; }
   .nav-icon-bookshelf { height: 58px; }
   .nav-icon-trees { height: 54px; }
-  .nav-icon-tower { height: 58px; }
+  .nav-icon-tower { height: 68px; width: 68px; }
+  .nav-card.area-contact .nav-card-icon { width: 68px; }
+  .nav-icon-tower::before { border-left-width: 8px; border-right-width: 8px; border-bottom-width: 54px; }
+  .nav-icon-tower::after { width: 58px; height: 54px; }
   .rec-slide { padding: 18px 48px 18px 16px; }
   .rec-slide-thumb { width: 72px; height: 72px; font-size: 0.72rem; }
   .rec-slide-title { font-size: 0.95rem; }
@@ -1205,7 +1269,7 @@ html[lang="en"] .countdown-label-row-en { display: block; }
           <span class="nav-card-desc lang-en">Not necessarily flawless, but always unmistakably weird.</span>
           <span class="nav-card-arrow">→</span>
         </div>
-        <span class="nav-card-icon nav-icon-gamepad" aria-hidden="true"></span>
+        <span class="nav-card-icon nav-icon-gamepad" aria-hidden="true"><span class="gp-shell"></span><span class="gp-dpad"></span><span class="gp-face"></span></span>
       </a>
 
       <a class="nav-card area-archive" href="archive.html">
