@@ -80,9 +80,9 @@ body {
 }
 .lang-en.visible.hero-en-logo-wrap { display: flex; }
 .hero-logo-large {
-  height: clamp(72px, 14vw, 118px);
+  height: clamp(100px, 22vw, 176px);
   width: auto;
-  max-width: min(92vw, 440px);
+  max-width: min(96vw, 720px);
   display: block;
   object-fit: contain;
   animation: logo-neon-flicker 3.5s infinite;
@@ -333,70 +333,6 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   border: 1px solid transparent;
   transition: all 0.2s ease;
   position: relative;
-  overflow: hidden;
-  min-height: 148px;
-}
-.nav-card > * { position: relative; z-index: 1; }
-.nav-card::after {
-  content: '';
-  position: absolute;
-  right: 18px;
-  bottom: 24px;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.26;
-}
-.nav-card.area-about::after {
-  width: 54px;
-  height: 38px;
-  background:
-    linear-gradient(135deg, transparent 42%, #999 42%, #999 58%, transparent 58%),
-    linear-gradient(90deg, #d8d8d8 0%, #d8d8d8 47%, #666 47%, #666 53%, #d8d8d8 53%);
-  border-radius: 3px;
-  transform: rotate(-8deg);
-}
-.nav-card.area-games::after {
-  width: 52px;
-  height: 34px;
-  background: #5a5a5a;
-  border-radius: 14px;
-  box-shadow:
-    inset 0 0 0 2px #888,
-    -12px -8px 0 -6px #999,
-    12px -8px 0 -6px #999,
-    -12px 8px 0 -6px #999,
-    12px 8px 0 -6px #999,
-    0 -10px 0 -8px #777;
-  transform: none;
-}
-.nav-card.area-archive::after {
-  width: 58px;
-  height: 42px;
-  background:
-    repeating-linear-gradient(180deg, #8b7355 0, #8b7355 3px, transparent 3px, transparent 9px),
-    linear-gradient(90deg, #6a5040, #a08060);
-  border: 2px solid #5a4030;
-  border-radius: 2px;
-  transform: none;
-}
-.nav-card.area-wilds::after {
-  width: 58px;
-  height: 42px;
-  background: linear-gradient(to bottom, #e8a050 0%, #e8a050 38%, #5a4030 38%, #2a3828 100%);
-  border-radius: 2px;
-  box-shadow: inset 14px 0 0 -9px #1a2818, inset -10px 0 0 -7px #1a2818;
-  transform: none;
-}
-.nav-card.area-contact::after {
-  width: 40px;
-  height: 48px;
-  opacity: 0.32;
-  background:
-    linear-gradient(#aaa, #aaa) center 2px / 8px 26px no-repeat,
-    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(232,160,180,0.55) 3px, rgba(232,160,180,0.55) 7px);
-  background-position: center 2px, center bottom;
-  background-size: 8px 26px, 44px 14px;
-  transform: none;
 }
 .nav-card:hover {
   background: var(--white);
@@ -819,7 +755,7 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 @media (max-width: 576px) {
   .lang-bar { padding: 8px 16px; }
   .site-logo-img { height: 44px; max-width: 200px; }
-  .hero-logo-large { height: clamp(56px, 12vw, 88px); }
+  .hero-logo-large { height: clamp(72px, 20vw, 120px); max-width: min(94vw, 520px); }
   .hero-bg { height: 240px; object-position: center 30%; }
   .hero-overlay { padding: 16px; }
   .hero-title-zh { font-size: 1.6rem; padding: 8px 16px; }
@@ -838,7 +774,13 @@ html[lang="en"] .countdown-label-row-en { display: block; }
 
 /* ── 双语切换核心控制 ── */
 .lang-zh, .lang-en { display: none; }
-.lang-zh.visible, .lang-en.visible { display: block; }
+.lang-zh.visible {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.lang-en.visible.hero-en-logo-wrap { display: flex; }
 .lang-zh-inline, .lang-en-inline { display: none; }
 .lang-zh-inline.visible, .lang-en-inline.visible { display: inline; }
 </style>
@@ -861,7 +803,7 @@ html[lang="en"] .countdown-label-row-en { display: block; }
   <img class="hero-bg" src="yiweijiayao.jpg" alt="异味游戏同好会">
   <div class="hero-overlay">
     <!-- 中文版：中文标题占位 -->
-    <div class="lang-zh" style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+    <div class="lang-zh">
       <div class="hero-title-zh">异味游戏同好会</div>
     </div>
     <!-- 英文版：大号霓虹 Logo 作为标题 -->
