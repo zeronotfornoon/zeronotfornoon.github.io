@@ -84,11 +84,11 @@ body {
   will-change: transform;
 }
 .site-bg-glow-a {
-  width: min(75vw, 640px);
-  height: min(58vw, 480px);
-  top: 4%;
-  left: -15%;
-  background: rgba(232, 160, 180, 0.34);
+  width: min(68vw, 560px);
+  height: min(52vw, 440px);
+  top: 52%;
+  left: -12%;
+  background: rgba(232, 160, 180, 0.18);
   animation: site-glow-drift-a 22s ease-in-out infinite alternate;
 }
 @keyframes site-glow-drift-a {
@@ -118,20 +118,6 @@ body {
   left: 28%;
   background: rgba(196, 168, 130, 0.2);
   animation: site-glow-drift-c 26s ease-in-out infinite alternate;
-}
-.site-bg-glow-d {
-  width: min(90vw, 820px);
-  height: 200px;
-  top: calc(380px - 80px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(232, 160, 180, 0.22);
-  filter: blur(90px);
-  animation: site-glow-drift-d 20s ease-in-out infinite alternate;
-}
-@keyframes site-glow-drift-d {
-  0% { transform: translateX(-50%) scale(1); opacity: 0.85; }
-  100% { transform: translateX(-48%) scale(1.1); opacity: 1; }
 }
 .site-bg-spore {
   position: absolute;
@@ -168,8 +154,7 @@ body {
   .site-bg-glow-a { opacity: 0.85; }
   .site-bg-glow-b { opacity: 0.75; }
   .site-bg-glow-c { opacity: 0.8; }
-  .site-bg-glow-d { opacity: 0.9; transform: translateX(-50%); }
-  .site-bg-spore { opacity: 0.45; }
+  .site-bg-glow-a { top: 58%; }
 }
 
 /* ── 顶部语言栏 ── */
@@ -232,7 +217,7 @@ body {
   position: relative;
   width: 100%;
   overflow: hidden;
-  margin-bottom: -1px;
+  background: var(--off-white);
 }
 .hero::after {
   content: '';
@@ -240,38 +225,34 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 160px;
+  height: 220px;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(245, 245, 247, 0.35) 35%,
-    rgba(245, 245, 247, 0.78) 68%,
+    rgba(228, 198, 208, 0.18) 18%,
+    rgba(236, 214, 222, 0.42) 38%,
+    rgba(242, 228, 234, 0.68) 58%,
+    rgba(246, 238, 242, 0.88) 78%,
     var(--off-white) 100%
   );
   pointer-events: none;
-  z-index: 2;
+  z-index: 1;
 }
 .hero-bg {
   width: 100%;
   display: block;
   height: 380px;
   object-fit: cover;
-  /* 聚焦于头像区域，并给予适当的裁剪视口 */
   object-position: center 35%;
   filter: brightness(0.95);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, 0.75) 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, 0.75) 72%, transparent 100%);
 }
-/* 渐变遮罩 */
 .hero-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 1;
-  background: linear-gradient(
-    to bottom,
-    rgba(245, 245, 247, 0.02) 0%,
-    rgba(245, 245, 247, 0.06) 40%,
-    rgba(245, 245, 247, 0.22) 70%,
-    rgba(245, 245, 247, 0.42) 100%
-  );
+  z-index: 2;
+  background: none;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -280,7 +261,8 @@ body {
   gap: 10px;
 }
 .hero-title-img {
-  display: block;
+  position: relative;
+  z-index: 1;
   width: auto;
   height: clamp(52px, 11vw, 96px);
   max-width: min(92vw, 820px);
@@ -291,6 +273,8 @@ body {
     drop-shadow(0 2px 8px rgba(17, 17, 17, 0.12));
 }
 .hero-tagline {
+  position: relative;
+  z-index: 1;
   flex-shrink: 0;
   font-family: 'UranusPixel', 'Press Start 2P', monospace;
   font-size: clamp(1rem, 1.8vw, 1.25rem);
@@ -300,6 +284,10 @@ body {
   text-align: center;
   line-height: 1.9;
   margin-top: 8px;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.95),
+    0 0 18px rgba(255, 255, 255, 0.75),
+    0 1px 2px rgba(255, 255, 255, 0.9);
 }
 
 /* ── 倒计时条 ── */
@@ -1426,11 +1414,15 @@ html[lang="en"] .side-char-line {
   .lang-bar { padding: 8px 16px; }
   .site-logo-img { height: 44px; max-width: 200px; }
   .hero-title-img { height: clamp(40px, 10vw, 72px); max-width: min(94vw, 640px); }
-  .hero-bg { height: 240px; object-position: center 30%; }
+  .hero-bg {
+    height: 240px;
+    object-position: center 30%;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 48%, rgba(0, 0, 0, 0.7) 68%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 48%, rgba(0, 0, 0, 0.7) 68%, transparent 100%);
+  }
   .hero-overlay { padding: 16px; }
-  .hero::after { height: 110px; }
+  .hero::after { height: 140px; }
   .site-bg-spore { animation-duration: 9s; }
-  .site-bg-glow-d { top: calc(240px - 60px); height: 140px; }
   .countdown-strip { gap: 8px; padding: 16px 12px; flex-wrap: wrap; }
   .countdown-deco { min-width: 28px; height: 32px; }
   .countdown-deco .glow-mushroom-sm { transform: scale(0.58); }
@@ -1504,7 +1496,6 @@ html[lang="en"] .side-char-line {
   <span class="site-bg-glow site-bg-glow-a"></span>
   <span class="site-bg-glow site-bg-glow-b"></span>
   <span class="site-bg-glow site-bg-glow-c"></span>
-  <span class="site-bg-glow site-bg-glow-d"></span>
   <span class="site-bg-spore site-bg-spore-1"></span>
   <span class="site-bg-spore site-bg-spore-2"></span>
   <span class="site-bg-spore site-bg-spore-3"></span>
