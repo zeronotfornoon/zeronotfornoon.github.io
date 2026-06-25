@@ -274,6 +274,11 @@ body {
   z-index: 0;
   pointer-events: none;
 }
+.hero-title-brush.lang-en {
+  width: 62%;
+  height: 142%;
+  transform: translate(-50%, -50%) rotate(-1.8deg);
+}
 .hero-title-brush svg {
   display: block;
   width: 100%;
@@ -297,8 +302,8 @@ body {
   max-height: 180px;
 }
 .hero-title-img.lang-en {
-  max-height: 163px;
-  width: 92%;
+  max-height: 187px;
+  width: 100%;
 }
 .hero-tagline {
   position: absolute;
@@ -1449,7 +1454,8 @@ html[lang="en"] .side-char-line {
     width: min(78vw, 400px);
   }
   .hero-title-img.lang-zh { max-height: 105px; }
-  .hero-title-img.lang-en { max-height: 97px; }
+  .hero-title-img.lang-en { max-height: 112px; }
+  .hero-title-brush.lang-en { width: 58%; height: 136%; }
   .hero-bg {
     height: 240px;
     object-position: center 30%;
@@ -1575,16 +1581,31 @@ html[lang="en"] .side-char-line {
       <span class="hero-title-brush lang-zh" aria-hidden="true">
         <svg viewBox="0 0 360 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
           <defs>
-            <filter id="hero-brush-rough" x="-8%" y="-8%" width="116%" height="116%">
+            <filter id="hero-brush-rough-zh" x="-8%" y="-8%" width="116%" height="116%">
               <feTurbulence type="fractalNoise" baseFrequency="0.038" numOctaves="4" seed="7" result="noise"/>
               <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G"/>
             </filter>
           </defs>
-          <g filter="url(#hero-brush-rough)" fill="#121212">
+          <g filter="url(#hero-brush-rough-zh)" fill="#121212">
             <path d="M28 62 C78 44, 145 54, 210 48 C268 44, 318 50, 332 58 L326 80 C268 88, 195 76, 128 84 C78 90, 42 86, 30 74 Z" opacity="0.93"/>
             <path d="M38 76 C98 92, 168 68, 238 74 C278 78, 312 72, 328 82 L320 102 C248 110, 168 96, 98 106 C58 110, 34 94, 40 84 Z" opacity="0.88"/>
             <path d="M52 44 C118 56, 198 38, 268 48 L262 66 C198 60, 128 70, 58 58 Z" opacity="0.72"/>
             <path d="M98 94 C158 88, 218 100, 278 90 L272 108 C212 116, 148 104, 92 110 Z" opacity="0.65"/>
+          </g>
+        </svg>
+      </span>
+      <span class="hero-title-brush lang-en" aria-hidden="true">
+        <svg viewBox="0 0 360 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <filter id="hero-brush-rough-en" x="-8%" y="-8%" width="116%" height="116%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" seed="11" result="noise"/>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="11" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </defs>
+          <g filter="url(#hero-brush-rough-en)" fill="#121212">
+            <path d="M32 60 C88 46, 158 52, 228 48 C286 44, 322 52, 330 62 L324 78 C268 86, 198 74, 132 82 C82 88, 48 84, 34 72 Z" opacity="0.93"/>
+            <path d="M42 74 C102 88, 172 66, 242 72 C284 76, 316 70, 326 80 L318 98 C246 106, 172 92, 102 102 C62 106, 38 92, 44 82 Z" opacity="0.86"/>
+            <path d="M58 46 C128 54, 208 40, 272 50 L266 64 C204 58, 138 68, 64 56 Z" opacity="0.7"/>
           </g>
         </svg>
       </span>
