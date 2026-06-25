@@ -161,15 +161,42 @@ body {
   max-width: 560px;
   line-height: 1.75;
 }
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.03em;
+}
+.hero-stats-sep {
+  opacity: 0.45;
+}
 
 /* ── 主体 ── */
 .page-body {
-  max-width: 960px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 36px 24px 80px;
+}
+.archive-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+  align-items: start;
+}
+.archive-main {
+  min-width: 0;
   background: rgba(255, 252, 247, 0.72);
-  border-radius: 16px 16px 0 0;
+  border-radius: 16px;
+  padding: 28px 28px 36px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+.archive-sidebar {
+  position: sticky;
+  top: 88px;
 }
 
 /* ── 精选区 ── */
@@ -196,9 +223,17 @@ body {
 }
 .featured-grid {
   display: grid;
+  gap: 16px;
+}
+.featured-grid.featured-count-1 {
+  grid-template-columns: 1fr;
+}
+.featured-grid.featured-count-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.featured-grid.featured-count-3 {
   grid-template-columns: 1.4fr 1fr;
   grid-template-rows: auto auto;
-  gap: 16px;
 }
 .featured-card {
   background: var(--white);
@@ -216,7 +251,7 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.06);
 }
-.featured-card-hero {
+.featured-count-3 .featured-card-hero {
   grid-row: span 2;
 }
 .featured-thumb {
@@ -230,17 +265,86 @@ body {
   overflow: hidden;
 }
 .featured-thumb.has-cover,
-.feed-cover.has-cover {
+.feed-cover.has-cover,
+.strip-card-thumb.has-cover {
   background: #eaeaea;
 }
-.featured-thumb.has-cover img,
-.feed-cover.has-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.featured-thumb.has-default,
+.feed-cover.has-default,
+.strip-card-thumb.has-default {
+  position: relative;
 }
-.featured-thumb.has-cover .featured-thumb-label {
+.featured-thumb.has-default.cat-research,
+.strip-card-thumb.has-default.cat-research,
+.feed-cover.has-default.cat-research {
+  background: linear-gradient(145deg, #d8e4ef 0%, #b8c9da 100%);
+}
+.featured-thumb.has-default.cat-interview,
+.strip-card-thumb.has-default.cat-interview,
+.feed-cover.has-default.cat-interview {
+  background: linear-gradient(145deg, #f5d6e0 0%, #e8a0b4 100%);
+}
+.featured-thumb.has-default.cat-news,
+.strip-card-thumb.has-default.cat-news,
+.feed-cover.has-default.cat-news {
+  background: linear-gradient(145deg, #dce8dc 0%, #b8cfb8 100%);
+}
+.thumb-default-mark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.thumb-default-glyph {
+  width: 34px;
+  height: 34px;
+  border: 2px solid rgba(17, 17, 17, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.28);
+  position: relative;
+}
+.thumb-default-mark.cat-research .thumb-default-glyph::before {
+  content: '⌕';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: rgba(17, 17, 17, 0.55);
+}
+.thumb-default-mark.cat-interview .thumb-default-glyph::before {
+  content: '♪';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: rgba(17, 17, 17, 0.55);
+}
+.thumb-default-mark.cat-news .thumb-default-glyph::before {
+  content: '✦';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: rgba(17, 17, 17, 0.55);
+}
+.thumb-default-text {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.48rem;
+  letter-spacing: 0.08em;
+  color: rgba(17, 17, 17, 0.42);
+}
+.featured-thumb.has-default .featured-thumb-label,
+.strip-card-thumb.has-default .featured-thumb-label,
+.feed-cover.has-default .featured-thumb-label {
   position: absolute;
   left: 10px;
   bottom: 10px;
@@ -254,7 +358,36 @@ body {
   letter-spacing: 0.06em;
   opacity: 1;
 }
+.featured-thumb.has-cover img,
+.feed-cover.has-cover img,
+.strip-card-thumb.has-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.featured-thumb.has-cover .featured-thumb-label,
+.strip-card-thumb.has-cover .featured-thumb-label,
+.feed-cover.has-cover .featured-thumb-label {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  background: rgba(17, 17, 17, 0.72);
+  color: var(--white);
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 1;
+}
+.featured-count-1 .featured-card-hero,
+.featured-count-2 .featured-card-hero {
+  grid-row: auto;
+}
 .featured-card-hero .featured-thumb { height: 200px; }
+.featured-count-1 .featured-card-hero .featured-thumb { height: 220px; }
 .featured-thumb-label {
   font-family: 'Press Start 2P', monospace;
   font-size: 0.55rem;
@@ -368,14 +501,14 @@ body {
 }
 .feed-cover {
   width: 112px;
-  min-height: 84px;
+  height: 84px;
   flex-shrink: 0;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid var(--border);
   align-self: center;
+  position: relative;
 }
-.feed-cover:not(.has-cover) { display: none; }
 .feed-link:hover { background: var(--off-white); }
 .feed-main {
   flex: 1;
@@ -446,6 +579,214 @@ body {
   color: var(--ink);
 }
 
+/* ── 分类分区 ── */
+.category-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 8px;
+}
+.category-strip-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.category-strip-title {
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.03em;
+}
+.category-strip-count {
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.category-strip-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.strip-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.strip-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+.strip-card-thumb {
+  height: 118px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.strip-card-body {
+  padding: 16px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.strip-card-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.strip-card-meta {
+  margin-top: auto;
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+.category-strip-empty {
+  grid-column: 1 / -1;
+  padding: 28px 18px;
+  text-align: center;
+  color: var(--ink-faint);
+  font-size: 0.88rem;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+}
+
+/* ── 侧栏角色卡 ── */
+.side-char-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 20px 18px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+.side-char-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--pink) 0%, var(--pink-light) 55%, transparent 100%);
+}
+.side-char-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.side-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--pink-light);
+  box-shadow: 0 0 0 1px var(--pink), 0 4px 12px rgba(232, 160, 180, 0.25);
+  flex-shrink: 0;
+}
+.side-char-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding-top: 4px;
+}
+.side-char-name {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+.side-char-title {
+  font-size: 0.78rem;
+  color: var(--ink-dim);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+}
+html[lang="en"] .side-char-title {
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+}
+.side-char-line {
+  font-family: 'UranusPixel', 'Press Start 2P', monospace;
+  font-size: 0.92rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  background: var(--pink-bg);
+  border-radius: 8px;
+  border: 1px dashed rgba(232, 160, 180, 0.55);
+}
+html[lang="en"] .side-char-line {
+  font-size: 0.82rem;
+}
+.side-char-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 6px 12px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+  line-height: 1.3;
+  margin-bottom: 14px;
+}
+.side-char-badge .archive-count {
+  color: var(--pink);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.68rem;
+  margin: 0 3px;
+  letter-spacing: 0;
+}
+.random-archive-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.random-archive-btn:hover {
+  background: var(--ink);
+  color: var(--white);
+}
+.random-archive-btn-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
 /* ── 加载更多 / 空状态 ── */
 .load-more-wrap {
   display: flex;
@@ -482,7 +823,7 @@ body {
   text-align: center;
   padding: 32px 24px 48px;
   border-top: 1px solid var(--border);
-  max-width: 960px;
+  max-width: 1120px;
   margin: 0 auto;
 }
 .footer-back {
@@ -541,12 +882,31 @@ body {
 
 /* ── 响应式 ── */
 @media (max-width: 768px) {
-  .featured-grid {
+  .archive-layout {
+    grid-template-columns: 1fr;
+  }
+  .archive-sidebar {
+    position: static;
+    order: 2;
+  }
+  .archive-main {
+    order: 1;
+  }
+  .featured-grid.featured-count-2,
+  .featured-grid.featured-count-3 {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
   }
-  .featured-card-hero { grid-row: auto; }
-  .featured-card-hero .featured-thumb { height: 140px; }
+  .featured-count-1 .featured-card-hero,
+  .featured-count-2 .featured-card-hero,
+  .featured-count-3 .featured-card-hero {
+    grid-row: auto;
+  }
+  .featured-card-hero .featured-thumb,
+  .featured-count-1 .featured-card-hero .featured-thumb { height: 140px; }
+  .category-strip-row {
+    grid-template-columns: 1fr;
+  }
   .feed-link { padding: 18px 20px; }
   .feed-arrow { display: none; }
 }
@@ -558,9 +918,19 @@ body {
   .hero { height: 220px; }
   .hero-inner { padding: 32px 16px 24px; }
   .page-body { padding: 24px 16px 60px; }
+  .archive-main { padding: 20px 16px 28px; }
 }
 
 /* ── 双语 ── */
+.lang-zh, .lang-en { display: none; }
+.side-char-card .lang-zh.visible,
+.side-char-card .lang-en.visible {
+  display: block;
+}
+.side-char-card .side-char-badge.lang-zh.visible,
+.side-char-card .side-char-badge.lang-en.visible {
+  display: inline-flex;
+}
 .lang-zh-inline, .lang-en-inline { display: none; }
 .lang-zh-inline.visible, .lang-en-inline.visible { display: inline; }
 </style>
@@ -597,10 +967,14 @@ body {
       <span class="lang-zh-inline">游戏考据、开发者采访与独立游戏资讯——铁鼠也啃噬不尽的独游文字记录。</span>
       <span class="lang-en-inline">Game research, developer interviews, and indie news — written records even the iron rat can't chew through.</span>
     </p>
+    <div class="hero-stats" id="heroStats" aria-live="polite"></div>
   </div>
 </div>
 
 <div class="page-body">
+<div class="archive-layout">
+
+  <div class="archive-main">
 
   <section class="featured-section" id="featuredSection">
     <div class="section-label">
@@ -635,21 +1009,51 @@ body {
       </button>
     </div>
 
-    <ul class="feed-list" id="feedList"></ul>
+    <div class="category-sections" id="categorySections"></div>
 
-    <div class="empty-state hidden" id="emptyState">
-      <span class="lang-zh-inline">暂无文章，野菌还在酝酿中……</span>
-      <span class="lang-en-inline">No posts yet — the mushrooms are still brewing…</span>
-    </div>
+    <div id="feedSection">
+      <ul class="feed-list" id="feedList"></ul>
 
-    <div class="load-more-wrap">
-      <button class="load-more-btn hidden" id="loadMoreBtn" type="button">
-        <span class="lang-zh-inline">加载更多</span>
-        <span class="lang-en-inline">Load More</span>
-      </button>
+      <div class="empty-state hidden" id="emptyState">
+        <span class="lang-zh-inline">暂无文章，野菌还在酝酿中……</span>
+        <span class="lang-en-inline">No posts yet — the mushrooms are still brewing…</span>
+      </div>
+
+      <div class="load-more-wrap">
+        <button class="load-more-btn hidden" id="loadMoreBtn" type="button">
+          <span class="lang-zh-inline">加载更多</span>
+          <span class="lang-en-inline">Load More</span>
+        </button>
+      </div>
     </div>
   </section>
 
+  </div>
+
+  <aside class="archive-sidebar">
+    <div class="side-char-card">
+      <div class="side-char-top">
+        <img class="side-avatar" src="slj.jpg" alt="">
+        <div class="side-char-info">
+          <div class="side-char-name lang-zh">小椿</div>
+          <div class="side-char-name lang-en">Kakihara</div>
+          <div class="side-char-title lang-zh">看板中官</div>
+          <div class="side-char-title lang-en">21st-century priest of Attis</div>
+        </div>
+      </div>
+      <div class="side-char-line lang-zh">何异味……</div>
+      <div class="side-char-line lang-en">WTF</div>
+      <div class="side-char-badge lang-zh">已收录 <span class="archive-count">0</span> 份异味档案</div>
+      <div class="side-char-badge lang-en"><span class="archive-count">0</span> weird gems archived</div>
+      <button class="random-archive-btn" id="randomArchiveBtn" type="button">
+        <span class="random-archive-btn-icon" aria-hidden="true">🎲</span>
+        <span class="lang-zh-inline">随便抽一本</span>
+        <span class="lang-en-inline">Pick one at random</span>
+      </button>
+    </div>
+  </aside>
+
+</div>
 </div>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
@@ -671,6 +1075,8 @@ function setLang(lang) {
   document.documentElement.lang = isZH ? 'zh' : 'en';
   document.getElementById('btnZH').classList.toggle('active', isZH);
   document.getElementById('btnEN').classList.toggle('active', !isZH);
+  document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('visible', isZH));
+  document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('visible', !isZH));
   document.querySelectorAll('.lang-zh-inline').forEach(el => el.classList.toggle('visible', isZH));
   document.querySelectorAll('.lang-en-inline').forEach(el => el.classList.toggle('visible', !isZH));
   if (window.archiveOnLangChange) window.archiveOnLangChange(lang);
