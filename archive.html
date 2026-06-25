@@ -1139,7 +1139,7 @@ html[lang="en"] .side-char-line {
       <div class="side-char-line lang-en">WTF</div>
       <div class="side-char-badge lang-zh">已收录 <span class="archive-count">0</span> 份异味档案</div>
       <div class="side-char-badge lang-en"><span class="archive-count">0</span> weird gems archived</div>
-      <button class="random-archive-btn" id="randomArchiveBtn" type="button">
+      <button class="random-archive-btn" id="randomArchiveBtn" type="button" onclick="return window.archivePickRandom &amp;&amp; window.archivePickRandom(event)">
         <span class="random-archive-btn-icon" aria-hidden="true">🎲</span>
         <span class="lang-zh-inline">随便抽一本</span>
         <span class="lang-en-inline">Pick one at random</span>
@@ -1162,6 +1162,7 @@ html[lang="en"] .side-char-line {
 </div>
 
 <script src="js/images.js"></script>
+<script src="js/archive-data.js"></script>
 <script src="archive.js"></script>
 <script>
 function setLang(lang) {
