@@ -340,175 +340,147 @@ html[lang="en"] .countdown-head-en { display: flex; }
 }
 .countdown-timer {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  gap: clamp(8px, 1.4vw, 14px);
+  gap: 8px;
   flex-wrap: wrap;
 }
 .cd-unit {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  min-width: clamp(64px, 10vw, 88px);
+  gap: 4px;
 }
-.flip-card {
-  position: relative;
-  width: 100%;
-  height: clamp(72px, 11vw, 96px);
-  perspective: 520px;
-  transform-style: preserve-3d;
-  border-radius: 10px;
-  box-shadow: 0 8px 18px rgba(17, 17, 17, 0.16);
-  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.65rem, 3.2vw, 2.35rem);
-  line-height: 1;
+.cd-num {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
   color: var(--white);
-}
-.flip-card::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 1px;
-  margin-top: -0.5px;
-  background: rgba(0, 0, 0, 0.72);
-  z-index: 5;
-  pointer-events: none;
-}
-.flip-card-face {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 50%;
-  overflow: hidden;
-  backface-visibility: hidden;
-}
-.flip-card-face span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200%;
-  width: 100%;
-}
-.flip-card-top {
-  top: 0;
-  background: #151515;
-  border-radius: 10px 10px 0 0;
-}
-.flip-card-top span { align-items: flex-end; padding-bottom: 3px; }
-.flip-card-bottom {
-  bottom: 0;
-  background: #0a0a0a;
-  border-radius: 0 0 10px 10px;
-}
-.flip-card-bottom span { align-items: flex-start; padding-top: 3px; margin-top: -100%; }
-.flip-card-leaf {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  overflow: hidden;
-  transform-origin: bottom;
-  transform-style: preserve-3d;
-  z-index: 3;
-  backface-visibility: hidden;
-  visibility: hidden;
-}
-.flip-card:not(.is-flipping) .flip-card-leaf {
-  transform: none;
-  animation: none;
-}
-.flip-card-leaf-front,
-.flip-card-leaf-back {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  backface-visibility: hidden;
-}
-.flip-card-leaf-front {
-  background: #151515;
-  border-radius: 10px 10px 0 0;
-}
-.flip-card-leaf-front span {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  height: 200%;
-  width: 100%;
-  padding-bottom: 3px;
-}
-.flip-card-leaf-back {
-  transform: rotateX(180deg);
-  background: #0a0a0a;
-  border-radius: 10px 10px 0 0;
-}
-.flip-card-leaf-back span {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  height: 200%;
-  width: 100%;
-  padding-top: 3px;
-  margin-top: -100%;
-}
-.flip-card.is-flipping .flip-card-leaf {
-  visibility: visible;
-  animation: flip-leaf-down 0.62s cubic-bezier(0.37, 0.01, 0.25, 1) forwards;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
-}
-@keyframes flip-leaf-down {
-  0% { transform: rotateX(0deg); }
-  100% { transform: rotateX(-180deg); }
+  background: #252525;
+  padding: 8px 12px;
+  min-width: 55px;
+  text-align: center;
+  border-radius: 4px;
+  line-height: 1.4;
 }
 .cd-lbl {
-  font-family: 'Noto Sans SC', sans-serif;
-  font-size: clamp(0.72rem, 1.2vw, 0.82rem);
-  color: #666666;
+  font-family: 'UranusPixel', 'Press Start 2P', monospace;
+  font-size: 0.65rem;
+  color: var(--ink-faint);
   font-weight: 400;
-  letter-spacing: 0.04em;
-  text-transform: capitalize;
+  letter-spacing: 0.08em;
 }
-.glow-mushroom {
-  width: 28px;
-  height: 34px;
-  flex-shrink: 0;
+.cd-sep {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.2rem;
+  color: var(--pink);
+  margin-bottom: 16px;
+}
+.sprout-mushroom {
   position: relative;
-  animation: mush-glow-pulse 2.4s ease-in-out infinite;
+  width: 40px;
+  height: 48px;
+  flex-shrink: 0;
+  overflow: visible;
 }
-.glow-mushroom::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 1px;
-  width: 26px;
-  height: 16px;
-  background: #e8a0b4;
-  border-radius: 50% 50% 38% 38%;
-  box-shadow:
-    5px 4px 0 1px rgba(255, 255, 255, 0.45),
-    13px 6px 0 1px rgba(255, 255, 255, 0.28),
-    0 0 10px #f5c8d6,
-    0 0 20px rgba(232, 160, 180, 0.8);
-}
-.glow-mushroom::after {
-  content: '';
+.sprout-ground {
   position: absolute;
   bottom: 0;
-  left: 9px;
-  width: 10px;
-  height: 14px;
-  background: linear-gradient(180deg, #f5e6ec 0%, #dcc4d0 100%);
-  border-radius: 2px 2px 3px 3px;
+  left: 1px;
+  right: 1px;
+  height: 9px;
+  background: linear-gradient(180deg, #7a5f4a 0%, #5c4536 100%);
+  border-radius: 45% 45% 18% 18%;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  z-index: 4;
 }
-@keyframes mush-glow-pulse {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.4); }
+.sprout-crack {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  width: 16px;
+  height: 0;
+  margin-left: -8px;
+  border-top: 2px dashed rgba(58, 42, 30, 0.85);
+  transform-origin: center;
+  z-index: 5;
+  animation: sprout-crack 60s ease-in-out infinite;
+}
+.sprout-plant {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  width: 30px;
+  height: 40px;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.sprout-stem {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 10px;
+  height: 24px;
+  margin-left: -5px;
+  background: linear-gradient(180deg, #f2e4ea 0%, #dcc4d0 100%);
+  border-radius: 2px 2px 1px 1px;
+  transform-origin: bottom center;
+  animation: sprout-stem-rise 60s ease-in-out infinite;
+}
+.sprout-cap {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  width: 28px;
+  height: 17px;
+  margin-left: -14px;
+  background: #e8a0b4;
+  border-radius: 50% 50% 38% 38%;
+  transform-origin: center bottom;
+  animation: sprout-cap-open 60s ease-in-out infinite;
+  box-shadow:
+    5px 4px 0 1px rgba(255, 255, 255, 0.4),
+    13px 6px 0 1px rgba(255, 255, 255, 0.22);
+}
+.sprout-dust {
+  position: absolute;
+  bottom: 6px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #8b7355;
+  opacity: 0;
+  z-index: 6;
+  animation: sprout-dust-pop 60s ease-out infinite;
+}
+.sprout-dust-a { left: 8px; }
+.sprout-dust-b { right: 8px; animation-delay: 1.4s; }
+@keyframes sprout-stem-rise {
+  0%, 7% { transform: scaleY(0); opacity: 0; }
+  11% { opacity: 1; }
+  40% { transform: scaleY(1); opacity: 1; }
+  84%, 93% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(0); opacity: 0; }
+}
+@keyframes sprout-cap-open {
+  0%, 34% { transform: scale(0); opacity: 0; }
+  38% { opacity: 1; }
+  58% { transform: scale(1); opacity: 1; }
+  68%, 86% {
+    transform: scale(1);
+    opacity: 1;
+    filter: brightness(1.45) drop-shadow(0 0 10px rgba(232, 160, 180, 0.95)) drop-shadow(0 0 18px rgba(232, 160, 180, 0.55));
+  }
+  100% { transform: scale(0); opacity: 0; filter: none; }
+}
+@keyframes sprout-crack {
+  0%, 9% { opacity: 0; transform: scaleX(0); }
+  14%, 42% { opacity: 1; transform: scaleX(1); }
+  90%, 100% { opacity: 0; transform: scaleX(0); }
+}
+@keyframes sprout-dust-pop {
+  0%, 12% { opacity: 0; transform: translateY(0) scale(0.5); }
+  16% { opacity: 0.9; transform: translateY(-4px) scale(1); }
+  24%, 100% { opacity: 0; transform: translateY(-10px) scale(0.3); }
 }
 
 /* ── 两栏布局（左宽右窄） ── */
@@ -1495,9 +1467,9 @@ html[lang="en"] .side-char-line {
   .hero::after { height: 140px; }
   .site-bg-spore { animation-duration: 9s; }
   .countdown-strip { gap: 14px; padding: 10px 0 4px; }
-  .cd-unit { min-width: 56px; }
-  .flip-card { height: 64px; font-size: 1.35rem; }
-  .cd-lbl { font-size: 0.68rem; }
+  .cd-num { font-size: 0.85rem; min-width: 44px; padding: 6px 8px; }
+  .cd-sep { margin-bottom: 14px; font-size: 0.9rem; }
+  .sprout-mushroom { width: 34px; height: 42px; }
   .main-rec-carousel .rec-carousel-track { min-height: 220px; }
   .main-rec-carousel .rec-slide {
     flex-direction: column;
@@ -1614,60 +1586,54 @@ html[lang="en"] .side-char-line {
 <div class="countdown-wrap">
 <div class="countdown-strip">
   <div class="countdown-head countdown-head-zh">
-    <span class="glow-mushroom" aria-hidden="true"></span>
+    <span class="sprout-mushroom" aria-hidden="true">
+      <span class="sprout-ground"></span>
+      <span class="sprout-crack"></span>
+      <span class="sprout-plant">
+        <span class="sprout-stem"></span>
+        <span class="sprout-cap"></span>
+      </span>
+      <span class="sprout-dust sprout-dust-a"></span>
+      <span class="sprout-dust sprout-dust-b"></span>
+    </span>
     <div class="countdown-label">
       <span class="lang-zh-inline">野菌即将破土而出……</span>
     </div>
   </div>
   <div class="countdown-head countdown-head-en">
+    <span class="sprout-mushroom" aria-hidden="true">
+      <span class="sprout-ground"></span>
+      <span class="sprout-crack"></span>
+      <span class="sprout-plant">
+        <span class="sprout-stem"></span>
+        <span class="sprout-cap"></span>
+      </span>
+      <span class="sprout-dust sprout-dust-a"></span>
+      <span class="sprout-dust sprout-dust-b"></span>
+    </span>
     <div class="countdown-label">
       <span class="lang-en-inline">The mushrooms are about to emerge…</span>
     </div>
   </div>
   <div class="countdown-timer">
     <div class="cd-unit">
-      <div class="flip-card" id="flipDays">
-        <div class="flip-card-top flip-card-face"><span>00</span></div>
-        <div class="flip-card-bottom flip-card-face"><span>00</span></div>
-        <div class="flip-card-leaf" aria-hidden="true">
-          <div class="flip-card-leaf-front"><span>00</span></div>
-          <div class="flip-card-leaf-back"><span>00</span></div>
-        </div>
-      </div>
-      <div class="cd-lbl"><span class="lang-zh-inline">天</span><span class="lang-en-inline">Days</span></div>
+      <div class="cd-num" id="cdDays">00</div>
+      <div class="cd-lbl"><span class="lang-zh-inline">天</span><span class="lang-en-inline">days</span></div>
     </div>
+    <div class="cd-sep">:</div>
     <div class="cd-unit">
-      <div class="flip-card" id="flipHours">
-        <div class="flip-card-top flip-card-face"><span>00</span></div>
-        <div class="flip-card-bottom flip-card-face"><span>00</span></div>
-        <div class="flip-card-leaf" aria-hidden="true">
-          <div class="flip-card-leaf-front"><span>00</span></div>
-          <div class="flip-card-leaf-back"><span>00</span></div>
-        </div>
-      </div>
-      <div class="cd-lbl"><span class="lang-zh-inline">时</span><span class="lang-en-inline">Hours</span></div>
+      <div class="cd-num" id="cdHours">00</div>
+      <div class="cd-lbl"><span class="lang-zh-inline">时</span><span class="lang-en-inline">hrs</span></div>
     </div>
+    <div class="cd-sep">:</div>
     <div class="cd-unit">
-      <div class="flip-card" id="flipMins">
-        <div class="flip-card-top flip-card-face"><span>00</span></div>
-        <div class="flip-card-bottom flip-card-face"><span>00</span></div>
-        <div class="flip-card-leaf" aria-hidden="true">
-          <div class="flip-card-leaf-front"><span>00</span></div>
-          <div class="flip-card-leaf-back"><span>00</span></div>
-        </div>
-      </div>
-      <div class="cd-lbl"><span class="lang-zh-inline">分</span><span class="lang-en-inline">Minutes</span></div>
+      <div class="cd-num" id="cdMins">00</div>
+      <div class="cd-lbl"><span class="lang-zh-inline">分</span><span class="lang-en-inline">min</span></div>
     </div>
+    <div class="cd-sep">:</div>
     <div class="cd-unit">
-      <div class="flip-card" id="flipSecs">
-        <div class="flip-card-top flip-card-face"><span>00</span></div>
-        <div class="flip-card-bottom flip-card-face"><span>00</span></div>
-        <div class="flip-card-leaf" aria-hidden="true">
-          <div class="flip-card-leaf-front"><span>00</span></div>
-          <div class="flip-card-leaf-back"><span>00</span></div>
-        </div>
-      </div>
-      <div class="cd-lbl"><span class="lang-zh-inline">秒</span><span class="lang-en-inline">Seconds</span></div>
+      <div class="cd-num" id="cdSecs">00</div>
+      <div class="cd-lbl"><span class="lang-zh-inline">秒</span><span class="lang-en-inline">sec</span></div>
     </div>
   </div>
 </div>
@@ -1961,64 +1927,18 @@ function setLang(lang) {
 
 // 倒计时 目标：2026年9月24日 20:00 北京时间
 const TARGET = new Date('2026-09-24T20:00:00+08:00');
-const FLIP_IDS = ['flipDays', 'flipHours', 'flipMins', 'flipSecs'];
-
-function setFlipCardText(card, value) {
-  card.querySelectorAll('.flip-card-top span, .flip-card-bottom span, .flip-card-leaf-front span, .flip-card-leaf-back span')
-    .forEach(el => { el.textContent = value; });
-}
-
-function resetFlipLeaf(card) {
-  const leaf = card.querySelector('.flip-card-leaf');
-  if (!leaf) return;
-  card.classList.remove('is-flipping');
-  leaf.style.transform = '';
-  leaf.style.filter = '';
-  leaf.style.animation = '';
-}
-
-function flipCardTo(card, nextValue) {
-  const current = card.dataset.value;
-  if (!current || current === nextValue) return;
-
-  resetFlipLeaf(card);
-  void card.offsetWidth;
-
-  const leaf = card.querySelector('.flip-card-leaf');
-  leaf.querySelector('.flip-card-leaf-front span').textContent = current;
-  leaf.querySelector('.flip-card-leaf-back span').textContent = nextValue;
-  card.querySelector('.flip-card-bottom span').textContent = nextValue;
-
-  card.classList.add('is-flipping');
-  leaf.addEventListener('animationend', function onEnd() {
-    resetFlipLeaf(card);
-    setFlipCardText(card, nextValue);
-    card.dataset.value = nextValue;
-  }, { once: true });
-}
-
 function updateCountdown() {
   const diff = TARGET - new Date();
-  const values = diff <= 0
-    ? ['00', '00', '00', '00']
-    : [
-        String(Math.floor(diff / 86400000)).padStart(2, '0'),
-        String(Math.floor(diff % 86400000 / 3600000)).padStart(2, '0'),
-        String(Math.floor(diff % 3600000 / 60000)).padStart(2, '0'),
-        String(Math.floor(diff % 60000 / 1000)).padStart(2, '0')
-      ];
-
-  FLIP_IDS.forEach((id, i) => {
-    const card = document.getElementById(id);
-    if (!card) return;
-    const nextValue = values[i];
-    if (!card.dataset.value) {
-      setFlipCardText(card, nextValue);
-      card.dataset.value = nextValue;
-      return;
-    }
-    flipCardTo(card, nextValue);
-  });
+  if (diff <= 0) {
+    ['cdDays', 'cdHours', 'cdMins', 'cdSecs'].forEach(id => {
+      document.getElementById(id).textContent = '00';
+    });
+    return;
+  }
+  document.getElementById('cdDays').textContent  = String(Math.floor(diff / 86400000)).padStart(2, '0');
+  document.getElementById('cdHours').textContent = String(Math.floor(diff % 86400000 / 3600000)).padStart(2, '0');
+  document.getElementById('cdMins').textContent  = String(Math.floor(diff % 3600000 / 60000)).padStart(2, '0');
+  document.getElementById('cdSecs').textContent  = String(Math.floor(diff % 60000 / 1000)).padStart(2, '0');
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
