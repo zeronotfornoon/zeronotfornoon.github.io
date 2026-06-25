@@ -563,18 +563,11 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
 <script src="js/games-lib.js"></script>
 <script src="games.js"></script>
 <script>
-function setLang(lang) {
-  const isZH = lang === 'zh';
-  document.documentElement.lang = isZH ? 'zh' : 'en';
-  document.getElementById('btnZH').classList.toggle('active', isZH);
-  document.getElementById('btnEN').classList.toggle('active', !isZH);
-  document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('visible', isZH));
-  document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('visible', !isZH));
-  document.querySelectorAll('.lang-zh-inline').forEach(el => el.classList.toggle('visible', isZH));
-  document.querySelectorAll('.lang-en-inline').forEach(el => el.classList.toggle('visible', !isZH));
-  if (window.gamesOnLangChange) window.gamesOnLangChange(lang);
-}
-setLang('zh');
+initSiteLang({
+  onChange: function(lang) {
+    if (window.gamesOnLangChange) window.gamesOnLangChange(lang);
+  }
+});
 (function() {
   const btn = document.getElementById('backToTop');
   if (!btn) return;

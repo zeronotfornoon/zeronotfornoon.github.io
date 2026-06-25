@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>异味须知 | About Us — Weird Games Club</title>
+<script src="js/site.js"></script>
+<script>
+setSiteMeta({
+  path: 'about.html',
+  title: '异味须知 | About Us — Weird Games Club',
+  description: '我们是谁，我们在做什么，以及异味游戏同好会能为独立游戏开发者与玩家提供什么。'
+});
+</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Noto+Serif+SC:wght@300;400;600&family=Press+Start+2P&display=swap');
 
@@ -738,19 +746,7 @@ body {
 </div>
 
 <script>
-function setLang(lang) {
-  const isZH = lang === 'zh';
-  document.documentElement.lang = isZH ? 'zh' : 'en';
-  document.getElementById('btnZH').classList.toggle('active', isZH);
-  document.getElementById('btnEN').classList.toggle('active', !isZH);
-  document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('visible', isZH));
-  document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('visible', !isZH));
-  document.querySelectorAll('.lang-zh-inline').forEach(el => el.classList.toggle('visible', isZH));
-  document.querySelectorAll('.lang-en-inline').forEach(el => el.classList.toggle('visible', !isZH));
-  document.querySelectorAll('.lang-zh-flex').forEach(el => el.classList.toggle('visible', isZH));
-  document.querySelectorAll('.lang-en-flex').forEach(el => el.classList.toggle('visible', !isZH));
-}
-setLang('zh');
+initSiteLang();
 (function() {
   const btn = document.getElementById('backToTop');
   if (!btn) return;

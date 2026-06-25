@@ -1051,7 +1051,7 @@ html[lang="en"] .side-char-line {
     </h1>
     <p class="hero-desc">
       <span class="lang-zh-inline">游戏考据、开发者采访与独立游戏资讯——铁鼠也啃噬不尽的独游文字记录。</span>
-      <span class="lang-en-inline">Game research, developer interviews, and indie news — written records even the iron rat can't chew through.</span>
+      <span class="lang-en-inline">Game research, developer interviews, and indie news that even Tesso can't eat away.</span>
     </p>
     <div class="hero-stats" id="heroStats" aria-live="polite"></div>
   </div>
@@ -1165,18 +1165,11 @@ html[lang="en"] .side-char-line {
 <script src="js/archive-data.js"></script>
 <script src="archive.js"></script>
 <script>
-function setLang(lang) {
-  const isZH = lang === 'zh';
-  document.documentElement.lang = isZH ? 'zh' : 'en';
-  document.getElementById('btnZH').classList.toggle('active', isZH);
-  document.getElementById('btnEN').classList.toggle('active', !isZH);
-  document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('visible', isZH));
-  document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('visible', !isZH));
-  document.querySelectorAll('.lang-zh-inline').forEach(el => el.classList.toggle('visible', isZH));
-  document.querySelectorAll('.lang-en-inline').forEach(el => el.classList.toggle('visible', !isZH));
-  if (window.archiveOnLangChange) window.archiveOnLangChange(lang);
-}
-setLang('zh');
+initSiteLang({
+  onChange: function(lang) {
+    if (window.archiveOnLangChange) window.archiveOnLangChange(lang);
+  }
+});
 (function() {
   const btn = document.getElementById('backToTop');
   if (!btn) return;
