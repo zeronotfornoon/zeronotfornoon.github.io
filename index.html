@@ -253,29 +253,36 @@ body {
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 2;
   background: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 40px 24px 28px;
-  gap: 10px;
+  pointer-events: none;
+}
+.hero-title-wrap {
+  position: absolute;
+  left: 50%;
+  top: 34%;
+  transform: translate(-50%, -50%);
+  width: min(58vw, 640px);
+  z-index: 1;
+  pointer-events: none;
 }
 .hero-title-img {
   position: relative;
   z-index: 1;
-  width: auto;
-  height: clamp(52px, 11vw, 96px);
-  max-width: min(92vw, 820px);
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
   object-fit: contain;
-  flex-shrink: 0;
   filter:
     drop-shadow(0 0 2px rgba(232, 160, 180, 0.35))
     drop-shadow(0 2px 8px rgba(17, 17, 17, 0.12));
 }
 .hero-tagline {
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 28px;
   z-index: 1;
-  flex-shrink: 0;
+  pointer-events: none;
   font-family: 'UranusPixel', 'Press Start 2P', monospace;
   font-size: clamp(1rem, 1.8vw, 1.25rem);
   color: var(--ink-dim);
@@ -1413,14 +1420,17 @@ html[lang="en"] .side-char-line {
 @media (max-width: 576px) {
   .lang-bar { padding: 8px 16px; }
   .site-logo-img { height: 44px; max-width: 200px; }
-  .hero-title-img { height: clamp(40px, 10vw, 72px); max-width: min(94vw, 640px); }
+  .hero-title-wrap {
+    top: 32%;
+    width: min(72vw, 420px);
+  }
   .hero-bg {
     height: 240px;
     object-position: center 30%;
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 48%, rgba(0, 0, 0, 0.7) 68%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 0%, #000 48%, rgba(0, 0, 0, 0.7) 68%, transparent 100%);
   }
-  .hero-overlay { padding: 16px; }
+  .hero-tagline { bottom: 16px; padding: 0 16px; }
   .hero::after { height: 140px; }
   .site-bg-spore { animation-duration: 9s; }
   .countdown-strip { gap: 8px; padding: 16px 12px; flex-wrap: wrap; }
@@ -1528,7 +1538,9 @@ html[lang="en"] .side-char-line {
 <div class="hero">
   <img class="hero-bg" src="yiweijiayao.jpg" alt="异味游戏同好会">
   <div class="hero-overlay">
-    <img class="hero-title-img" src="hero-title-zh.png" alt="异味游戏同好会 Weird Games Club">
+    <div class="hero-title-wrap">
+      <img class="hero-title-img" src="hero-title-zh.png" alt="异味游戏同好会 Weird Games Club">
+    </div>
     <div class="hero-tagline">
       <span class="lang-zh-inline">独立游戏不是流水线产品，每一份异味都值得深尝</span>
       <span class="lang-en-inline">Savor Weird Games Slowly</span>
