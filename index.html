@@ -260,9 +260,25 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: min(48.5vw, 573px);
+  width: min(53vw, 630px);
   z-index: 1;
   pointer-events: none;
+}
+.hero-title-brush {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 118%;
+  height: 168%;
+  transform: translate(-50%, -50%) rotate(-2.5deg);
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-title-brush svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 .hero-title-img {
   position: relative;
@@ -271,12 +287,18 @@ body {
   width: 100%;
   height: auto;
   max-width: none;
-  max-height: 163px;
   margin: 0 auto;
   object-fit: contain;
   filter:
     drop-shadow(0 0 2px rgba(232, 160, 180, 0.35))
     drop-shadow(0 2px 8px rgba(17, 17, 17, 0.12));
+}
+.hero-title-img.lang-zh {
+  max-height: 180px;
+}
+.hero-title-img.lang-en {
+  max-height: 163px;
+  width: 92%;
 }
 .hero-tagline {
   position: absolute;
@@ -1424,9 +1446,10 @@ html[lang="en"] .side-char-line {
   .site-logo-img { height: 44px; max-width: 200px; }
   .hero-title-wrap {
     top: 50%;
-    width: min(75vw, 375px);
+    width: min(78vw, 400px);
   }
-  .hero-title-img { max-height: 97px; }
+  .hero-title-img.lang-zh { max-height: 105px; }
+  .hero-title-img.lang-en { max-height: 97px; }
   .hero-bg {
     height: 240px;
     object-position: center 30%;
@@ -1503,6 +1526,9 @@ html[lang="en"] .side-char-line {
 .hero-title-wrap .lang-en.visible {
   display: block;
 }
+.hero-title-wrap .hero-title-brush.visible {
+  display: block;
+}
 .lang-zh-inline, .lang-en-inline { display: none; }
 .lang-zh-inline.visible, .lang-en-inline.visible { display: inline; }
 </style>
@@ -1546,6 +1572,22 @@ html[lang="en"] .side-char-line {
   <img class="hero-bg" src="yiweijiayao.jpg" alt="异味游戏同好会">
   <div class="hero-overlay">
     <div class="hero-title-wrap">
+      <span class="hero-title-brush lang-zh" aria-hidden="true">
+        <svg viewBox="0 0 520 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <defs>
+            <filter id="hero-brush-rough" x="-8%" y="-8%" width="116%" height="116%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.038" numOctaves="4" seed="7" result="noise"/>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </defs>
+          <g filter="url(#hero-brush-rough)" fill="#121212">
+            <path d="M8 62 C95 38, 210 52, 340 44 C410 40, 468 48, 512 55 L505 82 C420 92, 280 78, 155 86 C72 92, 28 88, 12 78 Z" opacity="0.93"/>
+            <path d="M22 78 C130 98, 255 72, 390 80 C445 84, 488 76, 508 88 L498 108 C360 118, 210 102, 95 112 C48 116, 18 98, 26 86 Z" opacity="0.88"/>
+            <path d="M45 42 C160 58, 290 34, 420 46 L412 68 C290 62, 165 74, 52 58 Z" opacity="0.72"/>
+            <path d="M130 96 C220 88, 310 104, 400 92 L392 112 C300 122, 195 108, 118 114 Z" opacity="0.65"/>
+          </g>
+        </svg>
+      </span>
       <img class="hero-title-img lang-zh" src="hero-title-zh.png" alt="异味游戏同好会">
       <img class="hero-title-img lang-en" src="logo1.png" alt="Weird Games Club">
     </div>
