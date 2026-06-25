@@ -751,6 +751,12 @@
     border-color: rgba(106, 143, 110, 0.45);
   }
   .modal-btn-secondary:hover { background: rgba(58, 92, 62, 0.2); }
+  .animal-hut-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .animal-hut-actions .modal-btn-secondary { margin-top: 10px; }
   .backpack-items {
     margin-top: 10px;
     font-size: 0.82rem;
@@ -878,7 +884,7 @@
     <div class="action-grid">
       <button class="action-btn" id="btnCompost" onclick="doCompost()">堆肥</button>
       <button class="action-btn" onclick="showComingSoon('捡果子')">捡果子</button>
-      <button class="action-btn" onclick="showComingSoon('动物小屋')">动物小屋</button>
+      <button class="action-btn" id="btnAnimalHut" onclick="openAnimalHut()">动物小屋</button>
       <button class="action-btn" id="btnExplore" onclick="openExplore()">探索林地</button>
       <button class="action-btn" onclick="showWildMushroom()">采野菌</button>
     </div>
@@ -1058,6 +1064,23 @@
   </div>
 </div>
 
+<div class="modal-overlay hidden" id="animalHutModal">
+  <div class="modal explore-modal">
+    <div class="modal-title" id="animalHutTitle">动物小屋</div>
+    <div class="modal-text" id="animalHutText"></div>
+    <div class="animal-hut-actions" id="animalHutActions"></div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="animalHutResultModal">
+  <div class="modal explore-modal">
+    <div class="modal-title">动物小屋</div>
+    <div class="modal-text" id="animalHutResultText"></div>
+    <div class="explore-items" id="animalHutResultItems"></div>
+    <button class="modal-btn" type="button" onclick="closeAnimalHutResult()">好的</button>
+  </div>
+</div>
+
 <script>
   const STORAGE_KEY = 'humidWildsState';
   const CARD_KEY = 'humidWildsCard';
@@ -1067,6 +1090,9 @@
   const WEATHER_REFRESH_MS = 24 * 60 * 60 * 1000;
   const EXPLORE_COOLDOWN_MS = 24 * 60 * 60 * 1000;
   const EXPLORE_DURATION_MS = 60 * 60 * 1000;
+  const HUT_BUILD_BRANCHES = 5;
+  const HUT_BUILD_DURATION_MS = 24 * 60 * 60 * 1000;
+  const HUT_BERRY_DURATION_MS = 24 * 60 * 60 * 1000;
   const MANAGER_CODE = 'Kakihara000';
 
   // 爱发电赞助人由 GitHub Actions 同步至 sponsors.json（见 .github/workflows/sync-sponsors.yml）
@@ -1085,6 +1111,7 @@
   let compostTimer = null;
   let weatherTimer = null;
   let exploreTimer = null;
+  let hutTimer = null;
 
   function generateForest() {
     const bg = document.getElementById('forestBg');
@@ -1188,6 +1215,7 @@
       migrateCompostState(state, todayStr());
       migrateWeatherState(state);
       migrateExploreState(state);
+      migrateAnimalHutState(state);
       if (needsWeatherRefresh()) refreshWeather();
     } else {
       const weather = pickWeather();
@@ -1203,7 +1231,12 @@
         backpackMax: BACKPACK_MAX,
         exploreStartedAt: 0,
         lastExploreAt: 0,
-        exploreResult: null
+        exploreResult: null,
+        animalHut: {
+          buildStartedAt: 0,
+          built: false,
+          berryPlacedAt: 0
+        }
       };
     }
     saveState();
@@ -1239,6 +1272,7 @@
     renderBackpack();
     renderCompostButton();
     renderExploreButton();
+    renderAnimalHutButton();
   }
 
   function selectAvatar(el) {
@@ -1642,6 +1676,272 @@
         }).join('');
     }
     document.getElementById('exploreResultModal').classList.remove('hidden');
+  }
+
+  const ANIMAL_HUT_OUTCOMES = [
+    { weight: 40, text: '小动物吃掉了浆果，什么都没留下……', items: {} },
+    { weight: 20, text: '不知名的小动物给你留下了一株草药', items: { '草药': 1 } },
+    { weight: 15, text: '不知名的小动物给你留下了一颗蓝色宝石', items: { '蓝色宝石': 1 } },
+    { weight: 25, text: '不知名的小动物给你留下了一颗浆果', items: { '浆果': 1 } }
+  ];
+
+  function migrateAnimalHutState(state) {
+    if (!state.animalHut) {
+      state.animalHut = { buildStartedAt: 0, built: false, berryPlacedAt: 0 };
+    }
+    if (state.animalHut.buildStartedAt == null) state.animalHut.buildStartedAt = 0;
+    if (state.animalHut.built == null) state.animalHut.built = false;
+    if (state.animalHut.berryPlacedAt == null) state.animalHut.berryPlacedAt = 0;
+    syncHutBuildState();
+  }
+
+  function syncHutBuildState() {
+    if (!state.animalHut || !state.animalHut.buildStartedAt || state.animalHut.built) return;
+    if (Date.now() - state.animalHut.buildStartedAt >= HUT_BUILD_DURATION_MS) {
+      state.animalHut.built = true;
+    }
+  }
+
+  function isHutBuilt() {
+    syncHutBuildState();
+    return !!(state.animalHut && state.animalHut.built);
+  }
+
+  function isHutBuilding() {
+    if (!state.animalHut || !state.animalHut.buildStartedAt || state.animalHut.built) return false;
+    return Date.now() - state.animalHut.buildStartedAt < HUT_BUILD_DURATION_MS;
+  }
+
+  function getHutBuildRemainMs() {
+    if (!isHutBuilding()) return 0;
+    var remain = HUT_BUILD_DURATION_MS - (Date.now() - state.animalHut.buildStartedAt);
+    return remain > 0 ? remain : 0;
+  }
+
+  function isHutBerryWaiting() {
+    if (!isHutBuilt() || !state.animalHut.berryPlacedAt) return false;
+    return Date.now() - state.animalHut.berryPlacedAt < HUT_BERRY_DURATION_MS;
+  }
+
+  function canClaimHutVisit() {
+    if (!isHutBuilt() || !state.animalHut.berryPlacedAt) return false;
+    return Date.now() - state.animalHut.berryPlacedAt >= HUT_BERRY_DURATION_MS;
+  }
+
+  function getHutBerryRemainMs() {
+    if (!isHutBerryWaiting()) return 0;
+    var remain = HUT_BERRY_DURATION_MS - (Date.now() - state.animalHut.berryPlacedAt);
+    return remain > 0 ? remain : 0;
+  }
+
+  function getBackpackQty(name) {
+    return state.backpack[name] || 0;
+  }
+
+  function removeFromBackpack(items) {
+    for (var name in items) {
+      if (getBackpackQty(name) < items[name]) return false;
+    }
+    for (var name in items) {
+      state.backpack[name] -= items[name];
+      if (state.backpack[name] <= 0) delete state.backpack[name];
+    }
+    state.backpackCount = getBackpackTotal(state.backpack);
+    return true;
+  }
+
+  function closeAnimalHutModal() {
+    document.getElementById('animalHutModal').classList.add('hidden');
+  }
+
+  function closeAnimalHutResult() {
+    document.getElementById('animalHutResultModal').classList.add('hidden');
+  }
+
+  function showAnimalHutModal(title, text, buttons) {
+    document.getElementById('animalHutTitle').textContent = title;
+    document.getElementById('animalHutText').textContent = text;
+    var actions = document.getElementById('animalHutActions');
+    actions.innerHTML = '';
+    buttons.forEach(function(b, index) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'modal-btn' + (b.secondary ? ' modal-btn-secondary' : '');
+      btn.textContent = b.label;
+      btn.onclick = b.onClick;
+      actions.appendChild(btn);
+    });
+    document.getElementById('animalHutModal').classList.remove('hidden');
+  }
+
+  function showHutBuildIntro() {
+    showAnimalHutModal('动物小屋', '你还没有建好动物小屋。背包里有5根树枝，即可搭建动物小屋，工期为24小时', [
+      { label: '确认搭建', onClick: confirmBuildHut },
+      { label: '我再想想', onClick: closeAnimalHutModal, secondary: true }
+    ]);
+  }
+
+  function showHutBuildingStatus() {
+    showAnimalHutModal('动物小屋', '动物小屋还在搭建中，大约还需 ' + formatExploreRemain(getHutBuildRemainMs()) + ' 完工。', [
+      { label: '好的', onClick: closeAnimalHutModal }
+    ]);
+  }
+
+  function showHutWelcome() {
+    showAnimalHutModal('动物小屋', '欢迎来到动物小屋！放下一颗浆果，有可能会吸引来不知名的小动物，它们说不定会给你留下回礼', [
+      { label: '放下一颗浆果', onClick: placeBerryInHut },
+      { label: '我再想想', onClick: closeAnimalHutModal, secondary: true }
+    ]);
+  }
+
+  function showHutVisitReady() {
+    showAnimalHutModal('动物小屋', '不知名的小动物或许已经来过了……', [
+      { label: '查看动物小屋', onClick: claimHutVisit },
+      { label: '我再想想', onClick: closeAnimalHutModal, secondary: true }
+    ]);
+  }
+
+  function confirmBuildHut() {
+    if (getBackpackQty('树枝') < HUT_BUILD_BRANCHES) {
+      closeAnimalHutModal();
+      showAlert('树枝不足，请先去林地里转转吧');
+      return;
+    }
+    removeFromBackpack({ '树枝': HUT_BUILD_BRANCHES });
+    state.animalHut.buildStartedAt = Date.now();
+    state.animalHut.built = false;
+    saveState();
+    renderState();
+    closeAnimalHutModal();
+    showAlert('搭建中');
+  }
+
+  function placeBerryInHut() {
+    if (getBackpackQty('浆果') < 1) {
+      closeAnimalHutModal();
+      showAlert('浆果不足，请先去林地里转转吧');
+      return;
+    }
+    removeFromBackpack({ '浆果': 1 });
+    state.animalHut.berryPlacedAt = Date.now();
+    saveState();
+    renderState();
+    closeAnimalHutModal();
+    showAlert('已放置，请24小时后再回来查看');
+  }
+
+  function rollAnimalHutOutcome() {
+    var totalWeight = ANIMAL_HUT_OUTCOMES.reduce(function(s, o) { return s + o.weight; }, 0);
+    var roll = Math.random() * totalWeight;
+    for (var i = 0; i < ANIMAL_HUT_OUTCOMES.length; i++) {
+      var outcome = ANIMAL_HUT_OUTCOMES[i];
+      roll -= outcome.weight;
+      if (roll <= 0) {
+        return { text: outcome.text, items: Object.assign({}, outcome.items) };
+      }
+    }
+    var fb = ANIMAL_HUT_OUTCOMES[0];
+    return { text: fb.text, items: Object.assign({}, fb.items) };
+  }
+
+  function showAnimalHutResult(text, items) {
+    document.getElementById('animalHutResultText').textContent = text;
+    var itemsBox = document.getElementById('animalHutResultItems');
+    var itemEntries = Object.entries(items || {});
+    if (itemEntries.length === 0) {
+      itemsBox.innerHTML = '<div class="explore-empty-note">本次没有获得物品。</div>';
+    } else {
+      itemsBox.innerHTML = '<div class="explore-items-title">获得物品</div>' +
+        itemEntries.map(function(e) {
+          return '<div class="explore-item-row">' + e[0] + ' ×' + e[1] + '</div>';
+        }).join('');
+    }
+    document.getElementById('animalHutResultModal').classList.remove('hidden');
+  }
+
+  function claimHutVisit() {
+    if (!canClaimHutVisit()) return;
+    var outcome = rollAnimalHutOutcome();
+    var overflowMsg = '';
+    if (outcome.items && Object.keys(outcome.items).length > 0) {
+      var packResult = addToBackpack(outcome.items);
+      if (packResult.skipped > 0) {
+        overflowMsg = '背包已满，有 ' + packResult.skipped + ' 件物品未能装入。';
+      }
+    }
+    state.animalHut.berryPlacedAt = 0;
+    saveState();
+    renderState();
+    closeAnimalHutModal();
+    showAnimalHutResult(outcome.text, outcome.items);
+    if (overflowMsg) {
+      setTimeout(function() { showAlert(overflowMsg); }, 300);
+    }
+  }
+
+  function openAnimalHut() {
+    syncHutBuildState();
+    saveState();
+
+    if (canClaimHutVisit()) {
+      showHutVisitReady();
+      return;
+    }
+    if (isHutBerryWaiting()) {
+      showAlert('已放置浆果，请' + formatExploreRemain(getHutBerryRemainMs()) + '后再回来查看');
+      return;
+    }
+    if (isHutBuilding()) {
+      showHutBuildingStatus();
+      return;
+    }
+    if (isHutBuilt()) {
+      showHutWelcome();
+      return;
+    }
+    showHutBuildIntro();
+  }
+
+  function renderAnimalHutButton() {
+    var btn = document.getElementById('btnAnimalHut');
+    if (!btn) return;
+
+    if (canClaimHutVisit()) {
+      btn.disabled = false;
+      btn.classList.remove('cooldown');
+      btn.textContent = '查看动物小屋';
+      if (hutTimer) { clearInterval(hutTimer); hutTimer = null; }
+      return;
+    }
+    if (isHutBuilding()) {
+      btn.disabled = false;
+      btn.classList.add('cooldown');
+      btn.textContent = formatExploreRemain(getHutBuildRemainMs()) + '后完工';
+      if (!hutTimer) {
+        hutTimer = setInterval(function() {
+          syncHutBuildState();
+          if (!isHutBuilding()) {
+            saveState();
+          }
+          renderAnimalHutButton();
+        }, 30000);
+      }
+      return;
+    }
+    if (isHutBerryWaiting()) {
+      btn.disabled = false;
+      btn.classList.add('cooldown');
+      btn.textContent = formatExploreRemain(getHutBerryRemainMs()) + '后可查看';
+      if (!hutTimer) {
+        hutTimer = setInterval(renderAnimalHutButton, 30000);
+      }
+      return;
+    }
+
+    btn.disabled = false;
+    btn.classList.remove('cooldown');
+    btn.textContent = '动物小屋';
+    if (hutTimer) { clearInterval(hutTimer); hutTimer = null; }
   }
 
   function addToBackpack(items) {
