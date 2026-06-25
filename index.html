@@ -1913,12 +1913,30 @@ function syncArchivedCount() {
   });
 }
 
-initSiteLang({
-  onChange: function(lang) {
-    const link = document.getElementById('contactLink');
-    if (link) link.href = lang === 'zh' ? CONTACT_ZH : CONTACT_EN;
-  }
-});
+function applyIndexLangFallback() {
+  if (document.documentElement.getAttribute('data-lang-ready')) return;
+  document.documentElement.lang = 'zh';
+  document.documentElement.setAttribute('data-lang-ready', '1');
+  document.querySelectorAll('.lang-zh-inline').forEach(function(el) { el.classList.add('visible'); });
+  document.querySelectorAll('.lang-zh').forEach(function(el) { el.classList.add('visible'); });
+  var link = document.getElementById('contactLink');
+  if (link) link.href = CONTACT_ZH;
+  var btnZH = document.getElementById('btnZH');
+  var btnEN = document.getElementById('btnEN');
+  if (btnZH) btnZH.classList.add('active');
+  if (btnEN) btnEN.classList.remove('active');
+}
+
+if (typeof initSiteLang === 'function') {
+  initSiteLang({
+    onChange: function(lang) {
+      const link = document.getElementById('contactLink');
+      if (link) link.href = lang === 'zh' ? CONTACT_ZH : CONTACT_EN;
+    }
+  });
+} else {
+  applyIndexLangFallback();
+}
 
 // 倒计时 目标：2026年9月24日 20:00 北京时间
 const TARGET = new Date('2026-09-24T20:00:00+08:00');
