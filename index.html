@@ -416,7 +416,11 @@ html[lang="en"] .countdown-head-en { display: flex; }
   transform-style: preserve-3d;
   z-index: 3;
   backface-visibility: hidden;
-  opacity: 0;
+  visibility: hidden;
+}
+.flip-card:not(.is-flipping) .flip-card-leaf {
+  transform: none;
+  animation: none;
 }
 .flip-card-leaf-front,
 .flip-card-leaf-back {
@@ -454,7 +458,7 @@ html[lang="en"] .countdown-head-en { display: flex; }
   margin-top: -100%;
 }
 .flip-card.is-flipping .flip-card-leaf {
-  opacity: 1;
+  visibility: visible;
   animation: flip-leaf-down 0.62s cubic-bezier(0.37, 0.01, 0.25, 1) forwards;
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
 }
@@ -1622,7 +1626,7 @@ html[lang="en"] .side-char-line {
   </div>
   <div class="countdown-timer">
     <div class="cd-unit">
-      <div class="flip-card" id="flipDays" data-value="00">
+      <div class="flip-card" id="flipDays">
         <div class="flip-card-top flip-card-face"><span>00</span></div>
         <div class="flip-card-bottom flip-card-face"><span>00</span></div>
         <div class="flip-card-leaf" aria-hidden="true">
@@ -1633,7 +1637,7 @@ html[lang="en"] .side-char-line {
       <div class="cd-lbl"><span class="lang-zh-inline">天</span><span class="lang-en-inline">Days</span></div>
     </div>
     <div class="cd-unit">
-      <div class="flip-card" id="flipHours" data-value="00">
+      <div class="flip-card" id="flipHours">
         <div class="flip-card-top flip-card-face"><span>00</span></div>
         <div class="flip-card-bottom flip-card-face"><span>00</span></div>
         <div class="flip-card-leaf" aria-hidden="true">
@@ -1644,7 +1648,7 @@ html[lang="en"] .side-char-line {
       <div class="cd-lbl"><span class="lang-zh-inline">时</span><span class="lang-en-inline">Hours</span></div>
     </div>
     <div class="cd-unit">
-      <div class="flip-card" id="flipMins" data-value="00">
+      <div class="flip-card" id="flipMins">
         <div class="flip-card-top flip-card-face"><span>00</span></div>
         <div class="flip-card-bottom flip-card-face"><span>00</span></div>
         <div class="flip-card-leaf" aria-hidden="true">
@@ -1655,7 +1659,7 @@ html[lang="en"] .side-char-line {
       <div class="cd-lbl"><span class="lang-zh-inline">分</span><span class="lang-en-inline">Minutes</span></div>
     </div>
     <div class="cd-unit">
-      <div class="flip-card" id="flipSecs" data-value="00">
+      <div class="flip-card" id="flipSecs">
         <div class="flip-card-top flip-card-face"><span>00</span></div>
         <div class="flip-card-bottom flip-card-face"><span>00</span></div>
         <div class="flip-card-leaf" aria-hidden="true">
@@ -1964,25 +1968,30 @@ function setFlipCardText(card, value) {
     .forEach(el => { el.textContent = value; });
 }
 
-function flipCardTo(card, nextValue) {
-  const current = card.dataset.value || nextValue;
-  if (current === nextValue) return;
+function resetFlipLeaf(card) {
+  const leaf = card.querySelector('.flip-card-leaf');
+  if (!leaf) return;
+  card.classList.remove('is-flipping');
+  leaf.style.transform = '';
+  leaf.style.filter = '';
+  leaf.style.animation = '';
+}
 
-  if (card.classList.contains('is-flipping')) {
-    card.classList.remove('is-flipping');
-    void card.offsetWidth;
-  }
+function flipCardTo(card, nextValue) {
+  const current = card.dataset.value;
+  if (!current || current === nextValue) return;
+
+  resetFlipLeaf(card);
+  void card.offsetWidth;
 
   const leaf = card.querySelector('.flip-card-leaf');
   leaf.querySelector('.flip-card-leaf-front span').textContent = current;
   leaf.querySelector('.flip-card-leaf-back span').textContent = nextValue;
+  card.querySelector('.flip-card-bottom span').textContent = nextValue;
 
   card.classList.add('is-flipping');
   leaf.addEventListener('animationend', function onEnd() {
-    leaf.removeEventListener('animationend', onEnd);
-    card.classList.remove('is-flipping');
-    leaf.style.transform = '';
-    leaf.style.filter = '';
+    resetFlipLeaf(card);
     setFlipCardText(card, nextValue);
     card.dataset.value = nextValue;
   }, { once: true });
