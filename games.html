@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合作游戏 | Supported Games — Weird Games Club</title>
+<script src="js/site.js"></script>
+<script>
+setSiteMeta({
+  path: 'games.html',
+  title: '合作游戏 | Supported Games — Weird Games Club',
+  description: '异味优选独立游戏收录——不一定是完美的精品，但一定散发异味。'
+});
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Press+Start+2P&display=swap');
+
+@font-face {
+  font-family: 'UranusPixel';
+  src: url('Uranus_Pixel_11Px.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root {
+  --white: #ffffff;
+  --off-white: #f5f5f7;
+  --ink: #111111;
+  --ink-dim: #444444;
+  --ink-faint: #888888;
+  --pink: #e8a0b4;
+  --pink-light: #f5d6e0;
+  --pink-bg: #fdf0f4;
+  --border: #e2e2e5;
+  --border-dark: #111111;
+  --games-bg: #f2eef8;
+  --games-accent: #8b7aad;
+  --games-accent-light: #c4b8dc;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background-color: #f3f0f8;
+  background-image:
+    linear-gradient(90deg, rgba(17, 17, 17, 0.016) 1px, transparent 1px),
+    linear-gradient(rgba(17, 17, 17, 0.016) 1px, transparent 1px),
+    radial-gradient(ellipse at 18% 18%, rgba(139, 122, 173, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 82% 78%, rgba(139, 122, 173, 0.08) 0%, transparent 50%);
+  background-size: 26px 26px, 26px 26px, 100% 100%, 100% 100%;
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+.lang-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  backdrop-filter: blur(8px);
+}
+.lang-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.lang-bar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.lang-bar-logo:hover { transform: translateY(-1px); }
+.site-logo-img {
+  height: 58px;
+  width: auto;
+  max-width: 260px;
+  display: block;
+  object-fit: contain;
+  animation: logo-neon-flicker 3.5s infinite;
+}
+@keyframes logo-neon-flicker {
+  0%,18%,20%,22%,53%,55%,100% {
+    filter:
+      drop-shadow(0 0 2px var(--pink))
+      drop-shadow(0 0 8px var(--pink))
+      drop-shadow(0 0 18px rgba(232, 160, 180, 0.9))
+      drop-shadow(0 0 30px rgba(232, 160, 180, 0.5));
+  }
+  19%,21%,54% {
+    filter: drop-shadow(0 0 1px rgba(232, 160, 180, 0.2));
+  }
+}
+.bar-title {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+.lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
+.lang-btn {
+  background: none; border: none;
+  padding: 5px 14px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; cursor: pointer;
+  color: var(--ink-dim); transition: all 0.15s;
+}
+.lang-btn.active { background: var(--ink); color: var(--white); }
+
+.hero {
+  margin-top: 72px;
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--games-bg) 0%, var(--off-white) 52%, #eef0f5 100%);
+  border-bottom: 1px solid var(--border);
+}
+.hero-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 48px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.hero-page-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.5rem;
+  color: var(--games-accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.hero-title {
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+}
+.hero-desc {
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  font-weight: 300;
+  max-width: 560px;
+  line-height: 1.75;
+}
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.03em;
+}
+.hero-stats-sep { opacity: 0.45; }
+
+.page-body {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 36px 24px 80px;
+}
+.games-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+  align-items: start;
+}
+.games-main {
+  min-width: 0;
+  background: rgba(255, 252, 255, 0.78);
+  border-radius: 16px;
+  padding: 28px 28px 36px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+.games-sidebar {
+  position: sticky;
+  top: 88px;
+}
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::before {
+  content: '';
+  width: 4px;
+  height: 14px;
+  background: var(--games-accent);
+  border-radius: 2px;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+.game-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+}
+.game-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(139, 122, 173, 0.14);
+  border-color: var(--games-accent-light);
+}
+.game-card-cover {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--games-bg);
+  position: relative;
+}
+.game-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.game-cover-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, var(--games-bg) 0%, #e8e2f2 100%);
+}
+.game-cover-placeholder-mark {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.72rem;
+  color: var(--games-accent);
+  opacity: 0.55;
+  letter-spacing: 0.08em;
+}
+.game-card-body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.game-card-title {
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+}
+.game-card-excerpt {
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+  line-height: 1.65;
+  flex: 1;
+}
+.game-card-arrow {
+  align-self: flex-end;
+  font-size: 1.1rem;
+  color: var(--games-accent);
+  transition: transform 0.15s;
+}
+.game-card:hover .game-card-arrow { transform: translateX(4px); }
+
+.games-empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--ink-faint);
+  font-size: 0.92rem;
+}
+
+.side-char-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 20px 18px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+.side-char-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--games-accent) 0%, var(--games-accent-light) 55%, transparent 100%);
+}
+.side-char-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.side-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--games-accent-light);
+  box-shadow: 0 0 0 1px var(--games-accent), 0 4px 12px rgba(139, 122, 173, 0.22);
+  flex-shrink: 0;
+}
+.side-char-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding-top: 4px;
+}
+.side-char-name {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+.side-char-title {
+  font-size: 0.78rem;
+  color: var(--ink-dim);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+}
+html[lang="en"] .side-char-title {
+  font-size: 0.72rem;
+}
+.side-char-line {
+  font-family: 'UranusPixel', 'Press Start 2P', monospace;
+  font-size: 0.92rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  background: var(--games-bg);
+  border-radius: 8px;
+  border: 1px dashed rgba(139, 122, 173, 0.45);
+}
+html[lang="en"] .side-char-line { font-size: 0.82rem; }
+.side-char-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 6px 12px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+  line-height: 1.3;
+  margin-bottom: 14px;
+}
+.side-char-badge .games-count {
+  color: var(--games-accent-light);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.68rem;
+  margin: 0 3px;
+  letter-spacing: 0;
+}
+.random-game-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.random-game-btn:hover {
+  background: var(--ink);
+  color: var(--white);
+}
+.random-game-btn-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 90;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-dark);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s, visibility 0.25s, transform 0.2s;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.back-to-top:hover { transform: translateY(-2px); }
+.back-to-top-triangle {
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 10px solid var(--ink);
+  margin-top: -2px;
+}
+
+.page-footer {
+  text-align: center;
+  padding: 24px 16px 40px;
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 768px) {
+  .games-layout { grid-template-columns: 1fr; }
+  .games-sidebar { position: static; order: 2; }
+  .games-main { order: 1; }
+  .games-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 576px) {
+  .lang-bar { padding: 8px 16px; }
+  .site-logo-img { height: 44px; max-width: 200px; }
+  .bar-title { display: none; }
+  .hero { height: 220px; }
+  .hero-inner { padding: 32px 16px 24px; }
+  .page-body { padding: 24px 16px 60px; }
+  .games-main { padding: 20px 16px 28px; }
+}
+
+.lang-zh, .lang-en { display: none; }
+.side-char-card .lang-zh.visible,
+.side-char-card .lang-en.visible { display: block; }
+.side-char-card .side-char-badge.lang-zh.visible,
+.side-char-card .side-char-badge.lang-en.visible { display: inline-flex; }
+.lang-zh-inline, .lang-en-inline { display: none; }
+.lang-zh-inline.visible, .lang-en-inline.visible { display: inline; }
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <div class="lang-bar-left">
+    <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
+      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    </a>
+    <span class="bar-title">
+      <span class="lang-zh-inline">合作游戏</span>
+      <span class="lang-en-inline">Supported Games</span>
+    </span>
+  </div>
+  <div class="lang-switch">
+    <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
+    <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-page-label">GAMES</div>
+    <h1 class="hero-title">
+      <span class="lang-zh-inline">合作游戏</span>
+      <span class="lang-en-inline">Supported Games</span>
+    </h1>
+    <p class="hero-desc">
+      <span class="lang-zh-inline">异味优选，不一定是完美的精品，但一定散发异味。</span>
+      <span class="lang-en-inline">Far from perfect, but utterly unique — curated weird indie picks.</span>
+    </p>
+    <div class="hero-stats" id="heroStats" aria-live="polite"></div>
+  </div>
+</div>
+
+<div class="page-body">
+<div class="games-layout">
+
+  <div class="games-main">
+    <div class="section-label">
+      <span class="lang-zh-inline">收录列表</span>
+      <span class="lang-en-inline">Catalog</span>
+    </div>
+    <div class="games-grid" id="gamesGrid"></div>
+  </div>
+
+  <aside class="games-sidebar">
+    <div class="side-char-card">
+      <div class="side-char-top">
+        <img class="side-avatar" src="Hiiragi-chan.jpg" alt="">
+        <div class="side-char-info">
+          <div class="side-char-name lang-zh">小柊</div>
+          <div class="side-char-name lang-en">Hiiragi</div>
+          <div class="side-char-title lang-zh">看板娘</div>
+          <div class="side-char-title lang-en">Club Mascot</div>
+        </div>
+      </div>
+      <div class="side-char-line lang-zh">游点异味……</div>
+      <div class="side-char-line lang-en">Kinda funky…</div>
+      <div class="side-char-badge lang-zh">已收容 <span class="games-count">3</span> 款异味游戏</div>
+      <div class="side-char-badge lang-en"><span class="games-count">3</span> weird games sheltered</div>
+      <button class="random-game-btn" id="randomGameBtn" type="button" onclick="return window.gamesPickRandom &amp;&amp; window.gamesPickRandom(event)">
+        <span class="random-game-btn-icon" aria-hidden="true">🎲</span>
+        <span class="lang-zh-inline">随机摇一款</span>
+        <span class="lang-en-inline">Roll a random pick</span>
+      </button>
+    </div>
+  </aside>
+
+</div>
+</div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="back-to-top-triangle"></span>
+</button>
+
+<div class="page-footer">
+  <a class="footer-back" href="index.html" style="color:inherit;text-decoration:none;">
+    ← <span class="lang-zh-inline">返回主页</span><span class="lang-en-inline">Back to Home</span>
+  </a>
+  <div class="footer-copy">© 2026 异味游戏同好会 Weird Games Club</div>
+</div>
+
+<script src="js/games-data.js"></script>
+<script src="js/games-lib.js"></script>
+<script src="games.js"></script>
+<script>
+function setLang(lang) {
+  const isZH = lang === 'zh';
+  document.documentElement.lang = isZH ? 'zh' : 'en';
+  document.getElementById('btnZH').classList.toggle('active', isZH);
+  document.getElementById('btnEN').classList.toggle('active', !isZH);
+  document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('visible', isZH));
+  document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('visible', !isZH));
+  document.querySelectorAll('.lang-zh-inline').forEach(el => el.classList.toggle('visible', isZH));
+  document.querySelectorAll('.lang-en-inline').forEach(el => el.classList.toggle('visible', !isZH));
+  if (window.gamesOnLangChange) window.gamesOnLangChange(lang);
+}
+setLang('zh');
+(function() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  const toggle = () => btn.classList.toggle('visible', window.scrollY > 280);
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
+</script>
+</body>
+</html>

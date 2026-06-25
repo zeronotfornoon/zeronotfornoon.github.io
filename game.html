@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>游戏 — Weird Games Club</title>
+<script src="js/site.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Press+Start+2P&display=swap');
+
+:root {
+  --white: #ffffff;
+  --off-white: #f5f5f7;
+  --ink: #111111;
+  --ink-dim: #444444;
+  --ink-faint: #888888;
+  --pink: #e8a0b4;
+  --border: #e2e2e5;
+  --border-dark: #111111;
+  --games-bg: #f2eef8;
+  --games-accent: #8b7aad;
+  --games-accent-light: #c4b8dc;
+  --steam: #1b2838;
+  --steam-hover: #2a475e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--off-white);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  line-height: 1.7;
+}
+
+.lang-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  backdrop-filter: blur(8px);
+}
+.lang-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.lang-bar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.lang-bar-logo:hover { transform: translateY(-1px); }
+.site-logo-img {
+  height: 58px;
+  width: auto;
+  max-width: 260px;
+  display: block;
+  object-fit: contain;
+  animation: logo-neon-flicker 3.5s infinite;
+}
+@keyframes logo-neon-flicker {
+  0%,18%,20%,22%,53%,55%,100% {
+    filter:
+      drop-shadow(0 0 2px var(--pink))
+      drop-shadow(0 0 8px var(--pink))
+      drop-shadow(0 0 18px rgba(232, 160, 180, 0.9));
+  }
+  19%,21%,54% {
+    filter: drop-shadow(0 0 1px rgba(232, 160, 180, 0.2));
+  }
+}
+.bar-title {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-weight: 300;
+}
+.bar-title a {
+  color: inherit;
+  text-decoration: none;
+}
+.bar-title a:hover { color: var(--ink); }
+.lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
+.lang-btn {
+  background: none; border: none;
+  padding: 5px 14px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; cursor: pointer;
+  color: var(--ink-dim); transition: all 0.15s;
+}
+.lang-btn.active { background: var(--ink); color: var(--white); }
+
+.game-wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: calc(72px + 36px) 24px 80px;
+}
+
+.game-card-shell {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+}
+
+.game-detail {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+  gap: 0;
+}
+.game-detail.hidden { display: none; }
+
+.game-detail-media {
+  background: var(--games-bg);
+  border-right: 1px solid var(--border);
+  min-height: 100%;
+}
+.game-detail-cover {
+  width: 100%;
+  min-height: 320px;
+  height: 100%;
+  position: relative;
+}
+.game-detail-cover.has-cover img {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+  display: block;
+}
+.game-detail-cover.game-cover-placeholder {
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--games-bg) 0%, #e8e2f2 100%);
+}
+.game-cover-placeholder-mark {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.85rem;
+  color: var(--games-accent);
+  opacity: 0.5;
+}
+
+.game-detail-info {
+  padding: 36px 40px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.game-detail-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.48rem;
+  color: var(--games-accent);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.game-detail-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+}
+.game-detail-desc {
+  color: var(--ink-dim);
+  font-size: 0.95rem;
+  line-height: 1.85;
+}
+.game-detail-desc p + p { margin-top: 1em; }
+
+.steam-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 14px 22px;
+  background: var(--steam);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(27, 40, 56, 0.25);
+}
+.steam-btn:hover { background: var(--steam-hover); }
+.steam-btn:active { transform: scale(0.98); }
+.steam-btn.is-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+.steam-btn-icon {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.game-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.nav-link {
+  color: var(--ink-faint);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+.nav-link:hover { color: var(--ink); }
+
+.game-not-found {
+  padding: 64px 32px;
+  text-align: center;
+  color: var(--ink-faint);
+}
+.game-not-found.hidden { display: none; }
+.game-not-found h1 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 90;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-dark);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s, visibility 0.25s, transform 0.2s;
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.back-to-top:hover { transform: translateY(-2px); }
+.back-to-top-triangle {
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 10px solid var(--ink);
+  margin-top: -2px;
+}
+
+.page-footer {
+  text-align: center;
+  padding: 24px 16px 40px;
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 768px) {
+  .game-detail {
+    grid-template-columns: 1fr;
+  }
+  .game-detail-media {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .game-detail-cover,
+  .game-detail-cover.has-cover img {
+    min-height: 220px;
+  }
+  .game-detail-info {
+    padding: 28px 24px 32px;
+  }
+}
+
+@media (max-width: 576px) {
+  .lang-bar { padding: 8px 16px; }
+  .site-logo-img { height: 44px; max-width: 200px; }
+  .bar-title { display: none; }
+  .game-wrap { padding: calc(72px + 20px) 16px 60px; }
+}
+
+.lang-zh-inline, .lang-en-inline { display: none; }
+.lang-zh-inline.visible, .lang-en-inline.visible { display: inline; }
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <div class="lang-bar-left">
+    <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
+      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    </a>
+    <span class="bar-title">
+      <a href="games.html">
+        <span class="lang-zh-inline">合作游戏</span>
+        <span class="lang-en-inline">Supported Games</span>
+      </a>
+    </span>
+  </div>
+  <div class="lang-switch">
+    <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
+    <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<div class="game-wrap">
+  <div class="game-card-shell">
+    <div class="game-detail" id="gameDetail">
+      <div class="game-detail-media" id="gameDetailMedia"></div>
+      <div class="game-detail-info">
+        <div class="game-detail-label">
+          <span class="lang-zh-inline">合作收录</span>
+          <span class="lang-en-inline">Supported</span>
+        </div>
+        <h1 class="game-detail-title" id="gameDetailTitle">加载中…</h1>
+        <div class="game-detail-desc" id="gameDetailDesc"></div>
+        <a class="steam-btn" id="gameSteamLink" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="steam-btn-icon" aria-hidden="true">▶</span>
+          <span class="lang-zh-inline">在 Steam 上查看</span>
+          <span class="lang-en-inline">View on Steam</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="game-not-found hidden" id="gameNotFound">
+      <h1>
+        <span class="lang-zh-inline">未找到该游戏</span>
+        <span class="lang-en-inline">Game not found</span>
+      </h1>
+      <p>
+        <span class="lang-zh-inline">链接可能有误，或该游戏尚未收录。</span>
+        <span class="lang-en-inline">The link may be wrong, or this game isn't listed yet.</span>
+      </p>
+    </div>
+  </div>
+
+  <nav class="game-nav">
+    <a class="nav-link" href="games.html">
+      ← <span class="lang-zh-inline">返回合作游戏列表</span><span class="lang-en-inline">Back to Supported Games</span>
+    </a>
+    <a class="nav-link" href="index.html">
+      <span class="lang-zh-inline">主页</span><span class="lang-en-inline">Home</span> →
+    </a>
+  </nav>
+</div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="back-to-top-triangle"></span>
+</button>
+
+<div class="page-footer">
+  <div class="footer-copy">© 2026 异味游戏同好会 Weird Games Club</div>
+</div>
+
+<script src="js/games-data.js"></script>
+<script src="js/games-lib.js"></script>
+<script src="game.js"></script>
+<script>
+function setLang(lang) {
+  const isZH = lang === 'zh';
+  document.documentElement.lang = isZH ? 'zh' : 'en';
+  document.getElementById('btnZH').classList.toggle('active', isZH);
+  document.getElementById('btnEN').classList.toggle('active', !isZH);
+  document.querySelectorAll('.lang-zh-inline').forEach(el => el.classList.toggle('visible', isZH));
+  document.querySelectorAll('.lang-en-inline').forEach(el => el.classList.toggle('visible', !isZH));
+  if (window.gamesOnLangChange) window.gamesOnLangChange(lang);
+}
+setLang('zh');
+(function() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  const toggle = () => btn.classList.toggle('visible', window.scrollY > 280);
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
+</script>
+</body>
+</html>
