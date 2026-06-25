@@ -474,6 +474,42 @@ body {
   border-color: var(--ink);
   color: var(--white);
 }
+.tag-filter-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  background: var(--pink-bg);
+  border: 1px dashed rgba(232, 160, 180, 0.65);
+  border-radius: 10px;
+}
+.tag-filter-label {
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+}
+.tag-filter-label strong {
+  color: var(--pink-deep);
+  font-weight: 700;
+}
+.tag-filter-clear {
+  background: var(--white);
+  border: 1px solid var(--border-dark);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tag-filter-clear:hover {
+  background: var(--ink);
+  color: var(--white);
+}
 
 /* ── 文章列表 ── */
 .feed-list {
@@ -492,12 +528,37 @@ body {
 .feed-item:last-child { border-bottom: none; }
 .feed-link {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  gap: 10px;
   padding: 24px 28px;
-  text-decoration: none;
   color: var(--ink);
   transition: background 0.15s;
+}
+.feed-core {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  color: inherit;
+}
+.feed-link:hover {
+  background: var(--off-white);
+}
+.feed-tags-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-left: 128px;
+}
+.featured-card-link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}
+.featured-card-tags {
+  padding: 0 22px 18px;
 }
 .feed-cover {
   width: 112px;
@@ -509,7 +570,10 @@ body {
   align-self: center;
   position: relative;
 }
-.feed-link:hover { background: var(--off-white); }
+.feed-link:hover .feed-arrow {
+  transform: translateX(4px);
+  color: var(--ink);
+}
 .feed-main {
   flex: 1;
   min-width: 0;
@@ -567,6 +631,27 @@ body {
   background: var(--pink-bg);
   padding: 2px 8px;
   border-radius: 3px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+button.article-tag {
+  appearance: none;
+  -webkit-appearance: none;
+}
+a.article-tag {
+  text-decoration: none;
+  display: inline-block;
+}
+.article-tag:hover,
+.article-tag.is-active {
+  background: var(--pink-deep);
+  color: var(--white);
+  border-color: var(--pink-deep);
+}
+.featured-body .feed-tags {
+  margin-top: 2px;
 }
 .feed-arrow {
   font-size: 1.1rem;
@@ -908,6 +993,7 @@ html[lang="en"] .side-char-line {
     grid-template-columns: 1fr;
   }
   .feed-link { padding: 18px 20px; }
+  .feed-tags-bar { padding-left: 0; }
   .feed-arrow { display: none; }
 }
 
@@ -1006,6 +1092,14 @@ html[lang="en"] .side-char-line {
       <button class="filter-tab" data-filter="news" type="button">
         <span class="lang-zh-inline">资讯</span>
         <span class="lang-en-inline">News</span>
+      </button>
+    </div>
+
+    <div class="tag-filter-banner hidden" id="tagFilterBanner">
+      <span class="tag-filter-label" id="tagFilterLabel"></span>
+      <button class="tag-filter-clear" id="clearTagFilter" type="button">
+        <span class="lang-zh-inline">清除标签</span>
+        <span class="lang-en-inline">Clear tag</span>
       </button>
     </div>
 
