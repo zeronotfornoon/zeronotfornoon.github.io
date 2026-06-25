@@ -310,35 +310,166 @@ body {
   position: relative;
   background: transparent;
   color: var(--ink);
-  padding: 12px 0;
+  padding: 12px 0 4px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 18px;
   width: 100%;
   max-width: 900px;
 }
-.countdown-body {
+.countdown-head {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  flex: 1;
-  min-width: 0;
-}
-.countdown-label-row-zh,
-.countdown-label-row-en {
-  display: flex;
-  align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  text-align: center;
 }
-.countdown-label-row-zh { display: flex; }
-html[lang="en"] .countdown-label-row-zh { display: none; }
-.countdown-label-row-en { display: none; }
-html[lang="en"] .countdown-label-row-en { display: flex; }
+.countdown-head-zh { display: flex; }
+html[lang="en"] .countdown-head-zh { display: none; }
+.countdown-head-en { display: none; }
+html[lang="en"] .countdown-head-en { display: flex; }
+.countdown-label {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.countdown-timer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(8px, 1.4vw, 14px);
+  flex-wrap: wrap;
+}
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: clamp(64px, 10vw, 88px);
+}
+.flip-card {
+  position: relative;
+  width: 100%;
+  height: clamp(72px, 11vw, 96px);
+  perspective: 520px;
+  transform-style: preserve-3d;
+  border-radius: 10px;
+  box-shadow: 0 8px 18px rgba(17, 17, 17, 0.16);
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+  line-height: 1;
+  color: var(--white);
+}
+.flip-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  margin-top: -0.5px;
+  background: rgba(0, 0, 0, 0.72);
+  z-index: 5;
+  pointer-events: none;
+}
+.flip-card-face {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+.flip-card-face span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200%;
+  width: 100%;
+}
+.flip-card-top {
+  top: 0;
+  background: #151515;
+  border-radius: 10px 10px 0 0;
+}
+.flip-card-top span { align-items: flex-end; padding-bottom: 3px; }
+.flip-card-bottom {
+  bottom: 0;
+  background: #0a0a0a;
+  border-radius: 0 0 10px 10px;
+}
+.flip-card-bottom span { align-items: flex-start; padding-top: 3px; margin-top: -100%; }
+.flip-card-leaf {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+  transform-origin: bottom;
+  transform-style: preserve-3d;
+  z-index: 3;
+  backface-visibility: hidden;
+  opacity: 0;
+}
+.flip-card-leaf-front,
+.flip-card-leaf-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  backface-visibility: hidden;
+}
+.flip-card-leaf-front {
+  background: #151515;
+  border-radius: 10px 10px 0 0;
+}
+.flip-card-leaf-front span {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 200%;
+  width: 100%;
+  padding-bottom: 3px;
+}
+.flip-card-leaf-back {
+  transform: rotateX(180deg);
+  background: #0a0a0a;
+  border-radius: 10px 10px 0 0;
+}
+.flip-card-leaf-back span {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 200%;
+  width: 100%;
+  padding-top: 3px;
+  margin-top: -100%;
+}
+.flip-card.is-flipping .flip-card-leaf {
+  opacity: 1;
+  animation: flip-leaf-down 0.62s cubic-bezier(0.37, 0.01, 0.25, 1) forwards;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+}
+@keyframes flip-leaf-down {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-180deg); }
+}
+.cd-lbl {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(0.72rem, 1.2vw, 0.82rem);
+  color: #666666;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: capitalize;
+}
 .glow-mushroom {
   width: 28px;
   height: 34px;
@@ -374,132 +505,6 @@ html[lang="en"] .countdown-label-row-en { display: flex; }
 @keyframes mush-glow-pulse {
   0%, 100% { filter: brightness(1); }
   50% { filter: brightness(1.4); }
-}
-.countdown-label {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(0.75rem, 1.5vw, 0.95rem);
-  color: var(--ink-dim);
-  letter-spacing: 0.04em;
-}
-.countdown-timer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.cd-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-.flip-card {
-  position: relative;
-  width: clamp(52px, 8vw, 64px);
-  height: clamp(44px, 7vw, 54px);
-  perspective: 420px;
-  transform-style: preserve-3d;
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(0.85rem, 1.5vw, 1.05rem);
-  color: var(--white);
-}
-.flip-card-face {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 50%;
-  overflow: hidden;
-  background: linear-gradient(180deg, #3a3a3e 0%, #2a2a2e 100%);
-  backface-visibility: hidden;
-}
-.flip-card-face span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200%;
-  width: 100%;
-}
-.flip-card-top {
-  top: 0;
-  border-radius: 8px 8px 0 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.35);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-.flip-card-top span { align-items: flex-end; padding-bottom: 2px; }
-.flip-card-bottom {
-  bottom: 0;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 2px 8px rgba(17, 17, 17, 0.12);
-}
-.flip-card-bottom span { align-items: flex-start; padding-top: 2px; margin-top: -100%; }
-.flip-card-leaf {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  overflow: hidden;
-  transform-origin: bottom;
-  transform-style: preserve-3d;
-  z-index: 2;
-  backface-visibility: hidden;
-}
-.flip-card-leaf-front,
-.flip-card-leaf-back {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  backface-visibility: hidden;
-}
-.flip-card-leaf-front {
-  background: linear-gradient(180deg, #3a3a3e 0%, #2a2a2e 100%);
-  border-radius: 8px 8px 0 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.35);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-.flip-card-leaf-front span {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  height: 200%;
-  width: 100%;
-  padding-bottom: 2px;
-}
-.flip-card-leaf-back {
-  transform: rotateX(180deg);
-  background: linear-gradient(180deg, #343438 0%, #26262a 100%);
-  border-radius: 8px 8px 0 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.35);
-}
-.flip-card-leaf-back span {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  height: 200%;
-  width: 100%;
-  padding-top: 2px;
-  margin-top: -100%;
-}
-.flip-card.is-flipping .flip-card-leaf {
-  animation: flip-leaf-down 0.55s ease-in forwards;
-}
-@keyframes flip-leaf-down {
-  0% { transform: rotateX(0deg); }
-  100% { transform: rotateX(-180deg); }
-}
-.cd-lbl {
-  font-size: 0.65rem;
-  color: var(--ink-faint);
-  font-weight: 400;
-  letter-spacing: 0.08em;
-}
-.cd-sep {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 1.1rem;
-  color: var(--pink);
-  margin-bottom: 18px;
-  opacity: 0.85;
 }
 
 /* ── 两栏布局（左宽右窄） ── */
@@ -1485,9 +1490,10 @@ html[lang="en"] .side-char-line {
   .hero-tagline { bottom: 16px; padding: 0 16px; }
   .hero::after { height: 140px; }
   .site-bg-spore { animation-duration: 9s; }
-  .countdown-strip { gap: 12px; padding: 12px 0; }
-  .flip-card { width: 46px; height: 40px; font-size: 0.72rem; }
-  .cd-sep { margin-bottom: 14px; font-size: 0.9rem; }
+  .countdown-strip { gap: 14px; padding: 10px 0 4px; }
+  .cd-unit { min-width: 56px; }
+  .flip-card { height: 64px; font-size: 1.35rem; }
+  .cd-lbl { font-size: 0.68rem; }
   .main-rec-carousel .rec-carousel-track { min-height: 220px; }
   .main-rec-carousel .rec-slide {
     flex-direction: column;
@@ -1603,66 +1609,61 @@ html[lang="en"] .side-char-line {
 <!-- 倒计时条 -->
 <div class="countdown-wrap">
 <div class="countdown-strip">
-  <div class="countdown-body">
-    <div class="countdown-label-row-zh">
-      <span class="glow-mushroom" aria-hidden="true"></span>
-      <div class="countdown-label">
-        <span class="lang-zh-inline">野菌即将破土而出……</span>
-      </div>
+  <div class="countdown-head countdown-head-zh">
+    <span class="glow-mushroom" aria-hidden="true"></span>
+    <div class="countdown-label">
+      <span class="lang-zh-inline">野菌即将破土而出……</span>
     </div>
-    <div class="countdown-label-row-en">
-      <div class="countdown-label">
-        <span class="lang-en-inline">The mushrooms are about to emerge…</span>
-      </div>
+  </div>
+  <div class="countdown-head countdown-head-en">
+    <div class="countdown-label">
+      <span class="lang-en-inline">The mushrooms are about to emerge…</span>
     </div>
-    <div class="countdown-timer">
-      <div class="cd-unit">
-        <div class="flip-card" id="flipDays" data-value="00">
-          <div class="flip-card-top flip-card-face"><span>00</span></div>
-          <div class="flip-card-bottom flip-card-face"><span>00</span></div>
-          <div class="flip-card-leaf" aria-hidden="true">
-            <div class="flip-card-leaf-front"><span>00</span></div>
-            <div class="flip-card-leaf-back"><span>00</span></div>
-          </div>
+  </div>
+  <div class="countdown-timer">
+    <div class="cd-unit">
+      <div class="flip-card" id="flipDays" data-value="00">
+        <div class="flip-card-top flip-card-face"><span>00</span></div>
+        <div class="flip-card-bottom flip-card-face"><span>00</span></div>
+        <div class="flip-card-leaf" aria-hidden="true">
+          <div class="flip-card-leaf-front"><span>00</span></div>
+          <div class="flip-card-leaf-back"><span>00</span></div>
         </div>
-        <div class="cd-lbl"><span class="lang-zh-inline">天</span><span class="lang-en-inline">days</span></div>
       </div>
-      <div class="cd-sep">:</div>
-      <div class="cd-unit">
-        <div class="flip-card" id="flipHours" data-value="00">
-          <div class="flip-card-top flip-card-face"><span>00</span></div>
-          <div class="flip-card-bottom flip-card-face"><span>00</span></div>
-          <div class="flip-card-leaf" aria-hidden="true">
-            <div class="flip-card-leaf-front"><span>00</span></div>
-            <div class="flip-card-leaf-back"><span>00</span></div>
-          </div>
+      <div class="cd-lbl"><span class="lang-zh-inline">天</span><span class="lang-en-inline">Days</span></div>
+    </div>
+    <div class="cd-unit">
+      <div class="flip-card" id="flipHours" data-value="00">
+        <div class="flip-card-top flip-card-face"><span>00</span></div>
+        <div class="flip-card-bottom flip-card-face"><span>00</span></div>
+        <div class="flip-card-leaf" aria-hidden="true">
+          <div class="flip-card-leaf-front"><span>00</span></div>
+          <div class="flip-card-leaf-back"><span>00</span></div>
         </div>
-        <div class="cd-lbl"><span class="lang-zh-inline">时</span><span class="lang-en-inline">hrs</span></div>
       </div>
-      <div class="cd-sep">:</div>
-      <div class="cd-unit">
-        <div class="flip-card" id="flipMins" data-value="00">
-          <div class="flip-card-top flip-card-face"><span>00</span></div>
-          <div class="flip-card-bottom flip-card-face"><span>00</span></div>
-          <div class="flip-card-leaf" aria-hidden="true">
-            <div class="flip-card-leaf-front"><span>00</span></div>
-            <div class="flip-card-leaf-back"><span>00</span></div>
-          </div>
+      <div class="cd-lbl"><span class="lang-zh-inline">时</span><span class="lang-en-inline">Hours</span></div>
+    </div>
+    <div class="cd-unit">
+      <div class="flip-card" id="flipMins" data-value="00">
+        <div class="flip-card-top flip-card-face"><span>00</span></div>
+        <div class="flip-card-bottom flip-card-face"><span>00</span></div>
+        <div class="flip-card-leaf" aria-hidden="true">
+          <div class="flip-card-leaf-front"><span>00</span></div>
+          <div class="flip-card-leaf-back"><span>00</span></div>
         </div>
-        <div class="cd-lbl"><span class="lang-zh-inline">分</span><span class="lang-en-inline">min</span></div>
       </div>
-      <div class="cd-sep">:</div>
-      <div class="cd-unit">
-        <div class="flip-card" id="flipSecs" data-value="00">
-          <div class="flip-card-top flip-card-face"><span>00</span></div>
-          <div class="flip-card-bottom flip-card-face"><span>00</span></div>
-          <div class="flip-card-leaf" aria-hidden="true">
-            <div class="flip-card-leaf-front"><span>00</span></div>
-            <div class="flip-card-leaf-back"><span>00</span></div>
-          </div>
+      <div class="cd-lbl"><span class="lang-zh-inline">分</span><span class="lang-en-inline">Minutes</span></div>
+    </div>
+    <div class="cd-unit">
+      <div class="flip-card" id="flipSecs" data-value="00">
+        <div class="flip-card-top flip-card-face"><span>00</span></div>
+        <div class="flip-card-bottom flip-card-face"><span>00</span></div>
+        <div class="flip-card-leaf" aria-hidden="true">
+          <div class="flip-card-leaf-front"><span>00</span></div>
+          <div class="flip-card-leaf-back"><span>00</span></div>
         </div>
-        <div class="cd-lbl"><span class="lang-zh-inline">秒</span><span class="lang-en-inline">sec</span></div>
       </div>
+      <div class="cd-lbl"><span class="lang-zh-inline">秒</span><span class="lang-en-inline">Seconds</span></div>
     </div>
   </div>
 </div>
@@ -1980,6 +1981,8 @@ function flipCardTo(card, nextValue) {
   leaf.addEventListener('animationend', function onEnd() {
     leaf.removeEventListener('animationend', onEnd);
     card.classList.remove('is-flipping');
+    leaf.style.transform = '';
+    leaf.style.filter = '';
     setFlipCardText(card, nextValue);
     card.dataset.value = nextValue;
   }, { once: true });
