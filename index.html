@@ -258,9 +258,9 @@ body {
 .hero-title-wrap {
   position: absolute;
   left: 50%;
-  top: 34%;
-  transform: translate(-50%, -50%);
-  width: min(58vw, 640px);
+  top: 16%;
+  transform: translateX(-50%);
+  width: min(34vw, 400px);
   z-index: 1;
   pointer-events: none;
 }
@@ -271,6 +271,8 @@ body {
   width: 100%;
   height: auto;
   max-width: none;
+  max-height: 118px;
+  margin: 0 auto;
   object-fit: contain;
   filter:
     drop-shadow(0 0 2px rgba(232, 160, 180, 0.35))
@@ -1421,9 +1423,10 @@ html[lang="en"] .side-char-line {
   .lang-bar { padding: 8px 16px; }
   .site-logo-img { height: 44px; max-width: 200px; }
   .hero-title-wrap {
-    top: 32%;
-    width: min(72vw, 420px);
+    top: 14%;
+    width: min(58vw, 280px);
   }
+  .hero-title-img { max-height: 72px; }
   .hero-bg {
     height: 240px;
     object-position: center 30%;
