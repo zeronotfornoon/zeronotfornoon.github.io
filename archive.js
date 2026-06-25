@@ -342,12 +342,6 @@ function renderFeed() {
         emptyState.innerHTML =
           '<span class="lang-zh-inline">暂无文章，野菌还在酝酿中……</span>' +
           '<span class="lang-en-inline">No posts yet — the mushrooms are still brewing…</span>';
-        document.querySelectorAll('#emptyState .lang-zh-inline').forEach(el => {
-          el.classList.toggle('visible', currentLang === 'zh');
-        });
-        document.querySelectorAll('#emptyState .lang-en-inline').forEach(el => {
-          el.classList.toggle('visible', currentLang === 'en');
-        });
       }
     }
     loadMoreBtn?.classList.add('hidden');

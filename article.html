@@ -183,6 +183,13 @@ body {
   padding: 3px 10px;
   border-radius: 3px;
   border: 1px solid var(--pink);
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.15s;
+}
+.article-tag:hover {
+  background: var(--pink-deep);
+  color: var(--white);
 }
 
 .article-body {
@@ -414,16 +421,9 @@ body {
 <script src="article.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" async></script>
 <script>
-function setLang(lang) {
-  const isZH = lang === 'zh';
-  document.documentElement.lang = isZH ? 'zh' : 'en';
-  document.getElementById('btnZH').classList.toggle('active', isZH);
-  document.getElementById('btnEN').classList.toggle('active', !isZH);
-  document.querySelectorAll('.lang-zh-inline').forEach(el => el.classList.toggle('visible', isZH));
-  document.querySelectorAll('.lang-en-inline').forEach(el => el.classList.toggle('visible', !isZH));
+registerSiteLangHook(function(lang) {
   if (window.articleOnLangChange) window.articleOnLangChange(lang);
-}
-setLang('zh');
+});
 (function() {
   const btn = document.getElementById('backToTop');
   if (!btn) return;

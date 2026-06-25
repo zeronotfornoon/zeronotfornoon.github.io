@@ -379,10 +379,8 @@ body {
 <script src="js/games-lib.js"></script>
 <script src="game.js"></script>
 <script>
-initSiteLang({
-  onChange: function(lang) {
-    if (window.gamesOnLangChange) window.gamesOnLangChange(lang);
-  }
+registerSiteLangHook(function(lang) {
+  if (window.gamesOnLangChange) window.gamesOnLangChange(lang);
 });
 (function() {
   const btn = document.getElementById('backToTop');

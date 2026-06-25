@@ -563,10 +563,8 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
 <script src="js/games-lib.js"></script>
 <script src="games.js"></script>
 <script>
-initSiteLang({
-  onChange: function(lang) {
-    if (window.gamesOnLangChange) window.gamesOnLangChange(lang);
-  }
+registerSiteLangHook(function(lang) {
+  if (window.gamesOnLangChange) window.gamesOnLangChange(lang);
 });
 (function() {
   const btn = document.getElementById('backToTop');

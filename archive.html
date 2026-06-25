@@ -1165,10 +1165,8 @@ html[lang="en"] .side-char-line {
 <script src="js/archive-data.js"></script>
 <script src="archive.js"></script>
 <script>
-initSiteLang({
-  onChange: function(lang) {
-    if (window.archiveOnLangChange) window.archiveOnLangChange(lang);
-  }
+registerSiteLangHook(function(lang) {
+  if (window.archiveOnLangChange) window.archiveOnLangChange(lang);
 });
 (function() {
   const btn = document.getElementById('backToTop');
