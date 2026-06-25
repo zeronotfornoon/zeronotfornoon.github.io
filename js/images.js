@@ -27,20 +27,43 @@ function resolveBodyImages(body, articleId) {
   return result;
 }
 
-function coverThumbHtml(article, thumbClass, labelText) {
+const DEFAULT_COVER_LABELS = {
+  research: { zh: '考据', en: 'Research' },
+  interview: { zh: '采访', en: 'Interview' },
+  news: { zh: '资讯', en: 'News' }
+};
+
+function defaultCoverMark(category, lang) {
+  const labels = DEFAULT_COVER_LABELS[category] || { zh: '档案', en: 'Archive' };
+  const text = lang === 'en' ? labels.en : labels.zh;
+  return (
+    '<span class="thumb-default-mark cat-' + category + '" aria-hidden="true">' +
+      '<span class="thumb-default-glyph"></span>' +
+      '<span class="thumb-default-text">' + text + '</span>' +
+    '</span>'
+  );
+}
+
+function coverThumbHtml(article, thumbClass, labelText, lang) {
   const cover = article.cover ? resolveArticleImage(article.id, article.cover) : '';
   const label = labelText ? '<span class="featured-thumb-label">' + labelText + '</span>' : '';
+  const catClass = article.category ? ' cat-' + article.category : '';
 
   if (cover) {
     return (
-      '<div class="' + thumbClass + ' has-cover">' +
+      '<div class="' + thumbClass + ' has-cover' + catClass + '">' +
         '<img src="' + cover + '" alt="" loading="lazy" decoding="async">' +
         label +
       '</div>'
     );
   }
 
-  return '<div class="' + thumbClass + '">' + label + '</div>';
+  return (
+    '<div class="' + thumbClass + ' has-default' + catClass + '">' +
+      defaultCoverMark(article.category, lang || 'zh') +
+      label +
+    '</div>'
+  );
 }
 
 if (typeof window !== 'undefined') {
