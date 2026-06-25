@@ -1,4 +1,34 @@
 const SITE_ORIGIN = 'https://weirdgamesclub.com';
+const SITE_LANG_KEY = 'wgcSiteLang';
+
+(function injectLangFallbackCss() {
+  if (typeof document === 'undefined') return;
+  const style = document.createElement('style');
+  style.id = 'site-lang-fallback-css';
+  style.textContent = [
+    'html:not([data-lang-ready]) .lang-zh-inline { display: inline !important; }',
+    'html:not([data-lang-ready]) .lang-en-inline { display: none !important; }',
+    'html:not([data-lang-ready]) .side-char-card .lang-zh { display: block !important; }',
+    'html:not([data-lang-ready]) .side-char-card .side-char-badge.lang-zh { display: inline-flex !important; }',
+    'html:not([data-lang-ready]) .nav-card .nav-card-desc.lang-zh { display: block !important; }',
+    'html:not([data-lang-ready]) .nav-card .nav-card-en.lang-zh { display: block !important; }',
+    'html:not([data-lang-ready]) .lang-zh-flex { display: flex !important; }',
+    'html:not([data-lang-ready]) .lang-en, html:not([data-lang-ready]) .lang-en-flex { display: none !important; }'
+  ].join('\n');
+  document.head.appendChild(style);
+})();
+
+const siteLangHooks = [];
+
+function registerSiteLangHook(fn) {
+  if (typeof fn === 'function') siteLangHooks.push(fn);
+}
+
+function runSiteLangHooks(lang) {
+  siteLangHooks.forEach(function(fn) {
+    try { fn(lang); } catch (e) { console.error(e); }
+  });
+}
 
 function siteUrl(path) {
   if (!path || path === '/') return SITE_ORIGIN + '/';
@@ -48,8 +78,97 @@ function setSiteMeta(options) {
   upsertMeta('name', 'twitter:image', image);
 }
 
+function normalizeSiteLang(lang) {
+  return lang === 'en' ? 'en' : 'zh';
+}
+
+function getSiteLang() {
+  try {
+    const saved = localStorage.getItem(SITE_LANG_KEY);
+    if (saved === 'en' || saved === 'zh') return saved;
+  } catch (e) { /* ignore */ }
+  return 'zh';
+}
+
+function saveSiteLang(lang) {
+  try {
+    localStorage.setItem(SITE_LANG_KEY, normalizeSiteLang(lang));
+  } catch (e) { /* ignore */ }
+}
+
+function applySiteLangVisibility(lang) {
+  const isZH = normalizeSiteLang(lang) === 'zh';
+  document.documentElement.lang = isZH ? 'zh' : 'en';
+  document.documentElement.setAttribute('data-lang-ready', '1');
+
+  const btnZH = document.getElementById('btnZH');
+  const btnEN = document.getElementById('btnEN');
+  if (btnZH) btnZH.classList.toggle('active', isZH);
+  if (btnEN) btnEN.classList.toggle('active', !isZH);
+
+  document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('visible', isZH));
+  document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('visible', !isZH));
+  document.querySelectorAll('.lang-zh-inline').forEach(el => el.classList.toggle('visible', isZH));
+  document.querySelectorAll('.lang-en-inline').forEach(el => el.classList.toggle('visible', !isZH));
+  document.querySelectorAll('.lang-zh-flex').forEach(el => el.classList.toggle('visible', isZH));
+  document.querySelectorAll('.lang-en-flex').forEach(el => el.classList.toggle('visible', !isZH));
+}
+
+function createSiteLangSetter(options) {
+  const opts = options || {};
+  return function setLang(lang) {
+    lang = normalizeSiteLang(lang);
+    saveSiteLang(lang);
+    applySiteLangVisibility(lang);
+    if (typeof opts.onChange === 'function') opts.onChange(lang);
+  };
+}
+
+function initSiteLang(options) {
+  const opts = options || {};
+  if (typeof opts.onChange === 'function') {
+    registerSiteLangHook(opts.onChange);
+  }
+
+  if (window.__siteLangInitialized) {
+    if (typeof opts.onChange === 'function') {
+      opts.onChange(getSiteLang());
+    }
+    return window.setLang;
+  }
+
+  window.__siteLangInitialized = true;
+  const setLang = createSiteLangSetter({
+    onChange: function(lang) { runSiteLangHooks(lang); }
+  });
+  window.setLang = setLang;
+  setLang(getSiteLang());
+  return setLang;
+}
+
+function bootSiteLang() {
+  if (!window.__siteLangInitialized) {
+    initSiteLang();
+  }
+}
+
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootSiteLang);
+  } else {
+    bootSiteLang();
+  }
+}
+
 if (typeof window !== 'undefined') {
   window.SITE_ORIGIN = SITE_ORIGIN;
+  window.SITE_LANG_KEY = SITE_LANG_KEY;
   window.siteUrl = siteUrl;
   window.setSiteMeta = setSiteMeta;
+  window.getSiteLang = getSiteLang;
+  window.saveSiteLang = saveSiteLang;
+  window.applySiteLangVisibility = applySiteLangVisibility;
+  window.createSiteLangSetter = createSiteLangSetter;
+  window.initSiteLang = initSiteLang;
+  window.registerSiteLangHook = registerSiteLangHook;
 }
