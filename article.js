@@ -136,10 +136,56 @@ function gameBadgeLabel(listed) {
 function mergeArticleFromIndex(article, indexEntry) {
   if (!indexEntry) return article;
   const merged = Object.assign({}, article);
-  if (Array.isArray(indexEntry.games) && indexEntry.games.length) {
+  const mdMetaComplete = Boolean(
+    article.title &&
+    article.title !== article.id &&
+    article.date
+  );
+
+  if (!mdMetaComplete) {
+    merged.category = indexEntry.category || merged.category;
+    merged.featured = indexEntry.featured ?? merged.featured;
+    merged.date = indexEntry.date || merged.date;
+    merged.author = indexEntry.author || merged.author;
+    merged.tags = Array.isArray(indexEntry.tags) ? indexEntry.tags : merged.tags;
+    merged.title = indexEntry.title || merged.title;
+    merged.excerpt = indexEntry.excerpt || merged.excerpt;
+    merged.cover = indexEntry.cover || merged.cover;
+    merged.games = Array.isArray(indexEntry.games) ? indexEntry.games : merged.games;
+  } else if (Array.isArray(indexEntry.games) && indexEntry.games.length) {
     merged.games = indexEntry.games;
   }
+
   return merged;
+}
+
+function withTimeout(promise, ms, label) {
+  return Promise.race([
+    promise,
+    new Promise(function(_, reject) {
+      setTimeout(function() {
+        reject(new Error((label || 'request') + ' timed out'));
+      }, ms);
+    })
+  ]);
+}
+
+function renderLoadingError(messageZh, messageEn) {
+  document.getElementById('articleTitle').textContent = messageZh;
+  document.getElementById('articleMeta').style.display = 'none';
+  document.getElementById('articleLead')?.classList.add('hidden');
+  document.getElementById('articleTags').style.display = 'none';
+  document.getElementById('articleGames')?.classList.add('hidden');
+  document.getElementById('articleToc')?.classList.add('hidden');
+  document.getElementById('articleShare')?.classList.add('hidden');
+  document.getElementById('articleRelated')?.classList.add('hidden');
+  document.getElementById('articleBody').innerHTML =
+    '<p class="lang-zh-inline">' + escapeHtml(messageZh) + '</p>' +
+    '<p class="lang-en-inline">' + escapeHtml(messageEn) + '</p>' +
+    '<p><a href="archive.html">返回异味档案</a></p>';
+  if (typeof applySiteLangVisibility === 'function' && typeof getSiteLang === 'function') {
+    applySiteLangVisibility(getSiteLang());
+  }
 }
 
 function renderLinkedGames(article) {
@@ -553,6 +599,12 @@ async function fetchArticleText(id) {
   return null;
 }
 
+function stripLeadingFrontmatter(text) {
+  const trimmed = String(text || '').replace(/^\uFEFF/, '');
+  const match = trimmed.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/);
+  return match ? trimmed.slice(match[0].length) : trimmed;
+}
+
 async function loadArticle() {
   const id = getArticleId();
   if (!id) {
@@ -568,23 +620,29 @@ async function loadArticle() {
 
   initShareControls();
 
+  const FETCH_TIMEOUT_MS = 12000;
+
   try {
     try {
       if (typeof loadAllGames === 'function') {
-        await loadAllGames();
+        await withTimeout(loadAllGames(), FETCH_TIMEOUT_MS, 'games.json');
       }
     } catch (gamesErr) {
       console.warn('Games index unavailable for article links:', gamesErr);
     }
 
     try {
-      allArticlesIndex = await fetchArticlesIndex();
+      allArticlesIndex = await withTimeout(fetchArticlesIndex(), FETCH_TIMEOUT_MS, 'articles.json');
     } catch (indexErr) {
       console.warn('Article index unavailable for related posts:', indexErr);
-      allArticlesIndex = [];
+      allArticlesIndex = getEmbeddedArticlesData()?.articles || [];
     }
 
-    const text = await fetchArticleText(id);
+    const indexEntry = allArticlesIndex.find(function(item) {
+      return item.id === id;
+    });
+
+    const text = await withTimeout(fetchArticleText(id), FETCH_TIMEOUT_MS, 'article md');
     if (!text) {
       renderNotFound();
       return;
@@ -604,12 +662,10 @@ async function loadArticle() {
           cover: meta.cover || ''
         };
 
-    const indexEntry = allArticlesIndex.find(function(item) {
-      return item.id === (meta.id || id);
-    });
     article = mergeArticleFromIndex(article, indexEntry);
 
-    const resolvedBody = resolveBodyImages(body, article.id);
+    const bodySource = Object.keys(meta).length ? body : stripLeadingFrontmatter(text);
+    const resolvedBody = resolveBodyImages(bodySource, article.id);
     let bodyHtml;
     try {
       bodyHtml = renderMarkdown(resolvedBody);
@@ -623,7 +679,11 @@ async function loadArticle() {
     renderArticle(article, bodyHtml);
   } catch (err) {
     console.error('Failed to load article:', err);
-    renderNotFound();
+    if (String(err.message || '').includes('timed out')) {
+      renderLoadingError('文章加载超时，请刷新页面或稍后再试。', 'Article load timed out. Please refresh and try again.');
+    } else {
+      renderNotFound();
+    }
   }
 }
 
