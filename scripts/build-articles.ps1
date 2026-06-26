@@ -54,13 +54,31 @@ Get-ChildItem $ArticlesDir -Filter "*.md" | Where-Object { $_.Name -ne "_templat
     }
 
     $Tags = @()
-    if ($M.tags -is [array]) { $Tags = $M.tags }
-    elseif ($M.tags) { $Tags = @($M.tags) }
+    if ($M.tags -is [array]) {
+        $Tags = @($M.tags | ForEach-Object { [string]$_ })
+    } elseif ($M.tags) {
+        $TagText = [string]$M.tags
+        if ($TagText -match '^\[(.*)\]$') {
+            $Tags = @($Matches[1] -split ',' | ForEach-Object { $_.Trim().Trim('"').Trim("'") } | Where-Object { $_ })
+        } elseif ($TagText -match '[,，、]') {
+            $Tags = @($TagText -split '[,，、]' | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+        } else {
+            $Tags = @($TagText)
+        }
+    }
 
     $Cover = ""
     if ($M.cover) { $Cover = [string]$M.cover }
 
-    $Articles += [ordered]@{
+    $Excerpt = if ($M.excerpt) { [string]$M.excerpt } elseif ($M.intro) { [string]$M.intro } else { "" }
+    if (-not $Excerpt) {
+        Write-Warning "Tip $($_.Name): missing excerpt (one-line intro) — add it in frontmatter"
+    }
+    if (-not $Tags.Count) {
+        Write-Warning "Tip $($_.Name): missing tags — add them in frontmatter"
+    }
+
+    $Item = [ordered]@{
         id       = [string]$M.id
         category = if ($M.category) { [string]$M.category } else { "news" }
         featured = [bool]$M.featured
@@ -68,9 +86,11 @@ Get-ChildItem $ArticlesDir -Filter "*.md" | Where-Object { $_.Name -ne "_templat
         author   = if ($M.author) { [string]$M.author } else { "WGC" }
         tags     = $Tags
         title    = if ($M.title) { [string]$M.title } else { [string]$M.id }
-        excerpt  = if ($M.excerpt) { [string]$M.excerpt } else { "" }
-        cover    = $Cover
+        excerpt  = $Excerpt
     }
+    if ($Cover) { $Item.cover = $Cover }
+
+    $Articles += $Item
 }
 
 $Sorted = $Articles | Sort-Object { $_.date } -Descending

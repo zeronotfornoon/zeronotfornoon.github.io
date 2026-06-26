@@ -11,7 +11,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { parseArticleMd } from '../js/frontmatter.js';
+import { parseArticleMd, normalizeArticleMeta } from '../js/frontmatter.js';
 import { writeFallbackJs } from './lib/fallback.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -38,17 +38,21 @@ export function buildArticles(root = ROOT) {
       return null;
     }
 
-    return {
-      id: meta.id,
-      category: meta.category || 'news',
-      featured: Boolean(meta.featured),
-      date: meta.date || '1970-01-01',
-      author: meta.author || '异味游戏同好会',
-      tags: Array.isArray(meta.tags) ? meta.tags : [],
-      title: meta.title || meta.id,
-      excerpt: meta.excerpt || '',
-      ...(meta.cover ? { cover: meta.cover } : {})
-    };
+    const article = normalizeArticleMeta({
+      ...meta,
+      date: meta.date || '1970-01-01'
+    });
+
+    if (!article.excerpt) {
+      console.warn('提示 ' + file + '：未填写 excerpt（列表页一句话介绍），请在 frontmatter 手写');
+    }
+    if (!article.tags.length) {
+      console.warn('提示 ' + file + '：未填写 tags（可筛选标签），请在 frontmatter 手写');
+    }
+
+    if (!article.cover) delete article.cover;
+
+    return article;
   }).filter(Boolean);
 
   articles.sort((a, b) => b.date.localeCompare(a.date));
