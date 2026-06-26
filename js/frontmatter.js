@@ -65,10 +65,39 @@ function coerceScalar(value) {
   return value;
 }
 
+/** 只认 frontmatter 里手写的 tags，不从正文或标题提取 */
+function parseTagsList(raw) {
+  if (Array.isArray(raw)) {
+    return raw.map(item => String(item).trim()).filter(Boolean);
+  }
+  if (typeof raw === 'string' && raw.trim()) {
+    return raw.split(/[,，、]/).map(item => item.trim()).filter(Boolean);
+  }
+  return [];
+}
+
+/** 规范化文章元数据：tags / excerpt / cover 均来自 frontmatter 手写字段 */
+function normalizeArticleMeta(meta) {
+  const m = meta || {};
+  return {
+    id: m.id || '',
+    category: m.category || 'news',
+    featured: Boolean(m.featured),
+    date: m.date || '',
+    author: m.author || '异味游戏同好会',
+    tags: parseTagsList(m.tags),
+    title: m.title || m.id || '',
+    excerpt: String(m.excerpt || m.intro || '').trim(),
+    cover: String(m.cover || '').trim()
+  };
+}
+
 if (typeof window !== 'undefined') {
   window.parseArticleMd = parseArticleMd;
+  window.parseTagsList = parseTagsList;
+  window.normalizeArticleMeta = normalizeArticleMeta;
 }
 
 if (typeof module !== 'undefined') {
-  module.exports = { parseArticleMd };
+  module.exports = { parseArticleMd, parseTagsList, normalizeArticleMeta };
 }
