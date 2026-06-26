@@ -119,6 +119,59 @@ function getSharedTags(current, other) {
     .filter(tag => tag && otherSet.has(tag));
 }
 
+function gameTextForLang(game, field, lang) {
+  const zhKey = field + 'Zh';
+  const enKey = field + 'En';
+  if (lang === 'en') return game[enKey] || game[zhKey] || '';
+  return game[zhKey] || game[enKey] || '';
+}
+
+function gameBadgeLabel(listed) {
+  if (listed) {
+    return currentLang === 'en' ? 'Supported' : '合作收录';
+  }
+  return currentLang === 'en' ? 'Archives' : '档案关联';
+}
+
+function renderLinkedGames(article) {
+  const section = document.getElementById('articleGames');
+  const list = document.getElementById('articleGamesList');
+  if (!section || !list) return;
+
+  const ids = article.games || [];
+  if (!ids.length || typeof findGamesByIds !== 'function') {
+    section.classList.add('hidden');
+    list.innerHTML = '';
+    return;
+  }
+
+  const games = findGamesByIds(ids);
+  if (!games.length) {
+    section.classList.add('hidden');
+    list.innerHTML = '';
+    return;
+  }
+
+  list.innerHTML = games.map(game => {
+    const coverHtml = typeof renderCoverHtml === 'function'
+      ? renderCoverHtml(game, 'article-game-cover')
+      : '<div class="article-game-cover"></div>';
+
+    return (
+      '<a class="article-game-card" href="' + gameUrl(game.id) + '">' +
+        coverHtml +
+        '<div class="article-game-body">' +
+          '<span class="article-game-badge">' + escapeHtml(gameBadgeLabel(isGameListed(game))) + '</span>' +
+          '<span class="article-game-title">' + escapeHtml(gameTextForLang(game, 'title', currentLang)) + '</span>' +
+          '<span class="article-game-excerpt">' + escapeHtml(gameTextForLang(game, 'excerpt', currentLang)) + '</span>' +
+        '</div>' +
+      '</a>'
+    );
+  }).join('');
+
+  section.classList.remove('hidden');
+}
+
 function headingSlug(text, index) {
   const base = String(text || '').trim()
     .replace(/\s+/g, '-')
@@ -442,6 +495,7 @@ function renderArticle(article, bodyHtml) {
 
   document.getElementById('articleShare')?.classList.remove('hidden');
   updateShareLinks(article);
+  renderLinkedGames(article);
   renderRelatedArticles(article, allArticlesIndex);
 }
 
@@ -454,6 +508,8 @@ function renderNotFound() {
   document.getElementById('articleLead')?.classList.add('hidden');
   document.getElementById('articleTags').innerHTML = '';
   document.getElementById('articleTags').style.display = 'none';
+  document.getElementById('articleGames')?.classList.add('hidden');
+  document.getElementById('articleGamesList').innerHTML = '';
   document.getElementById('articleToc')?.classList.add('hidden');
   document.getElementById('articleTocList').innerHTML = '';
   document.getElementById('articleBody').innerHTML = msg.body;
@@ -492,6 +548,14 @@ async function loadArticle() {
   initShareControls();
 
   try {
+    try {
+      if (typeof loadAllGames === 'function') {
+        await loadAllGames();
+      }
+    } catch (gamesErr) {
+      console.warn('Games index unavailable for article links:', gamesErr);
+    }
+
     try {
       allArticlesIndex = await fetchArticlesIndex();
     } catch (indexErr) {

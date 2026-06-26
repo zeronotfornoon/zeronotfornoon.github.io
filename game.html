@@ -278,6 +278,77 @@ body {
   font-size: 0.78rem;
 }
 
+.game-related {
+  margin-top: 24px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 28px 20px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+}
+.game-related.hidden { display: none; }
+.game-related-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.game-related-title::before {
+  content: '';
+  width: 4px;
+  height: 14px;
+  background: var(--games-accent);
+  border-radius: 2px;
+}
+.game-related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.game-related-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.game-related-card:hover {
+  border-color: var(--games-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(139, 122, 173, 0.1);
+}
+.game-related-cat {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 3px;
+  color: var(--white);
+}
+.game-related-cat.cat-research { background: #5c7a9e; }
+.game-related-cat.cat-interview { background: #d4607e; }
+.game-related-cat.cat-news { background: #6a8f6e; }
+.game-related-title {
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.game-related-date {
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+}
+
 @media (max-width: 768px) {
   .game-detail {
     grid-template-columns: 1fr;
@@ -331,7 +402,7 @@ body {
     <div class="game-detail" id="gameDetail">
       <div class="game-detail-media" id="gameDetailMedia"></div>
       <div class="game-detail-info">
-        <div class="game-detail-label">
+        <div class="game-detail-label" id="gameDetailLabel">
           <span class="lang-zh-inline">合作收录</span>
           <span class="lang-en-inline">Supported</span>
         </div>
@@ -357,6 +428,14 @@ body {
     </div>
   </div>
 
+  <section class="game-related hidden" id="gameRelatedArticles" aria-label="Related archive articles">
+    <h2 class="game-related-title">
+      <span class="lang-zh-inline">异味档案中的相关文章</span>
+      <span class="lang-en-inline">Related archive articles</span>
+    </h2>
+    <div class="game-related-list" id="gameRelatedList"></div>
+  </section>
+
   <nav class="game-nav">
     <a class="nav-link" href="games.html">
       ← <span class="lang-zh-inline">返回合作游戏列表</span><span class="lang-en-inline">Back to Supported Games</span>
@@ -377,6 +456,7 @@ body {
 
 <script src="js/games-data.js"></script>
 <script src="js/games-lib.js"></script>
+<script src="js/archive-data.js"></script>
 <script src="game.js"></script>
 <script>
 registerSiteLangHook(function(lang) {

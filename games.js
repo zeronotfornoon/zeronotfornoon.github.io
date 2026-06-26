@@ -12,7 +12,16 @@ function renderGameCards() {
     return;
   }
 
-  allGames.forEach(game => {
+  const listedGames = getListedGames(allGames);
+  if (!listedGames.length) {
+    grid.innerHTML =
+      '<div class="games-empty">' +
+        (currentLang === 'en' ? 'No supported games listed yet…' : '暂无合作游戏……') +
+      '</div>';
+    return;
+  }
+
+  listedGames.forEach(game => {
     const card = document.createElement('a');
     card.className = 'game-card';
     card.href = gameUrl(game.id);
