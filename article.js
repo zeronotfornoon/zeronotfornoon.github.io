@@ -133,13 +133,29 @@ function gameBadgeLabel(listed) {
   return currentLang === 'en' ? 'Archives' : '档案关联';
 }
 
+function mergeArticleFromIndex(article, indexEntry) {
+  if (!indexEntry) return article;
+  const merged = Object.assign({}, article);
+  if (Array.isArray(indexEntry.games) && indexEntry.games.length) {
+    merged.games = indexEntry.games;
+  }
+  return merged;
+}
+
 function renderLinkedGames(article) {
   const section = document.getElementById('articleGames');
   const list = document.getElementById('articleGamesList');
   if (!section || !list) return;
 
   const ids = article.games || [];
-  if (!ids.length || typeof findGamesByIds !== 'function') {
+  if (!ids.length) {
+    section.classList.add('hidden');
+    list.innerHTML = '';
+    return;
+  }
+
+  if (typeof findGamesByIds !== 'function') {
+    console.warn('Article game links: js/games-lib.js not loaded');
     section.classList.add('hidden');
     list.innerHTML = '';
     return;
@@ -147,6 +163,11 @@ function renderLinkedGames(article) {
 
   const games = findGamesByIds(ids);
   if (!games.length) {
+    console.warn(
+      'Article game links: no matches in games.json for ids:',
+      ids.join(', '),
+      '— check js/games-data.js / data/games.json upload'
+    );
     section.classList.add('hidden');
     list.innerHTML = '';
     return;
@@ -570,7 +591,7 @@ async function loadArticle() {
     }
 
     const { meta, body } = parseArticleMd(text);
-    const article = typeof normalizeArticleMeta === 'function'
+    let article = typeof normalizeArticleMeta === 'function'
       ? normalizeArticleMeta({ ...meta, id: meta.id || id })
       : {
           id: meta.id || id,
@@ -582,6 +603,11 @@ async function loadArticle() {
           excerpt: meta.excerpt || meta.intro || '',
           cover: meta.cover || ''
         };
+
+    const indexEntry = allArticlesIndex.find(function(item) {
+      return item.id === (meta.id || id);
+    });
+    article = mergeArticleFromIndex(article, indexEntry);
 
     const resolvedBody = resolveBodyImages(body, article.id);
     let bodyHtml;

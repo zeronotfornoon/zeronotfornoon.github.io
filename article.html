@@ -201,6 +201,97 @@ body {
   color: var(--white);
 }
 
+/* ── 本文提到的游戏 ── */
+.article-games {
+  padding: 18px 40px 20px;
+  background: #f6f4fb;
+  border-bottom: 1px solid var(--border);
+}
+.article-games.hidden { display: none; }
+.article-games-title {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.article-games-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.article-game-card {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 14px;
+  align-items: start;
+  text-decoration: none;
+  color: inherit;
+  padding: 12px;
+  border: 1px solid #d8d0ea;
+  border-radius: 10px;
+  background: var(--white);
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.article-game-card:hover {
+  border-color: #8b7aad;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(139, 122, 173, 0.12);
+}
+.article-game-cover {
+  width: 88px;
+  height: 66px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #eaeaea;
+}
+.article-game-cover.has-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.article-game-cover.game-cover-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ece8f4;
+}
+.article-game-cover .game-cover-placeholder-mark {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #8b7aad;
+}
+.article-game-body { min-width: 0; }
+.article-game-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #ece8f4;
+  color: #6f5f96;
+  margin-bottom: 6px;
+}
+.article-game-title {
+  display: block;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.article-game-excerpt {
+  display: block;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--ink-faint);
+}
+
 .article-body {
   padding: 32px 40px 40px;
   font-family: 'Noto Serif SC', serif;
@@ -665,12 +756,15 @@ body {
   .article-wrap { padding: calc(72px + 24px) 16px 60px; }
   .article-header { padding: 24px 20px 20px; }
   .article-tags { padding: 12px 20px; }
+  .article-games { padding: 14px 20px 16px; }
   .article-toc { margin: 0 20px 16px; padding: 14px 16px; }
   .article-body { padding: 24px 20px 32px; }
   .article-share { padding: 20px; }
   .article-related { padding: 22px 18px 18px; }
   .related-card { grid-template-columns: 80px 1fr; gap: 12px; padding: 10px; }
   .related-thumb { width: 80px; height: 60px; }
+  .article-game-card { grid-template-columns: 72px 1fr; gap: 12px; padding: 10px; }
+  .article-game-cover { width: 72px; height: 54px; }
 }
 
 .lang-zh-inline, .lang-en-inline { display: none; }
@@ -711,6 +805,13 @@ body {
       <p class="article-lead hidden" id="articleLead"></p>
     </header>
     <div class="article-tags" id="articleTags"></div>
+    <div class="article-games hidden" id="articleGames" aria-label="Games mentioned">
+      <div class="article-games-title">
+        <span class="lang-zh-inline">本文提到的游戏</span>
+        <span class="lang-en-inline">Games in this article</span>
+      </div>
+      <div class="article-games-list" id="articleGamesList"></div>
+    </div>
     <nav class="article-toc hidden" id="articleToc" aria-label="Table of contents">
       <div class="article-toc-title">
         <span class="lang-zh-inline">目录</span>
@@ -796,6 +897,8 @@ body {
 <script src="js/frontmatter.js"></script>
 <script src="js/images.js"></script>
 <script src="js/archive-data.js"></script>
+<script src="js/games-data.js"></script>
+<script src="js/games-lib.js"></script>
 <script src="article.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" async></script>
 <script>
