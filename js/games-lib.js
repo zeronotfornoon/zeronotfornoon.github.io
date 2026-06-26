@@ -19,6 +19,32 @@ function gameUrl(id) {
   return 'game.html?id=' + encodeURIComponent(id);
 }
 
+function isGameListed(game) {
+  return game && game.listed !== false;
+}
+
+function getAllGamesPool() {
+  if (allGames.length) return allGames;
+  const embedded = getEmbeddedGamesData();
+  return embedded ? embedded.games : [];
+}
+
+function getListedGames(games) {
+  return (games || getAllGamesPool()).filter(isGameListed);
+}
+
+function findGameById(id) {
+  const needle = String(id || '').trim();
+  if (!needle) return null;
+  return getAllGamesPool().find(game => game.id === needle) || null;
+}
+
+function findGamesByIds(ids) {
+  return (ids || [])
+    .map(id => findGameById(id))
+    .filter(Boolean);
+}
+
 function gameCoverUrl(game) {
   const cover = String(game.cover || '').trim();
   if (!cover) return '';
@@ -36,9 +62,7 @@ function gameText(game, field) {
 }
 
 function getRandomGamePool() {
-  if (allGames.length) return allGames;
-  const embedded = getEmbeddedGamesData();
-  return embedded ? embedded.games : [];
+  return getListedGames();
 }
 
 let randomGameLock = false;
@@ -100,8 +124,9 @@ async function loadAllGames() {
 }
 
 function updateGameCount() {
+  const count = getListedGames().length;
   document.querySelectorAll('.games-count').forEach(el => {
-    el.textContent = String(allGames.length);
+    el.textContent = String(count);
   });
 }
 
@@ -109,12 +134,13 @@ function renderHeroStats() {
   const el = document.getElementById('heroStats');
   if (!el) return;
 
-  if (!allGames.length) {
+  const listed = getListedGames();
+  if (!listed.length && !getAllGamesPool().length) {
     el.textContent = currentLang === 'en' ? 'Loading games…' : '游戏加载中……';
     return;
   }
 
-  const total = allGames.length;
+  const total = listed.length;
   if (currentLang === 'en') {
     el.innerHTML =
       '<span>' + total + ' supported game' + (total === 1 ? '' : 's') + '</span>' +
@@ -158,3 +184,7 @@ window.gamesOnLangChange = function gamesOnLangChange(lang) {
 };
 
 window.gamesPickRandom = pickRandomGame;
+window.isGameListed = isGameListed;
+window.getListedGames = getListedGames;
+window.findGameById = findGameById;
+window.findGamesByIds = findGamesByIds;

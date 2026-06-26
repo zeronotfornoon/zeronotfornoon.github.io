@@ -65,7 +65,7 @@ function coerceScalar(value) {
   return value;
 }
 
-/** 只认 frontmatter 里手写的 tags，不从正文或标题提取 */
+/** 只认 frontmatter 里手写的列表字段，不从正文或标题提取 */
 function parseTagsList(raw) {
   if (Array.isArray(raw)) {
     return raw.map(item => String(item).trim()).filter(Boolean);
@@ -76,10 +76,14 @@ function parseTagsList(raw) {
   return [];
 }
 
-/** 规范化文章元数据：tags / excerpt / cover 均来自 frontmatter 手写字段 */
+function parseGamesList(raw) {
+  return parseTagsList(raw);
+}
+
+/** 规范化文章元数据：tags / games / excerpt / cover 均来自 frontmatter 手写字段 */
 function normalizeArticleMeta(meta) {
   const m = meta || {};
-  return {
+  const article = {
     id: m.id || '',
     category: m.category || 'news',
     featured: Boolean(m.featured),
@@ -90,14 +94,20 @@ function normalizeArticleMeta(meta) {
     excerpt: String(m.excerpt || m.intro || '').trim(),
     cover: String(m.cover || '').trim()
   };
+
+  const games = parseGamesList(m.games);
+  if (games.length) article.games = games;
+
+  return article;
 }
 
 if (typeof window !== 'undefined') {
   window.parseArticleMd = parseArticleMd;
   window.parseTagsList = parseTagsList;
+  window.parseGamesList = parseGamesList;
   window.normalizeArticleMeta = normalizeArticleMeta;
 }
 
 if (typeof module !== 'undefined') {
-  module.exports = { parseArticleMd, parseTagsList, normalizeArticleMeta };
+  module.exports = { parseArticleMd, parseTagsList, parseGamesList, normalizeArticleMeta };
 }
