@@ -168,6 +168,15 @@ body {
 }
 .meta-sep { color: var(--border); }
 
+.article-lead {
+  margin-top: 4px;
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--ink-dim);
+  font-family: 'Noto Serif SC', serif;
+}
+.article-lead.hidden { display: none; }
+
 .article-tags {
   display: flex;
   flex-wrap: wrap;
@@ -281,6 +290,307 @@ body {
   text-underline-offset: 3px;
 }
 .article-body strong { color: var(--ink); font-weight: 600; }
+.article-body h2[id],
+.article-body h3[id] {
+  scroll-margin-top: 88px;
+}
+
+/* ── 目录 ── */
+.article-toc {
+  margin: 0 40px 20px;
+  padding: 18px 20px;
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.article-toc.hidden { display: none; }
+.article-toc-title {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.article-toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.article-toc-list li { margin: 0; }
+.article-toc-list li + li { margin-top: 6px; }
+.article-toc-list a {
+  display: block;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink-dim);
+  text-decoration: none;
+  padding: 4px 0;
+  border-left: 2px solid transparent;
+  padding-left: 10px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.article-toc-list a:hover {
+  color: var(--pink-deep);
+  border-left-color: var(--pink);
+}
+.article-toc-list li.toc-h3 a {
+  font-size: 0.8rem;
+  padding-left: 22px;
+  color: var(--ink-faint);
+}
+
+/* ── 分享 ── */
+.article-share {
+  padding: 24px 40px 32px;
+  border-top: 1px solid var(--border);
+  background: var(--pink-bg);
+}
+.article-share.hidden { display: none; }
+.article-share-title {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.article-share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.share-btn:hover {
+  background: var(--ink);
+  color: var(--white);
+}
+.share-btn.is-copied {
+  background: var(--cat-news);
+  border-color: var(--cat-news);
+  color: var(--white);
+}
+.share-btn-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 900;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.share-btn-weibo .share-btn-icon { background: #e6162d; color: #fff; }
+.share-btn-wechat .share-btn-icon { background: #07c160; color: #fff; }
+.share-btn-qq .share-btn-icon { background: #12b7f5; color: #fff; }
+.share-btn-copy .share-btn-icon { background: var(--ink); color: #fff; }
+
+/* ── 相关推荐 ── */
+.article-related {
+  margin-top: 28px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px 24px;
+}
+.article-related.hidden { display: none; }
+.article-related-title {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.article-related-title::before {
+  content: '';
+  width: 4px;
+  height: 14px;
+  background: var(--pink);
+  border-radius: 2px;
+}
+.article-related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.related-card {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 14px;
+  align-items: start;
+  text-decoration: none;
+  color: inherit;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.related-card:hover {
+  border-color: var(--pink);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+.related-thumb {
+  width: 96px;
+  height: 72px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #eaeaea;
+  position: relative;
+}
+.related-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.related-thumb.has-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.related-thumb .thumb-default-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink-faint);
+}
+.related-thumb .thumb-default-text {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.related-thumb .thumb-default-glyph {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--pink-light);
+}
+.related-body { min-width: 0; }
+.related-cat {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 3px;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.related-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.related-meta {
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+  margin-bottom: 4px;
+}
+.related-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.related-tag-pill {
+  font-size: 0.68rem;
+  color: var(--pink-deep);
+  background: var(--pink-bg);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--pink);
+}
+
+/* ── 微信分享弹层 ── */
+.wechat-share-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(17, 17, 17, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+.wechat-share-modal.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.wechat-share-panel {
+  width: min(100%, 320px);
+  background: var(--white);
+  border-radius: 12px;
+  padding: 24px 20px 20px;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+.wechat-share-panel h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.wechat-share-panel p {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.wechat-share-qr {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: block;
+  background: var(--white);
+}
+.wechat-share-close {
+  border: 1px solid var(--border-dark);
+  background: var(--white);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.wechat-share-close:hover {
+  background: var(--ink);
+  color: var(--white);
+}
 
 .article-nav {
   margin-top: 32px;
@@ -355,7 +665,12 @@ body {
   .article-wrap { padding: calc(72px + 24px) 16px 60px; }
   .article-header { padding: 24px 20px 20px; }
   .article-tags { padding: 12px 20px; }
+  .article-toc { margin: 0 20px 16px; padding: 14px 16px; }
   .article-body { padding: 24px 20px 32px; }
+  .article-share { padding: 20px; }
+  .article-related { padding: 22px 18px 18px; }
+  .related-card { grid-template-columns: 80px 1fr; gap: 12px; padding: 10px; }
+  .related-thumb { width: 80px; height: 60px; }
 }
 
 .lang-zh-inline, .lang-en-inline { display: none; }
@@ -393,10 +708,54 @@ body {
         <span class="meta-sep">·</span>
         <time id="articleDate"></time>
       </div>
+      <p class="article-lead hidden" id="articleLead"></p>
     </header>
     <div class="article-tags" id="articleTags"></div>
+    <nav class="article-toc hidden" id="articleToc" aria-label="Table of contents">
+      <div class="article-toc-title">
+        <span class="lang-zh-inline">目录</span>
+        <span class="lang-en-inline">Contents</span>
+      </div>
+      <ol class="article-toc-list" id="articleTocList"></ol>
+    </nav>
     <div class="article-body" id="articleBody"></div>
+    <div class="article-share" id="articleShare">
+      <div class="article-share-title">
+        <span class="lang-zh-inline">分享这篇文章</span>
+        <span class="lang-en-inline">Share this article</span>
+      </div>
+      <div class="article-share-actions">
+        <button class="share-btn share-btn-copy" id="shareCopyBtn" type="button">
+          <span class="share-btn-icon">⎘</span>
+          <span class="share-copy-label lang-zh-inline">复制链接</span>
+          <span class="share-copy-label lang-en-inline">Copy link</span>
+        </button>
+        <a class="share-btn share-btn-weibo" id="shareWeiboBtn" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="share-btn-icon">微</span>
+          <span class="lang-zh-inline">新浪微博</span>
+          <span class="lang-en-inline">Weibo</span>
+        </a>
+        <button class="share-btn share-btn-wechat" id="shareWechatBtn" type="button">
+          <span class="share-btn-icon">信</span>
+          <span class="lang-zh-inline">微信</span>
+          <span class="lang-en-inline">WeChat</span>
+        </button>
+        <a class="share-btn share-btn-qq" id="shareQqBtn" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="share-btn-icon">Q</span>
+          <span class="lang-zh-inline">QQ</span>
+          <span class="lang-en-inline">QQ</span>
+        </a>
+      </div>
+    </div>
   </div>
+
+  <section class="article-related hidden" id="articleRelated" aria-label="Related articles">
+    <h2 class="article-related-title">
+      <span class="lang-zh-inline">你可能还想读</span>
+      <span class="lang-en-inline">You may also like</span>
+    </h2>
+    <div class="article-related-list" id="articleRelatedList"></div>
+  </section>
 
   <nav class="article-nav">
     <a class="nav-link" href="archive.html">
@@ -416,8 +775,27 @@ body {
   <div class="footer-copy">© 2026 异味游戏同好会 Weird Games Club</div>
 </div>
 
+<div class="wechat-share-modal" id="wechatShareModal" aria-hidden="true">
+  <div class="wechat-share-panel" role="dialog" aria-modal="true" aria-labelledby="wechatShareTitle">
+    <h3 id="wechatShareTitle">
+      <span class="lang-zh-inline">微信分享</span>
+      <span class="lang-en-inline">Share on WeChat</span>
+    </h3>
+    <p>
+      <span class="lang-zh-inline">打开微信扫一扫，或长按保存二维码后在微信中识别</span>
+      <span class="lang-en-inline">Scan with WeChat, or save the QR code and open it in WeChat</span>
+    </p>
+    <img class="wechat-share-qr" id="wechatShareQr" src="" alt="">
+    <button class="wechat-share-close" id="wechatShareClose" type="button">
+      <span class="lang-zh-inline">关闭</span>
+      <span class="lang-en-inline">Close</span>
+    </button>
+  </div>
+</div>
+
 <script src="js/frontmatter.js"></script>
 <script src="js/images.js"></script>
+<script src="js/archive-data.js"></script>
 <script src="article.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" async></script>
 <script>

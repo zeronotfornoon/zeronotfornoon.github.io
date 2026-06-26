@@ -183,7 +183,45 @@ function refreshArticlesView() {
   renderTagBanner();
   renderCategorySections();
   renderFeed();
+  renderTagCloud(allArticles);
   syncUrl();
+}
+
+function collectAllTags(articles) {
+  const counts = new Map();
+  (articles || []).forEach(article => {
+    (article.tags || []).forEach(tag => {
+      const safe = normalizeTag(tag);
+      if (!safe) return;
+      counts.set(safe, (counts.get(safe) || 0) + 1);
+    });
+  });
+  return Array.from(counts.entries())
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'zh-CN'));
+}
+
+function renderTagCloud(articles) {
+  const panel = document.getElementById('archiveTagCloud');
+  const list = document.getElementById('archiveTagCloudList');
+  if (!panel || !list) return;
+
+  const tags = collectAllTags(articles);
+  if (!tags.length) {
+    panel.classList.add('hidden');
+    list.innerHTML = '';
+    return;
+  }
+
+  panel.classList.remove('hidden');
+  list.innerHTML = tags.map(([tag, count]) => {
+    const active = currentTag && normalizeTag(currentTag) === tag ? ' is-active' : '';
+    return (
+      '<button type="button" class="archive-tag-cloud-item' + active + '" data-tag="' + escapeHtml(tag) + '">' +
+        '#' + escapeHtml(tag) +
+        '<span class="archive-tag-count">' + count + '</span>' +
+      '</button>'
+    );
+  }).join('');
 }
 
 function renderFeatured(articles) {
@@ -475,6 +513,13 @@ function initFilters() {
   }
 
   document.addEventListener('click', event => {
+    const cloudBtn = event.target.closest('.archive-tag-cloud-item[data-tag]');
+    if (cloudBtn) {
+      event.preventDefault();
+      applyTagFilter(cloudBtn.dataset.tag);
+      return;
+    }
+
     const tagBtn = event.target.closest('.article-tag[data-tag]');
     if (!tagBtn) return;
     event.preventDefault();

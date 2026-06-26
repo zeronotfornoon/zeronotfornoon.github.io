@@ -872,6 +872,59 @@ html[lang="en"] .side-char-line {
   line-height: 1;
 }
 
+/* ── 侧栏标签云（frontmatter 手写 tags） ── */
+.archive-tag-cloud {
+  margin-top: 16px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 16px 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+.archive-tag-cloud.hidden { display: none; }
+.archive-tag-cloud-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.archive-tag-cloud-note {
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--ink-faint);
+  margin-bottom: 12px;
+}
+.archive-tag-cloud-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.archive-tag-cloud-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  color: var(--pink-deep);
+  background: var(--pink-bg);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--pink);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.archive-tag-cloud-item:hover,
+.archive-tag-cloud-item.is-active {
+  background: var(--pink-deep);
+  color: var(--white);
+  border-color: var(--pink-deep);
+}
+.archive-tag-count {
+  font-size: 0.65rem;
+  opacity: 0.75;
+}
+
 /* ── 加载更多 / 空状态 ── */
 .load-more-wrap {
   display: flex;
@@ -1144,6 +1197,18 @@ html[lang="en"] .side-char-line {
         <span class="lang-zh-inline">随便抽一本</span>
         <span class="lang-en-inline">Pick one at random</span>
       </button>
+    </div>
+
+    <div class="archive-tag-cloud hidden" id="archiveTagCloud">
+      <div class="archive-tag-cloud-title">
+        <span class="lang-zh-inline">全部标签</span>
+        <span class="lang-en-inline">All tags</span>
+      </div>
+      <p class="archive-tag-cloud-note">
+        <span class="lang-zh-inline">在文章 frontmatter 里手写，点击筛选</span>
+        <span class="lang-en-inline">Hand-written in each article’s frontmatter — click to filter</span>
+      </p>
+      <div class="archive-tag-cloud-list" id="archiveTagCloudList"></div>
     </div>
   </aside>
 
