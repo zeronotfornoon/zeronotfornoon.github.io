@@ -1245,6 +1245,22 @@ html[lang="en"] .side-char-line {
 .main-rec-carousel .rec-slide-cover-inner.tag-cat-research {
   background: linear-gradient(145deg, rgba(92, 122, 158, 0.18) 0%, rgba(238, 242, 248, 0.95) 100%);
 }
+.main-rec-carousel .rec-slide-cover.has-cover-img {
+  background: var(--off-white);
+}
+.main-rec-carousel .rec-slide-cover.has-cover-img img {
+  width: 100%;
+  height: 100%;
+  min-height: 132px;
+  object-fit: cover;
+  display: block;
+}
+.carousel-empty {
+  padding: 28px 56px 28px 24px;
+  color: var(--ink-faint);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
 .main-rec-carousel .rec-slide-info {
   justify-content: center;
   gap: 10px;
@@ -1305,6 +1321,33 @@ html[lang="en"] .side-char-line {
   text-align: center;
   line-height: 1.35;
   border: 1px dashed var(--ink-faint);
+  overflow: hidden;
+}
+.rec-slide-thumb.has-cover-img {
+  border: 1px solid var(--border);
+  background: var(--off-white);
+  padding: 0;
+}
+.rec-slide-thumb.has-cover-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.rec-slide-thumb.tag-cat-news {
+  background: linear-gradient(145deg, rgba(106, 143, 110, 0.22) 0%, rgba(237, 244, 237, 0.95) 100%);
+  border-color: rgba(106, 143, 110, 0.35);
+  color: #3d5c40;
+}
+.rec-slide-thumb.tag-cat-interview {
+  background: linear-gradient(145deg, rgba(212, 96, 126, 0.18) 0%, rgba(253, 240, 244, 0.95) 100%);
+  border-color: rgba(212, 96, 126, 0.35);
+  color: #9a3d55;
+}
+.rec-slide-thumb.tag-cat-research {
+  background: linear-gradient(145deg, rgba(92, 122, 158, 0.18) 0%, rgba(238, 242, 248, 0.95) 100%);
+  border-color: rgba(92, 122, 158, 0.35);
+  color: #3d5470;
 }
 .rec-slide-info {
   display: flex;
@@ -1653,52 +1696,7 @@ html[lang="en"] .side-char-line {
         News
       </div>
       <div class="rec-carousel main-rec-carousel" id="newsCarousel">
-        <div class="rec-carousel-track">
-          <a class="rec-slide active" href="article.html?id=loc-update-placeholder">
-            <div class="rec-slide-cover">
-              <div class="rec-slide-cover-inner tag-cat-news">
-                <span class="lang-zh-inline">汉化<br>追踪</span>
-                <span class="lang-en-inline">Loc.<br>Update</span>
-              </div>
-            </div>
-            <div class="rec-slide-info">
-              <span class="rec-cat-tag tag-cat-news">
-                <span class="lang-zh-inline">资讯</span>
-                <span class="lang-en-inline">News</span>
-              </span>
-              <div class="rec-slide-title">
-                <span class="lang-zh-inline">【游戏资讯】某款异味独立游戏中文本地化更新跟踪中</span>
-                <span class="lang-en-inline">News: Simplified Chinese localization update in progress</span>
-              </div>
-              <div class="rec-slide-meta">
-                <span class="lang-zh-inline">2026-06-22</span>
-                <span class="lang-en-inline">Jun 22, 2026</span>
-              </div>
-            </div>
-          </a>
-          <a class="rec-slide" href="article.html?id=patch-digest">
-            <div class="rec-slide-cover">
-              <div class="rec-slide-cover-inner tag-cat-news">
-                <span class="lang-zh-inline">补丁<br>速递</span>
-                <span class="lang-en-inline">Patch<br>Digest</span>
-              </div>
-            </div>
-            <div class="rec-slide-info">
-              <span class="rec-cat-tag tag-cat-news">
-                <span class="lang-zh-inline">资讯</span>
-                <span class="lang-en-inline">News</span>
-              </span>
-              <div class="rec-slide-title">
-                <span class="lang-zh-inline">【游戏资讯】模组与汉化补丁汇总即将上线</span>
-                <span class="lang-en-inline">News: Mod & localization patch digest coming soon</span>
-              </div>
-              <div class="rec-slide-meta">
-                <span class="lang-zh-inline">2026-06-15</span>
-                <span class="lang-en-inline">Jun 15, 2026</span>
-              </div>
-            </div>
-          </a>
-        </div>
+        <div class="rec-carousel-track"></div>
         <button class="rec-carousel-btn prev" type="button" aria-label="上一条" onclick="moveNewsCarousel(-1)">‹</button>
         <button class="rec-carousel-btn next" type="button" aria-label="下一条" onclick="moveNewsCarousel(1)">›</button>
         <div class="rec-carousel-dots" id="newsCarouselDots"></div>
@@ -1811,40 +1809,7 @@ html[lang="en"] .side-char-line {
         <span class="lang-en-inline">Recommended</span>
       </div>
       <div class="rec-carousel side-rec-carousel" id="recCarousel">
-        <div class="rec-carousel-track">
-          <a class="rec-slide active" href="article.html?id=whos-lila-garage-heathen">
-            <div class="rec-slide-thumb">
-              <span class="lang-zh-inline">独家<br>采访</span>
-              <span class="lang-en-inline">Interv.</span>
-            </div>
-            <div class="rec-slide-info">
-              <div class="rec-slide-title">
-                <span class="lang-zh-inline">献给大卫·林奇的 1-bit 轮回狂宴：采访《莱拉是谁？》制作人</span>
-                <span class="lang-en-inline">Interview: Who's Lila? developer Garage Heathen</span>
-              </div>
-              <div class="rec-slide-meta">
-                <span class="lang-zh-inline">采访 · 2022-03-08</span>
-                <span class="lang-en-inline">Interview · Mar 8, 2022</span>
-              </div>
-            </div>
-          </a>
-          <a class="rec-slide" href="article.html?id=cult-game-research">
-            <div class="rec-slide-thumb">
-              <span class="lang-zh-inline">游戏<br>考据</span>
-              <span class="lang-en-inline">Research</span>
-            </div>
-            <div class="rec-slide-info">
-              <div class="rec-slide-title">
-                <span class="lang-zh-inline">【游戏考据】被遗忘的 DOS 邪典：一款只在特定论坛流传过的异味 RPG</span>
-                <span class="lang-en-inline">Research: A Forgotten DOS Cult Classic RPG</span>
-              </div>
-              <div class="rec-slide-meta">
-                <span class="lang-zh-inline">考据 · 2026-06-18</span>
-                <span class="lang-en-inline">Research · Jun 18, 2026</span>
-              </div>
-            </div>
-          </a>
-        </div>
+        <div class="rec-carousel-track"></div>
         <button class="rec-carousel-btn prev" type="button" aria-label="上一条" onclick="moveRecCarousel(-1)">‹</button>
         <button class="rec-carousel-btn next" type="button" aria-label="下一条" onclick="moveRecCarousel(1)">›</button>
         <div class="rec-carousel-dots" id="recCarouselDots"></div>
@@ -1900,6 +1865,9 @@ html[lang="en"] .side-char-line {
   </div>
 </div>
 
+<script src="js/archive-data.js"></script>
+<script src="js/images.js"></script>
+<script src="js/home-carousel.js"></script>
 <script>
 const CONTACT_ZH = 'https://difficult-snowshoe-651.notion.site/3757a80dce1180018e24f9f298233120';
 const CONTACT_EN = 'https://difficult-snowshoe-651.notion.site/Contact-3757a80dce118015a7bbc02a423d6d7a';
@@ -1935,66 +1903,6 @@ function updateCountdown() {
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
-// 双轮播：News（主栏）+ 内容推荐（侧栏）
-const carouselStates = {};
-
-function initCarousel(rootId, dotsId) {
-  const root = document.getElementById(rootId);
-  const dotsEl = document.getElementById(dotsId);
-  if (!root || !dotsEl) return;
-
-  const state = { index: 0, timer: null };
-  const slides = () => root.querySelectorAll('.rec-slide');
-
-  function buildDots() {
-    dotsEl.innerHTML = '';
-    slides().forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'rec-carousel-dot' + (i === state.index ? ' active' : '');
-      dot.setAttribute('aria-label', '第 ' + (i + 1) + ' 条');
-      dot.addEventListener('click', () => go(i));
-      dotsEl.appendChild(dot);
-    });
-  }
-
-  function go(index) {
-    const list = slides();
-    if (!list.length) return;
-    state.index = ((index % list.length) + list.length) % list.length;
-    list.forEach((slide, i) => slide.classList.toggle('active', i === state.index));
-    dotsEl.querySelectorAll('.rec-carousel-dot').forEach((dot, i) => {
-      dot.classList.toggle('active', i === state.index);
-    });
-  }
-
-  function move(step) {
-    go(state.index + step);
-    restart();
-  }
-
-  function restart() {
-    if (state.timer) clearInterval(state.timer);
-    if (slides().length > 1) {
-      state.timer = setInterval(() => move(1), 6000);
-    }
-  }
-
-  carouselStates[rootId] = { move };
-  buildDots();
-  restart();
-}
-
-function moveNewsCarousel(step) {
-  carouselStates.newsCarousel?.move(step);
-}
-function moveRecCarousel(step) {
-  carouselStates.recCarousel?.move(step);
-}
-
-initCarousel('newsCarousel', 'newsCarouselDots');
-initCarousel('recCarousel', 'recCarouselDots');
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
