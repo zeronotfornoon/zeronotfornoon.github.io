@@ -70,6 +70,20 @@ Get-ChildItem $ArticlesDir -Filter "*.md" | Where-Object { $_.Name -ne "_templat
     $Cover = ""
     if ($M.cover) { $Cover = [string]$M.cover }
 
+    $Games = @()
+    if ($M.games -is [array]) {
+        $Games = @($M.games | ForEach-Object { [string]$_ })
+    } elseif ($M.games) {
+        $GameText = [string]$M.games
+        if ($GameText -match '^\[(.*)\]$') {
+            $Games = @($Matches[1] -split ',' | ForEach-Object { $_.Trim().Trim('"').Trim("'") } | Where-Object { $_ })
+        } elseif ($GameText -match '[,，、]') {
+            $Games = @($GameText -split '[,，、]' | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+        } else {
+            $Games = @($GameText)
+        }
+    }
+
     $Excerpt = if ($M.excerpt) { [string]$M.excerpt } elseif ($M.intro) { [string]$M.intro } else { "" }
     if (-not $Excerpt) {
         Write-Warning "Tip $($_.Name): missing excerpt (one-line intro) — add it in frontmatter"
@@ -88,6 +102,7 @@ Get-ChildItem $ArticlesDir -Filter "*.md" | Where-Object { $_.Name -ne "_templat
         title    = if ($M.title) { [string]$M.title } else { [string]$M.id }
         excerpt  = $Excerpt
     }
+    if ($Games.Count) { $Item.games = $Games }
     if ($Cover) { $Item.cover = $Cover }
 
     $Articles += $Item

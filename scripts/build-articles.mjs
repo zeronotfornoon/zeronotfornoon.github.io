@@ -12,20 +12,34 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { parseArticleMd, normalizeArticleMeta } from '../js/frontmatter.js';
-import { writeFallbackJs } from './lib/fallback.mjs';
+import { writeFallbackJs, readJson } from './lib/fallback.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 const ARTICLES_DIR = path.join(ROOT, 'articles');
 const OUT_FILE = path.join(ROOT, 'data', 'articles.json');
 const FALLBACK_FILE = path.join(ROOT, 'js', 'archive-data.js');
+const GAMES_FILE = path.join(ROOT, 'data', 'games.json');
 
 const SKIP = new Set(['_template.md']);
+
+function loadGameIds(root) {
+  const gamesPath = path.join(root, 'data', 'games.json');
+  if (!fs.existsSync(gamesPath)) return new Set();
+  try {
+    const payload = readJson(gamesPath);
+    return new Set((payload.games || []).map(game => game.id).filter(Boolean));
+  } catch (err) {
+    console.warn('无法读取 games.json，跳过 games 字段校验：', err.message);
+    return new Set();
+  }
+}
 
 export function buildArticles(root = ROOT) {
   const articlesDir = path.join(root, 'articles');
   const outFile = path.join(root, 'data', 'articles.json');
   const fallbackFile = path.join(root, 'js', 'archive-data.js');
+  const gameIds = loadGameIds(root);
 
   const files = fs.readdirSync(articlesDir).filter(f => f.endsWith('.md') && !SKIP.has(f));
 
@@ -48,6 +62,13 @@ export function buildArticles(root = ROOT) {
     }
     if (!article.tags.length) {
       console.warn('提示 ' + file + '：未填写 tags（可筛选标签），请在 frontmatter 手写');
+    }
+    if (article.games && gameIds.size) {
+      article.games.forEach(gameId => {
+        if (!gameIds.has(gameId)) {
+          console.warn('提示 ' + file + '：games 中的 "' + gameId + '" 不在 data/games.json 里');
+        }
+      });
     }
 
     if (!article.cover) delete article.cover;
