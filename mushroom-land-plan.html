@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>野菌计划 | Wild Fungus Project — Weird Games Club</title>
+<script src="js/site.js"></script>
+<script>
+setSiteMeta({
+  path: 'wild-fungus-plan.html',
+  title: '野菌计划 | Wild Fungus Project — Weird Games Club',
+  description: '什么是野菌计划？异味游戏同好会如何挑选、孵化并推荐那些值得被看见的异味独立游戏。'
+});
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Noto+Serif+SC:wght@300;400;600&family=Press+Start+2P&display=swap');
+
+:root {
+  --white: #ffffff;
+  --off-white: #f5f5f7;
+  --ink: #1a1a1a;
+  --ink-dim: #555;
+  --ink-faint: #999;
+  --pink: #e8a0b4;
+  --pink-bg: #fdf0f4;
+  --pink-deep: #d4607e;
+  --moss: #6a8f6e;
+  --moss-bg: #edf4ed;
+  --border: #e2e2e5;
+  --border-dark: #1a1a1a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--off-white);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+.lang-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  backdrop-filter: blur(8px);
+}
+.lang-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.lang-bar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.lang-bar-logo:hover { transform: translateY(-1px); }
+.site-logo-img {
+  height: 58px;
+  width: auto;
+  max-width: 260px;
+  display: block;
+  object-fit: contain;
+  animation: logo-neon-flicker 3.5s infinite;
+}
+@keyframes logo-neon-flicker {
+  0%,18%,20%,22%,53%,55%,100% {
+    filter:
+      drop-shadow(0 0 2px var(--pink))
+      drop-shadow(0 0 8px var(--pink))
+      drop-shadow(0 0 18px rgba(232, 160, 180, 0.9));
+  }
+  19%,21%,54% {
+    filter: drop-shadow(0 0 1px rgba(232, 160, 180, 0.2));
+  }
+}
+.bar-title {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-weight: 300;
+}
+.bar-title a {
+  color: inherit;
+  text-decoration: none;
+}
+.bar-title a:hover { color: var(--ink); }
+.lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
+.lang-btn {
+  background: none; border: none;
+  padding: 5px 14px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; cursor: pointer;
+  color: var(--ink-dim); transition: all 0.15s;
+}
+.lang-btn.active { background: var(--ink); color: var(--white); }
+
+.hero {
+  margin-top: 72px;
+  position: relative;
+  width: 100%;
+}
+/* 桌面：整图按原比例显示 */
+.hero-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: brightness(0.82) saturate(1.05);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(13, 17, 14, 0.15) 0%,
+    rgba(237, 244, 237, 0.55) 55%,
+    var(--off-white) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 32px 24px;
+  gap: 8px;
+}
+.hero-page-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.5rem;
+  color: var(--moss);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.hero-title {
+  font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-align: center;
+}
+.hero-title-en {
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  font-weight: 300;
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.page-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.section {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.section-header {
+  padding: 24px 32px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.55rem;
+  color: var(--moss);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.section-title-zh {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.section-title-en {
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+.section-body {
+  padding: 28px 32px;
+}
+
+.prose {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.96rem;
+  color: var(--ink-dim);
+  line-height: 1.95;
+  font-weight: 400;
+}
+.prose strong { color: var(--ink); font-weight: 600; }
+.prose p + p { margin-top: 1.1em; }
+
+.note-box {
+  margin-top: 1.2em;
+  padding: 14px 16px;
+  background: var(--moss-bg);
+  border-left: 3px solid var(--moss);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  line-height: 1.75;
+}
+
+.plan-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 1.4em;
+}
+.plan-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: all 0.15s;
+}
+.plan-link:hover {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.nav-link {
+  text-decoration: none;
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: color 0.15s;
+}
+.nav-link:hover { color: var(--ink); }
+
+.page-footer {
+  text-align: center;
+  padding: 32px 24px 48px;
+  border-top: 1px solid var(--border);
+  max-width: 900px;
+  margin: 0 auto;
+}
+.footer-copy {
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  margin-top: 8px;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 90;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-dark);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s, visibility 0.25s, transform 0.2s;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.back-to-top:hover { transform: translateY(-2px); }
+.back-to-top-triangle {
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 9px solid var(--ink);
+  margin-top: -2px;
+}
+
+@media (max-width: 576px) {
+  .lang-bar { padding: 8px 16px; }
+  .site-logo-img { height: 44px; max-width: 200px; }
+  .bar-title { display: none; }
+  /* 手机头图：与桌面分开调。改下面 4 个变量即可 */
+  .hero {
+    --hero-mobile-aspect: 16 / 10;
+    --hero-mobile-max-h: 200px;
+    --hero-mobile-focus-x: 50%;
+    --hero-mobile-focus-y: 42%;
+
+    aspect-ratio: var(--hero-mobile-aspect);
+    max-height: var(--hero-mobile-max-h);
+    overflow: hidden;
+  }
+  .hero-bg {
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--hero-mobile-focus-x) var(--hero-mobile-focus-y);
+  }
+  .hero-overlay {
+    padding: 20px 16px 14px;
+    background: linear-gradient(
+      to bottom,
+      rgba(13, 17, 14, 0.08) 0%,
+      rgba(237, 244, 237, 0.72) 48%,
+      var(--off-white) 100%
+    );
+  }
+  .hero-page-label { font-size: 0.42rem; }
+  .hero-title { font-size: 1.35rem; }
+  .hero-title-en { font-size: 0.82rem; }
+  .section-header, .section-body { padding-left: 20px; padding-right: 20px; }
+}
+
+.lang-zh, .lang-en { display: none; }
+.lang-zh-inline, .lang-en-inline { display: none; }
+.lang-zh-inline.visible, .lang-en-inline.visible { display: inline; }
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <div class="lang-bar-left">
+    <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
+      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    </a>
+    <span class="bar-title">
+      <a href="index.html">
+        <span class="lang-zh-inline">野菌计划</span>
+        <span class="lang-en-inline">Wild Fungus Project</span>
+      </a>
+    </span>
+  </div>
+  <div class="lang-switch">
+    <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
+    <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<div class="hero">
+  <img class="hero-bg" src="mushroom.jpg" alt="">
+  <div class="hero-overlay">
+    <div class="hero-page-label">MUSHROOM LAND PROJECT</div>
+    <h1 class="hero-title">
+      <span class="lang-zh-inline">野菌计划</span>
+      <span class="lang-en-inline">Mushroom Land Project</span>
+    </h1>
+    <div class="hero-title-en">
+      <span class="lang-zh-inline">蘑菇是固体的电波</span>
+      <span class="lang-en-inline">Mushrooms are solid radio waves</span>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-title-zh">
+        <span class="lang-zh-inline">吃下蘑菇，梦见死亡</span>
+        <span class="lang-en-inline">Cibus deorum</span>
+      </div>
+      <div class="section-title-en">WHAT IS IT</div>
+    </div>
+    <div class="section-body">
+      <div class="prose lang-zh">
+        <p>狂气的月光下，菌丝悄然蔓延，少女与哲人经历的微不足道的挫折化作养料，最终繁衍出一片世界末日的绝景……</p>
+        <p>我们精心挑选自己觉得有意思的独立游戏，撒上养料，目的是带给玩家挥之不去的梦魇……要来跟我们一起召唤世界末日吗？</p>
+      </div>
+      <div class="prose lang-en">
+        <p>Under the frantic moonlight, mycelium silently creeps. Whether a commonplace girl or a great philosopher, their most trivial setbacks turn into nourishment, ultimately hatching a sublime spectacle of the apocalypse...</p>
+        <p>We handpick stylized indie games that catch our eye, pour in our nutrients, and aim to leave you with a lingering, haunting savor. So—will you join us in summoning the end of the world?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-title-zh">
+        <span class="lang-zh-inline">野菌是怎么破土而出的？</span>
+        <span class="lang-en-inline">How does a mushroom break soil?</span>
+      </div>
+      <div class="section-title-en">THE SPROUT</div>
+    </div>
+    <div class="section-body">
+      <div class="prose lang-zh">
+        <p>我们会挑选那些自己觉得有意思，但没有在简中玩家社群里获得足够曝光的游戏，通过同好会的力量让它走进大众视野里。当然，我们会提供本地化方面的帮助，如果有必要，还会帮忙设计中文logo、解决本地化过程中的技术问题等等。</p>
+        <p>每破土一朵野菌，主页侧边栏的计数也会更新。你可以点进跳转到页面收获野菌，也可以在异味林地里采摘野菌。</p>
+              </div>
+      <div class="prose lang-en">
+        <p>We look for games with a distinctive spark that haven't quite found the spotlight in the Simplified Chinese community, using the collective pulse of our club to bring them into the open. Along the way, we offer dedicated localization support.</p>
+        <p>Each time a mushroom breaks through the soil, the tracker on our sidebar updates. You can click through to harvest the new growth, or simply roam the cyber glade of The Humid Wilds to forage at your own pace.</p>
+              </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-title-zh">
+        <span class="lang-zh-inline">野菌与合作游戏、异味档案的关系</span>
+        <span class="lang-en-inline">Mushroom Land, Supported Games &amp; the Archives</span>
+      </div>
+      <div class="section-title-en">RELATED PAGES</div>
+    </div>
+    <div class="section-body">
+      <div class="prose lang-zh">
+        <p>野菌计划的游戏会进入<strong>合作游戏</strong>列表；如果有采访、考据或资讯，会在<strong>异味档案</strong>里留下文字记录。</p>
+        <p>我们会在每个季度报告林地野菌的生长情况，报告会用文字和短视频的形式发布。</p>
+      </div>
+      <div class="prose lang-en">
+        <p>Titles officially sprouted through this project appear under <strong>Supported Games</strong>. Interviews and write-ups live in the <strong>Archives</strong>.</p>
+        <p>We will share quarterly updates on the growth of the wild mushrooms, published in both text and short video formats.</p>
+      </div>
+      <div class="plan-links">
+        <a class="plan-link" href="games.html">
+          <span class="lang-zh-inline">合作游戏 →</span>
+          <span class="lang-en-inline">Supported Games →</span>
+        </a>
+        <a class="plan-link" href="archive.html">
+          <span class="lang-zh-inline">异味档案 →</span>
+          <span class="lang-en-inline">Archives →</span>
+        </a>
+        <a class="plan-link" href="index.html">
+          <span class="lang-zh-inline">返回主页 · 看倒计时 →</span>
+          <span class="lang-en-inline">Home · Countdown →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="page-nav">
+    <a class="nav-link" href="index.html">
+      ← <span class="lang-zh-inline">返回主页</span><span class="lang-en-inline">Back to Home</span>
+    </a>
+    <a class="nav-link" href="about.html">
+      <span class="lang-zh-inline">异味须知</span><span class="lang-en-inline">About Us</span> →
+    </a>
+  </nav>
+
+</div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="back-to-top-triangle"></span>
+</button>
+
+<div class="page-footer">
+  <a class="nav-link" href="index.html">
+    ← <span class="lang-zh-inline">返回主页</span><span class="lang-en-inline">Back to Home</span>
+  </a>
+  <div class="footer-copy">© 2026 异味游戏同好会 Weird Games Club</div>
+</div>
+
+<script>
+(function() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  const toggle = () => btn.classList.toggle('visible', window.scrollY > 280);
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
+</script>
+</body>
+</html>
