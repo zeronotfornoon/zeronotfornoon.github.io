@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>野菌计划 | Wild Fungus Project — Weird Games Club</title>
+<title>野菌计划 | Mushroom Land Project — Weird Games Club</title>
 <script src="js/site.js"></script>
 <script>
 setSiteMeta({
-  path: 'wild-fungus-plan.html',
-  title: '野菌计划 | Wild Fungus Project — Weird Games Club',
-  description: '什么是野菌计划？异味游戏同好会如何挑选、孵化并推荐那些值得被看见的异味独立游戏。'
+  path: 'mushroom-land-plan.html',
+  title: '野菌计划 | Mushroom Land Project — Weird Games Club',
+  description: '什么是蘑菇之地计划？异味游戏同好会如何挑选、孵化并推荐那些值得被看见的异味独立游戏。'
 });
 </script>
 <style>
@@ -112,12 +112,22 @@ body {
   margin-top: 72px;
   position: relative;
   width: 100%;
+  overflow: hidden;
+  /* 头图横幅裁切：只显示人物+月相+两侧蘑菇这一段（非整图） */
+  --hero-aspect: 21 / 5;
+  --hero-max-h: 300px;
+  --hero-focus-x: 50%;
+  --hero-focus-y: 38%;
+
+  aspect-ratio: var(--hero-aspect);
+  max-height: var(--hero-max-h);
 }
-/* 桌面：整图按原比例显示 */
 .hero-bg {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
+  object-fit: cover;
+  object-position: var(--hero-focus-x) var(--hero-focus-y);
   filter: brightness(0.82) saturate(1.05);
 }
 .hero-overlay {
@@ -314,21 +324,12 @@ body {
   .lang-bar { padding: 8px 16px; }
   .site-logo-img { height: 44px; max-width: 200px; }
   .bar-title { display: none; }
-  /* 手机头图：与桌面分开调。改下面 4 个变量即可 */
+  /* 手机：单独改下面变量（比例 / 高度 / 裁切焦点） */
   .hero {
-    --hero-mobile-aspect: 16 / 10;
-    --hero-mobile-max-h: 200px;
-    --hero-mobile-focus-x: 50%;
-    --hero-mobile-focus-y: 42%;
-
-    aspect-ratio: var(--hero-mobile-aspect);
-    max-height: var(--hero-mobile-max-h);
-    overflow: hidden;
-  }
-  .hero-bg {
-    height: 100%;
-    object-fit: cover;
-    object-position: var(--hero-mobile-focus-x) var(--hero-mobile-focus-y);
+    --hero-aspect: 16 / 9;
+    --hero-max-h: 200px;
+    --hero-focus-x: 50%;
+    --hero-focus-y: 36%;
   }
   .hero-overlay {
     padding: 20px 16px 14px;
@@ -360,7 +361,7 @@ body {
     <span class="bar-title">
       <a href="index.html">
         <span class="lang-zh-inline">野菌计划</span>
-        <span class="lang-en-inline">Wild Fungus Project</span>
+        <span class="lang-en-inline">Mushroom Land Project</span>
       </a>
     </span>
   </div>
