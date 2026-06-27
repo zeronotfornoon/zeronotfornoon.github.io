@@ -14,6 +14,8 @@ import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
+const SCRIPT_VERSION = 2;
+
 const API_BASES = (process.env.AFDIAN_API_BASE
   ? [process.env.AFDIAN_API_BASE.replace(/\/$/, '')]
   : ['https://ifdian.net/api/open', 'https://afdian.com/api/open']
@@ -29,6 +31,8 @@ if (!userId || !token) {
   process.exit(1);
 }
 
+const REQUEST_TIMEOUT_MS = 30_000;
+
 function sign(paramsJson, ts) {
   const raw = `${token}params${paramsJson}ts${ts}user_id${userId}`;
   return createHash('md5').update(raw, 'utf8').digest('hex');
@@ -39,6 +43,7 @@ async function postOpenApi(apiBase, page) {
   const ts = Math.floor(Date.now() / 1000);
   const body = { user_id: userId, params: paramsJson, ts, sign: sign(paramsJson, ts) };
   const url = `${apiBase}/query-sponsor`;
+  console.log(`正在请求 ${url}（第 ${page} 页）…`);
 
   let res;
   try {
@@ -50,9 +55,11 @@ async function postOpenApi(apiBase, page) {
         'User-Agent': 'weirdgamesclub-sync/1.0 (+https://weirdgamesclub.com)',
       },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
   } catch (err) {
-    throw new Error(`${url} 网络错误：${err.message}`);
+    const msg = err.name === 'TimeoutError' ? `请求超时（${REQUEST_TIMEOUT_MS / 1000}s）` : err.message;
+    throw new Error(`${url} 网络错误：${msg}`);
   }
 
   const text = await res.text();
@@ -126,6 +133,7 @@ async function fetchAllSponsors() {
 }
 
 try {
+  console.log(`sync-sponsors v${SCRIPT_VERSION} → ${API_BASES.join(', ')}`);
   const list = await fetchAllSponsors();
   const output = {
     updated_at: new Date().toISOString(),
