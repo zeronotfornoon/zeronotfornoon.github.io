@@ -1,5 +1,5 @@
 let allGames = [];
-let currentLang = 'zh';
+let gamesLibLang = 'zh';
 
 function escapeHtml(str) {
   return String(str)
@@ -55,7 +55,7 @@ function gameCoverUrl(game) {
 function gameText(game, field) {
   const zhKey = field + 'Zh';
   const enKey = field + 'En';
-  if (currentLang === 'en') {
+  if (gamesLibLang === 'en') {
     return game[enKey] || game[zhKey] || '';
   }
   return game[zhKey] || game[enKey] || '';
@@ -76,7 +76,7 @@ function pickRandomGame(event) {
 
   const pool = getRandomGamePool();
   if (!pool.length) {
-    window.alert(currentLang === 'en'
+    window.alert(gamesLibLang === 'en'
       ? 'Game data is unavailable. Please refresh the page.'
       : '游戏数据不可用，请刷新页面后重试。');
     return false;
@@ -136,12 +136,12 @@ function renderHeroStats() {
 
   const listed = getListedGames();
   if (!listed.length && !getAllGamesPool().length) {
-    el.textContent = currentLang === 'en' ? 'Loading games…' : '游戏加载中……';
+    el.textContent = gamesLibLang === 'en' ? 'Loading games…' : '游戏加载中……';
     return;
   }
 
   const total = listed.length;
-  if (currentLang === 'en') {
+  if (gamesLibLang === 'en') {
     el.innerHTML =
       '<span>' + total + ' supported game' + (total === 1 ? '' : 's') + '</span>' +
       '<span class="hero-stats-sep">·</span>' +
@@ -177,7 +177,7 @@ function renderCoverHtml(game, className) {
 }
 
 window.gamesOnLangChange = function gamesOnLangChange(lang) {
-  currentLang = lang;
+  gamesLibLang = lang;
   renderHeroStats();
   if (window.gamesRerenderList) window.gamesRerenderList();
   if (window.gamesRerenderDetail) window.gamesRerenderDetail();
