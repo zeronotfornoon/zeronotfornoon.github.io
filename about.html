@@ -13,15 +13,27 @@ setSiteMeta({
 });
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Noto+Serif+SC:wght@300;400;600&family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Press+Start+2P&display=swap');
 
 @font-face {
   font-family: 'UranusPixel';
   src: url('Uranus_Pixel_11Px.ttf') format('truetype');
   font-display: swap;
 }
+@font-face {
+  font-family: 'ChaoHua Title A';
+  src: url('朝華標題A.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ChaoHua Typewriter';
+  src: url('朝華打字機.woff2') format('woff2');
+  font-display: swap;
+}
 
 :root {
+  --font-title: 'ChaoHua Title A', 'Noto Sans SC', sans-serif;
+  --font-body: 'ChaoHua Typewriter', 'Noto Serif SC', serif;
   --white: #ffffff;
   --off-white: #f5f5f7;
   --ink: #1a1a1a;
@@ -95,9 +107,10 @@ body {
   }
 }
 .bar-title {
+  font-family: var(--font-title);
   font-size: 0.78rem;
   color: var(--ink-faint);
-  font-weight: 300;
+  font-weight: normal;
   letter-spacing: 0.04em;
 }
 .lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
@@ -138,24 +151,27 @@ body {
   gap: 8px;
 }
 .hero-page-label {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.55rem;
+  font-family: var(--font-title);
+  font-size: 0.62rem;
   color: var(--pink-deep);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-bottom: 4px;
+  font-weight: normal;
 }
 .hero-title {
+  font-family: var(--font-title);
   font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 900;
+  font-weight: normal;
   color: var(--ink);
   letter-spacing: 0.04em;
   line-height: 1.1;
   text-align: center;
 }
 .hero-title-en {
+  font-family: var(--font-title);
   font-size: clamp(1rem, 2.5vw, 1.5rem);
-  font-weight: 300;
+  font-weight: normal;
   color: var(--ink-dim);
   letter-spacing: 0.1em;
   text-align: center;
@@ -186,20 +202,23 @@ body {
   gap: 12px;
 }
 .section-num {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.55rem;
+  font-family: var(--font-title);
+  font-size: 0.72rem;
   color: var(--pink);
   letter-spacing: 0.1em;
+  font-weight: normal;
 }
 .section-title-zh {
+  font-family: var(--font-title);
   font-size: 1.25rem;
-  font-weight: 900;
+  font-weight: normal;
   color: var(--ink);
   letter-spacing: 0.02em;
 }
 .section-title-en {
+  font-family: var(--font-title);
   font-size: 0.78rem;
-  font-weight: 300;
+  font-weight: normal;
   color: var(--ink-faint);
   letter-spacing: 0.08em;
   margin-top: 2px;
@@ -210,14 +229,15 @@ body {
 
 /* ── 文本样式 ── */
 .prose {
-  font-size: 0.95rem;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
   color: var(--ink-dim);
   line-height: 1.9;
-  font-weight: 300;
+  font-weight: normal;
 }
 .prose strong, .prose b {
   color: var(--ink);
-  font-weight: 700;
+  font-weight: normal;
 }
 .prose p + p { margin-top: 1.2em; }
 
@@ -247,8 +267,9 @@ body {
 }
 .service-card-label.pink { background: var(--pink-deep); }
 .service-card-title {
+  font-family: var(--font-title);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: normal;
   color: var(--ink);
   margin-bottom: 12px;
 }
@@ -259,9 +280,10 @@ body {
   gap: 8px;
 }
 .service-list li {
-  font-size: 0.88rem;
+  font-family: var(--font-body);
+  font-size: 0.96rem;
   color: var(--ink-dim);
-  font-weight: 300;
+  font-weight: normal;
   line-height: 1.7;
   padding-left: 16px;
   position: relative;
@@ -287,21 +309,23 @@ body {
   border-radius: 0 8px 8px 0;
 }
 .disclaimer-item-title {
+  font-family: var(--font-title);
   font-size: 0.88rem;
-  font-weight: 700;
+  font-weight: normal;
   color: var(--ink);
   margin-bottom: 10px;
   letter-spacing: 0.02em;
 }
 .disclaimer-item-body {
-  font-size: 0.88rem;
+  font-family: var(--font-body);
+  font-size: 0.96rem;
   color: var(--ink-dim);
   line-height: 1.85;
-  font-weight: 300;
+  font-weight: normal;
 }
 .disclaimer-item-body strong {
   color: var(--ink);
-  font-weight: 700;
+  font-weight: normal;
 }
 
 /* ── 成员介绍 ── */
@@ -343,8 +367,9 @@ body {
   flex: 1;
 }
 .member-name-zh {
+  font-family: var(--font-title);
   font-size: 1.2rem;
-  font-weight: 900;
+  font-weight: normal;
   color: var(--ink);
   letter-spacing: 0.04em;
 }
@@ -373,9 +398,10 @@ body {
   margin-top: 4px;
 }
 .member-traits li {
-  font-size: 0.82rem;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
   color: var(--ink-dim);
-  font-weight: 300;
+  font-weight: normal;
   line-height: 1.65;
   padding-left: 18px;
   position: relative;
