@@ -24,6 +24,7 @@ let currentArticle = null;
 let currentBodyHtml = '';
 let allArticlesIndex = [];
 let copyResetTimer = null;
+let articleLoading = false;
 
 function escapeHtml(str) {
   return String(str)
@@ -135,28 +136,22 @@ function gameBadgeLabel(listed) {
 
 function mergeArticleFromIndex(article, indexEntry) {
   if (!indexEntry) return article;
-  const merged = Object.assign({}, article);
-  const mdMetaComplete = Boolean(
-    article.title &&
-    article.title !== article.id &&
-    article.date
-  );
-
-  if (!mdMetaComplete) {
-    merged.category = indexEntry.category || merged.category;
-    merged.featured = indexEntry.featured ?? merged.featured;
-    merged.date = indexEntry.date || merged.date;
-    merged.author = indexEntry.author || merged.author;
-    merged.tags = Array.isArray(indexEntry.tags) ? indexEntry.tags : merged.tags;
-    merged.title = indexEntry.title || merged.title;
-    merged.excerpt = indexEntry.excerpt || merged.excerpt;
-    merged.cover = indexEntry.cover || merged.cover;
-    merged.games = Array.isArray(indexEntry.games) ? indexEntry.games : merged.games;
-  } else if (Array.isArray(indexEntry.games) && indexEntry.games.length) {
-    merged.games = indexEntry.games;
-  }
-
-  return merged;
+  return {
+    id: article.id || indexEntry.id,
+    category: indexEntry.category || article.category,
+    featured: indexEntry.featured ?? article.featured,
+    date: indexEntry.date || article.date,
+    author: indexEntry.author || article.author,
+    tags: Array.isArray(indexEntry.tags) && indexEntry.tags.length
+      ? indexEntry.tags
+      : (article.tags || []),
+    title: indexEntry.title || article.title,
+    excerpt: indexEntry.excerpt || article.excerpt,
+    cover: indexEntry.cover || article.cover,
+    games: Array.isArray(indexEntry.games) && indexEntry.games.length
+      ? indexEntry.games
+      : (article.games || [])
+  };
 }
 
 function withTimeout(promise, ms, label) {
@@ -220,15 +215,17 @@ function renderLinkedGames(article) {
   }
 
   list.innerHTML = games.map(game => {
+    const href = typeof gameUrl === 'function' ? gameUrl(game.id) : ('game.html?id=' + encodeURIComponent(game.id));
     const coverHtml = typeof renderCoverHtml === 'function'
       ? renderCoverHtml(game, 'article-game-cover')
       : '<div class="article-game-cover"></div>';
+    const listed = typeof isGameListed === 'function' ? isGameListed(game) : false;
 
     return (
-      '<a class="article-game-card" href="' + gameUrl(game.id) + '">' +
+      '<a class="article-game-card" href="' + href + '">' +
         coverHtml +
         '<div class="article-game-body">' +
-          '<span class="article-game-badge">' + escapeHtml(gameBadgeLabel(isGameListed(game))) + '</span>' +
+          '<span class="article-game-badge">' + escapeHtml(gameBadgeLabel(listed)) + '</span>' +
           '<span class="article-game-title">' + escapeHtml(gameTextForLang(game, 'title', currentLang)) + '</span>' +
           '<span class="article-game-excerpt">' + escapeHtml(gameTextForLang(game, 'excerpt', currentLang)) + '</span>' +
         '</div>' +
@@ -618,19 +615,12 @@ async function loadArticle() {
     return;
   }
 
+  articleLoading = true;
   initShareControls();
 
   const FETCH_TIMEOUT_MS = 12000;
 
   try {
-    try {
-      if (typeof loadAllGames === 'function') {
-        await withTimeout(loadAllGames(), FETCH_TIMEOUT_MS, 'games.json');
-      }
-    } catch (gamesErr) {
-      console.warn('Games index unavailable for article links:', gamesErr);
-    }
-
     try {
       allArticlesIndex = await withTimeout(fetchArticlesIndex(), FETCH_TIMEOUT_MS, 'articles.json');
     } catch (indexErr) {
@@ -677,6 +667,15 @@ async function loadArticle() {
         .join('');
     }
     renderArticle(article, bodyHtml);
+
+    if (typeof loadAllGames === 'function') {
+      try {
+        await loadAllGames();
+        renderLinkedGames(article);
+      } catch (gamesErr) {
+        console.warn('Games index unavailable for article links:', gamesErr);
+      }
+    }
   } catch (err) {
     console.error('Failed to load article:', err);
     if (String(err.message || '').includes('timed out')) {
@@ -684,6 +683,8 @@ async function loadArticle() {
     } else {
       renderNotFound();
     }
+  } finally {
+    articleLoading = false;
   }
 }
 
@@ -691,7 +692,7 @@ function onLangChange(lang) {
   currentLang = lang;
   if (currentArticle) {
     renderArticle(currentArticle, currentBodyHtml);
-  } else {
+  } else if (!articleLoading) {
     renderNotFound();
   }
 }
