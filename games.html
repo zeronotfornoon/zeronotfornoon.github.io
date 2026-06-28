@@ -30,6 +30,7 @@ setSiteMeta({
   --pink: #e8a0b4;
   --pink-light: #f5d6e0;
   --pink-bg: #fdf0f4;
+  --pink-deep: #d4607e;
   --border: #e2e2e5;
   --border-dark: #111111;
   --games-bg: #f2eef8;
@@ -371,7 +372,8 @@ body {
   letter-spacing: 0.02em;
 }
 html[lang="en"] .side-char-title {
-  font-size: 0.72rem;
+  font-size: 0.62rem;
+  line-height: 1.45;
 }
 .side-char-line {
   font-family: 'UranusPixel', 'Press Start 2P', monospace;
@@ -406,6 +408,60 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
   font-size: 0.68rem;
   margin: 0 3px;
   letter-spacing: 0;
+}
+
+/* ── 侧栏档案标签贴 ── */
+.games-label-stickers {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 4px 2px 2px;
+}
+.games-label-sticker {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  padding: 11px 16px 10px;
+  background: #fffef8;
+  border: 1px solid var(--pink);
+  box-shadow:
+    2px 3px 0 rgba(212, 96, 126, 0.12),
+    inset 0 -1px 0 rgba(212, 96, 126, 0.08);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--pink-deep);
+  line-height: 1.35;
+}
+.games-label-sticker::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 18px;
+  width: 42px;
+  height: 14px;
+  background: rgba(232, 160, 180, 0.42);
+  border: 1px solid rgba(212, 96, 126, 0.35);
+  transform: rotate(-4deg);
+  pointer-events: none;
+}
+.games-label-sticker--a {
+  align-self: flex-start;
+  transform: rotate(-2.5deg);
+}
+.games-label-sticker--b {
+  align-self: flex-end;
+  transform: rotate(2.5deg);
+}
+.games-label-sticker--b::before {
+  left: auto;
+  right: 16px;
+  transform: rotate(5deg);
+}
+html[lang="en"] .games-label-sticker {
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
 }
 .random-game-btn {
   width: 100%;
@@ -562,18 +618,29 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
           <div class="side-char-name lang-zh">小柊</div>
           <div class="side-char-name lang-en">Hiiragi-chan</div>
           <div class="side-char-title lang-zh">看板娘</div>
-          <div class="side-char-title lang-en">Gamer Girl</div>
+          <div class="side-char-title lang-en">Just an alt-geek girl curating weird games in her cyber glade</div>
         </div>
       </div>
       <div class="side-char-line lang-zh">游点异味……</div>
       <div class="side-char-line lang-en">Kinda funky…</div>
       <div class="side-char-badge lang-zh">已收容 <span class="games-count">3</span> 款异味游戏</div>
-      <div class="side-char-badge lang-en"><span class="games-count">3</span> weird games sheltered</div>
+      <div class="side-char-badge lang-en"><span class="games-count">3</span> weird games contained</div>
       <button class="random-game-btn" id="randomGameBtn" type="button" onclick="return window.gamesPickRandom &amp;&amp; window.gamesPickRandom(event)">
         <span class="random-game-btn-icon" aria-hidden="true">🎲</span>
         <span class="lang-zh-inline">随机摇一款</span>
         <span class="lang-en-inline">Roll a random pick</span>
       </button>
+    </div>
+
+    <div class="games-label-stickers" aria-label="Game labels">
+      <div class="games-label-sticker games-label-sticker--a">
+        <span class="lang-zh">野菌计划</span>
+        <span class="lang-en">Mushroom Land Plan</span>
+      </div>
+      <div class="games-label-sticker games-label-sticker--b">
+        <span class="lang-zh">林地落果</span>
+        <span class="lang-en">Forest Windfalls</span>
+      </div>
     </div>
   </aside>
 
