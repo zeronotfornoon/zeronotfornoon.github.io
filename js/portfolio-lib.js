@@ -88,17 +88,35 @@ function renderProjectCoverHtml(project, className) {
   '</div>';
 }
 
-async function loadAllProjects() {
-  const embedded = getEmbeddedPortfolioData();
-  if (embedded) {
-    allProjects = embedded.projects;
-    return allProjects;
+async function fetchPortfolioJson() {
+  const urls = ['data/portfolio.json'];
+
+  let lastError = null;
+  for (let i = 0; i < urls.length; i += 1) {
+    try {
+      const res = await fetch(urls[i], { cache: 'no-store' });
+      if (!res.ok) {
+        lastError = new Error('HTTP ' + res.status + ' for ' + urls[i]);
+        continue;
+      }
+      return await res.json();
+    } catch (err) {
+      lastError = err;
+    }
   }
 
-  const res = await fetch('data/portfolio.json');
-  if (!res.ok) throw new Error('Failed to load portfolio data');
-  const data = await res.json();
-  allProjects = Array.isArray(data.projects) ? data.projects : [];
+  const embedded = getEmbeddedPortfolioData();
+  if (embedded) {
+    console.warn('Using embedded portfolio data fallback:', lastError);
+    return embedded;
+  }
+
+  throw lastError || new Error('portfolio.json not found');
+}
+
+async function loadAllProjects() {
+  const data = await fetchPortfolioJson();
+  allProjects = data.projects || [];
   return allProjects;
 }
 
