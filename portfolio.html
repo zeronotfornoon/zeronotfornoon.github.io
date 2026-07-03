@@ -356,12 +356,15 @@ a.project-card:hover .project-card-arrow { transform: translateX(4px); }
   margin-bottom: 14px;
 }
 .side-avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--portfolio-accent-light);
-  box-shadow: 0 0 0 1px var(--portfolio-accent), 0 4px 12px rgba(92, 122, 158, 0.22);
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 120px;
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(92, 122, 158, 0.16);
   flex-shrink: 0;
 }
 .side-note-intro {
@@ -568,7 +571,7 @@ a.project-card:hover .project-card-arrow { transform: translateX(4px); }
   <aside class="portfolio-sidebar">
     <div class="side-note-card">
       <div class="side-note-top">
-        <img class="side-avatar" src="slj2.jpg" alt="小椿 Kakihara">
+        <img class="side-avatar" src="slj3.jpg" alt="小椿 Kakihara">
         <div class="side-note-intro">
           <div class="side-note-title">
             <span class="lang-zh-inline">关于本页</span>
