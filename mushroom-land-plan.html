@@ -12,6 +12,7 @@ setSiteMeta({
   description: '什么是蘑菇之地计划？异味游戏同好会如何挑选、孵化并推荐那些值得被看见的异味独立游戏。'
 });
 </script>
+<link rel="stylesheet" href="css/ticket-album.css">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Press+Start+2P&display=swap');
 
@@ -496,6 +497,22 @@ body {
 
 </div>
 
+<div class="hidden-mushroom-zone">
+  <button class="hidden-find-mushroom" id="hiddenFindMushroom" type="button" aria-label="寻找蘑菇">
+    <span class="hf-ground" aria-hidden="true"></span>
+    <span class="hf-plant" aria-hidden="true">
+      <span class="hf-stem"></span>
+      <span class="hf-cap"></span>
+      <span class="hf-spore hf-spore-a"></span>
+      <span class="hf-spore hf-spore-b"></span>
+      <span class="hf-spore hf-spore-c"></span>
+    </span>
+    <span class="hf-spore-drift" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </span>
+  </button>
+</div>
+
 <button class="back-to-top" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
   <span class="back-to-top-triangle"></span>
 </button>
@@ -507,6 +524,17 @@ body {
   <div class="footer-copy">© 2026 异味游戏同好会 Weird Games Club</div>
 </div>
 
+<div class="ticket-reward-overlay hidden" id="ticketRewardOverlay" role="dialog" aria-modal="true" aria-labelledby="ticketRewardTitle">
+  <div class="ticket-reward-card">
+    <div class="ticket-reward-title" id="ticketRewardTitle"></div>
+    <div class="ticket-reward-body" id="ticketRewardBody"></div>
+    <div class="ticket-reward-preview" id="ticketRewardPreview"></div>
+    <button class="ticket-reward-btn" id="ticketRewardClose" type="button">知道了</button>
+  </div>
+</div>
+<div class="ticket-toast" id="ticketToast" role="status" aria-live="polite"></div>
+
+<script src="js/ticket-album.js"></script>
 <script>
 (function() {
   const btn = document.getElementById('backToTop');
@@ -515,6 +543,7 @@ body {
   window.addEventListener('scroll', toggle, { passive: true });
   toggle();
 })();
+if (window.TicketAlbum) TicketAlbum.initHiddenMushroom();
 </script>
 </body>
 </html>

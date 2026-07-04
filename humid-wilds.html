@@ -807,6 +807,9 @@
   .back-to-top.no-member-card {
     bottom: calc(22px + env(safe-area-inset-bottom));
   }
+  .back-to-top.has-ticket-booklet:not(.no-member-card) {
+    bottom: calc(100px + env(safe-area-inset-bottom));
+  }
   .back-to-top:hover {
     transform: translateY(-2px);
     border-color: var(--pale-moss);
@@ -821,7 +824,6 @@
   }
 
   @media (max-width: 600px) {
-    .forest-bg { background-position: center 85%; }
     .wilds-wrap { padding: calc(68px + env(safe-area-inset-top)) 14px calc(96px + env(safe-area-inset-bottom)); }
     .panel { padding: 18px 16px; margin-bottom: 12px; }
     .wilds-title { font-size: clamp(1.35rem, 6vw, 1.85rem); }
@@ -848,6 +850,7 @@
     .id-card-value { font-size: 0.82rem; }
   }
 </style>
+<link rel="stylesheet" href="css/ticket-album.css">
 </head>
 <body>
 
@@ -949,6 +952,26 @@
 <button class="back-to-top no-member-card" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
   <span class="back-to-top-triangle"></span>
 </button>
+
+<button class="ticket-booklet-btn" id="ticketBookletBtn" type="button" style="display:none;" aria-label="纪念票根册">
+  <span class="booklet-spine" aria-hidden="true"></span>
+  <span class="booklet-cover" aria-hidden="true"></span>
+  <span class="booklet-badge" id="ticketBookletBadge" data-count="0"></span>
+</button>
+
+<div class="ticket-album-overlay hidden" id="ticketAlbumOverlay" role="dialog" aria-modal="true" aria-labelledby="ticketAlbumTitle">
+  <div class="ticket-album-book">
+    <div class="ticket-album-head">
+      <div>
+        <div class="ticket-album-title" id="ticketAlbumTitle">纪念票根册</div>
+        <div class="ticket-album-sub" id="ticketAlbumSub">收藏你在俱乐部找到的纪念票根</div>
+      </div>
+      <button class="ticket-album-close" id="ticketAlbumClose" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="ticket-album-grid" id="ticketAlbumGrid"></div>
+    <div class="ticket-album-foot" id="ticketAlbumFoot"></div>
+  </div>
+</div>
 
 <!-- 会员卡入口（创建 / 登录） -->
 <div class="modal-overlay hidden" id="memberEntryModal">
@@ -1081,6 +1104,7 @@
   </div>
 </div>
 
+<script src="js/ticket-album.js"></script>
 <script>
   const STORAGE_KEY = 'humidWildsState';
   const CARD_KEY = 'humidWildsCard';
@@ -1390,12 +1414,22 @@
       : '异味林地访客会员卡';
     idCard.classList.toggle('manager', card.isManager);
     document.getElementById('memberCardBar').style.display = 'block';
+    var booklet = document.getElementById('ticketBookletBtn');
+    if (booklet) {
+      booklet.style.display = '';
+      if (window.TicketAlbum) {
+        TicketAlbum.initBooklet();
+        TicketAlbum.updateBookletBadge();
+      }
+    }
     syncBackToTopPosition();
   }
 
   function logoutMember() {
     localStorage.removeItem(CARD_KEY);
     document.getElementById('memberCardBar').style.display = 'none';
+    var booklet = document.getElementById('ticketBookletBtn');
+    if (booklet) booklet.style.display = 'none';
     syncBackToTopPosition();
     resetCreateCardForm();
     resetLoginCardForm();
@@ -2126,8 +2160,12 @@
   function syncBackToTopPosition() {
     const btn = document.getElementById('backToTop');
     const bar = document.getElementById('memberCardBar');
+    const booklet = document.getElementById('ticketBookletBtn');
     if (btn && bar) {
       btn.classList.toggle('no-member-card', bar.style.display === 'none');
+    }
+    if (btn && booklet) {
+      btn.classList.toggle('has-ticket-booklet', booklet.style.display !== 'none');
     }
   }
 
