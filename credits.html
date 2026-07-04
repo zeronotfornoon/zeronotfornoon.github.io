@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>网站素材鸣谢 | Credits — Weird Games Club</title>
+<script src="js/site.js"></script>
+<script>
+setSiteMeta({
+  path: 'credits.html',
+  title: '网站素材鸣谢 | Credits — Weird Games Club',
+  description: '感谢为异味游戏同好会网站贡献美术、音乐与其他素材的创作者。'
+});
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Press+Start+2P&display=swap');
+
+@font-face {
+  font-family: 'ChaoHua Title A';
+  src: url('朝華標題A.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ChaoHua Typewriter';
+  src: url('朝華打字機.woff2') format('woff2');
+  font-display: swap;
+}
+
+:root {
+  --font-title: 'ChaoHua Title A', 'Noto Sans SC', sans-serif;
+  --font-body: 'ChaoHua Typewriter', 'Noto Serif SC', serif;
+  --font-size-title: 2.00rem;
+  --font-size-body: 1.09rem;
+  --white: #ffffff;
+  --off-white: #f5f5f7;
+  --ink: #1a1a1a;
+  --ink-dim: #555;
+  --ink-faint: #999;
+  --pink: #e8a0b4;
+  --pink-bg: #fdf0f4;
+  --pink-deep: #d4607e;
+  --moss: #6a8f6e;
+  --moss-bg: #edf4ed;
+  --border: #e2e2e5;
+  --border-dark: #1a1a1a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--off-white);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+.lang-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  backdrop-filter: blur(8px);
+}
+.lang-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.lang-bar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.lang-bar-logo:hover { transform: translateY(-1px); }
+.site-logo-img {
+  height: 58px;
+  width: auto;
+  max-width: 260px;
+  display: block;
+  object-fit: contain;
+}
+.bar-title {
+  font-family: var(--font-title);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-weight: normal;
+}
+.bar-title a { color: inherit; text-decoration: none; }
+.bar-title a:hover { color: var(--ink); }
+.lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
+.lang-btn {
+  background: none; border: none;
+  padding: 5px 14px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; cursor: pointer;
+  color: var(--ink-dim); transition: all 0.15s;
+}
+.lang-btn.active { background: var(--ink); color: var(--white); }
+
+.page-hero {
+  margin-top: 72px;
+  padding: 56px 24px 48px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(232, 160, 180, 0.22) 0%, transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(106, 143, 110, 0.18) 0%, transparent 50%),
+    linear-gradient(180deg, var(--pink-bg) 0%, var(--off-white) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.page-hero-label {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  color: var(--pink-deep);
+  letter-spacing: 0.16em;
+  margin-bottom: 10px;
+}
+.page-hero-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.6rem, 5vw, var(--font-size-title));
+  font-weight: normal;
+  color: var(--ink);
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+}
+.page-hero-sub {
+  margin-top: 14px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--ink-dim);
+  line-height: 1.85;
+}
+
+.page-body {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 24px 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.credit-section {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.credit-section-head {
+  padding: 20px 28px 16px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(253, 240, 244, 0.35);
+}
+.credit-section-title {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  font-weight: normal;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+.credit-section-title-en {
+  font-family: var(--font-title);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+}
+.credit-list {
+  list-style: none;
+  padding: 8px 0;
+}
+.credit-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  padding: 14px 28px;
+  border-bottom: 1px solid rgba(226, 226, 229, 0.7);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: 1.65;
+}
+.credit-item:last-child { border-bottom: none; }
+.credit-role {
+  color: var(--ink-dim);
+  flex-shrink: 0;
+}
+.credit-name {
+  color: var(--ink);
+  font-weight: normal;
+}
+.credit-note {
+  padding: 18px 28px 22px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--ink-faint);
+  line-height: 1.75;
+  border-top: 1px dashed var(--border);
+  background: var(--moss-bg);
+}
+
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px 16px;
+}
+.nav-link {
+  text-decoration: none;
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: color 0.15s;
+}
+.nav-link:hover { color: var(--ink); }
+
+.page-footer {
+  text-align: center;
+  padding: 24px 24px 48px;
+  border-top: 1px solid var(--border);
+  max-width: 760px;
+  margin: 0 auto;
+}
+.footer-copy {
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  margin-top: 8px;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 90;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-dark);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s, visibility 0.25s, transform 0.2s;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.back-to-top:hover { transform: translateY(-2px); }
+.back-to-top-triangle {
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 9px solid var(--ink);
+  margin-top: -2px;
+}
+
+@media (max-width: 576px) {
+  .lang-bar { padding: 8px 16px; }
+  .site-logo-img { height: 44px; max-width: 200px; }
+  .bar-title { display: none; }
+  .page-hero { padding: 44px 16px 36px; }
+  .credit-section-head,
+  .credit-item,
+  .credit-note { padding-left: 18px; padding-right: 18px; }
+}
+
+.lang-zh, .lang-en { display: none; }
+.lang-zh-inline, .lang-en-inline { display: none; }
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <div class="lang-bar-left">
+    <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
+      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    </a>
+    <span class="bar-title">
+      <a href="index.html">
+        <span class="lang-zh-inline">网站素材鸣谢</span>
+        <span class="lang-en-inline">Credits</span>
+      </a>
+    </span>
+  </div>
+  <div class="lang-switch">
+    <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
+    <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<header class="page-hero">
+  <div class="page-hero-label">CREDITS</div>
+  <h1 class="page-hero-title">
+    <span class="lang-zh-inline">网站素材鸣谢</span>
+    <span class="lang-en-inline">Site Credits</span>
+  </h1>
+  <p class="page-hero-sub">
+    <span class="lang-zh-inline">本页列出为异味游戏同好会各页面提供美术、音乐与其他素材的创作者。感谢每一位让这片林地更鲜活的人。</span>
+    <span class="lang-en-inline">Contributors who supplied art, music, and other assets across Weird Games Club. Thank you for making this place feel alive.</span>
+  </p>
+</header>
+
+<div class="page-body">
+
+
+  <section class="credit-section">
+    <div class="credit-section-head">
+      <h2 class="credit-section-title">
+        <span class="lang-zh-inline">全站</span>
+        <span class="lang-en-inline">Site-wide</span>
+      </h2>
+      <div class="credit-section-title-en">SITE</div>
+    </div>
+    <ul class="credit-list">
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">网站 Logo 设计：</span>
+          <span class="lang-en-inline">Site logo design:</span>
+        </span>
+        <span class="credit-name">是个端某憨憨人 · Logo Artist</span>
+      </li>
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">网站字体：</span>
+          <span class="lang-en-inline">Web font:</span>
+        </span>
+        <span class="credit-name">朝華標題/朝華打字機 · Font</span>
+      </li>
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">异味林地背景音乐：</span>
+          <span class="lang-en-inline">THE HUMID WILDS background music:</span>
+        </span>
+        <span class="credit-name">Siarhei Korbut · Composer</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="credit-section">
+    <div class="credit-section-head">
+      <h2 class="credit-section-title">
+        <span class="lang-zh-inline">主页</span>
+        <span class="lang-en-inline">Homepage</span>
+      </h2>
+      <div class="credit-section-title-en">INDEX</div>
+    </div>
+    <ul class="credit-list">
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">网站头图画师：</span>
+          <span class="lang-en-inline">Homepage header artist:</span>
+        </span>
+        <span class="credit-name">伊安安莉 · Header Artist</span>
+      </li>
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">侧栏角色插画：</span>
+          <span class="lang-en-inline">Sidebar character art:</span>
+        </span>
+        <span class="credit-name">伊安安莉 · Character Artist</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="credit-section">
+    <div class="credit-section-head">
+      <h2 class="credit-section-title">
+        <span class="lang-zh-inline">异味须知</span>
+        <span class="lang-en-inline">About Us</span>
+      </h2>
+      <div class="credit-section-title-en">ABOUT</div>
+    </div>
+    <ul class="credit-list">
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">异味须知页面头图画师：</span>
+          <span class="lang-en-inline">About page header artist:</span>
+        </span>
+        <span class="credit-name">人間幽靈GHOST · About Header Artist</span>
+      </li>
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">成员肖像插画：</span>
+          <span class="lang-en-inline">Member portrait art:</span>
+        </span>
+        <span class="credit-name">汪汪大雪饼 · Portrait Artist</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="credit-section">
+    <div class="credit-section-head">
+      <h2 class="credit-section-title">
+        <span class="lang-zh-inline">异味档案</span>
+        <span class="lang-en-inline">Archive</span>
+      </h2>
+      <div class="credit-section-title-en">ARCHIVE</div>
+    </div>
+    <ul class="credit-list">
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">异味档案页面头图画师：</span>
+          <span class="lang-en-inline">Archive page header artist:</span>
+        </span>
+        <span class="credit-name">林木叶 · Archive Header Artist</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="credit-section">
+    <div class="credit-section-head">
+      <h2 class="credit-section-title">
+        <span class="lang-zh-inline">合作游戏</span>
+        <span class="lang-en-inline">Games</span>
+      </h2>
+      <div class="credit-section-title-en">GAMES</div>
+    </div>
+    <ul class="credit-list">
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">合作游戏页面头图画师：</span>
+          <span class="lang-en-inline">Games page header artist:</span>
+        </span>
+        <span class="credit-name">林木叶 · Games Header Artist</span>
+      </li>
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">侧栏装饰插画（read / play）：</span>
+          <span class="lang-en-inline">Sidebar decor (read / play):</span>
+        </span>
+        <span class="credit-name">伊安安莉 · Sidebar Artist</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="credit-section">
+    <div class="credit-section-head">
+      <h2 class="credit-section-title">
+        <span class="lang-zh-inline">作品集</span>
+        <span class="lang-en-inline">Portfolio</span>
+      </h2>
+      <div class="credit-section-title-en">PORTFOLIO</div>
+    </div>
+    <ul class="credit-list">
+          </li>
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">侧栏头像插画：</span>
+          <span class="lang-en-inline">Sidebar avatar art:</span>
+        </span>
+        <span class="credit-name">茶水王八· Avatar Artist</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="credit-section">
+    <div class="credit-section-head">
+      <h2 class="credit-section-title">
+        <span class="lang-zh-inline">野菌计划</span>
+        <span class="lang-en-inline">Mushroom Land Project</span>
+      </h2>
+      <div class="credit-section-title-en">MUSHROOM LAND</div>
+    </div>
+    <ul class="credit-list">
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">野菌计划页面头图画师：</span>
+          <span class="lang-en-inline">Mushroom Land page header artist:</span>
+        </span>
+        <span class="credit-name">iechoy · MLP Header Artist</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="credit-section">
+    <div class="credit-section-head">
+      <h2 class="credit-section-title">
+        <span class="lang-zh-inline">异味林地</span>
+        <span class="lang-en-inline">The Humid Wilds</span>
+      </h2>
+      <div class="credit-section-title-en">HUMID WILDS</div>
+    </div>
+    <ul class="credit-list">
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">异味林地背景美术：</span>
+          <span class="lang-en-inline">Humid Wilds background art:</span>
+        </span>
+        <span class="credit-name">edermunizz · Forest BG Artist</span>
+      </li>
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">会员卡角色立绘：</span>
+          <span class="lang-en-inline">Member card character art:</span>
+        </span>
+        <span class="credit-name">纳米诺比斯 · Character Artist</span>
+      </li>
+      <li class="credit-item">
+        <span class="credit-role">
+          <span class="lang-zh-inline">纪念票根插画：</span>
+          <span class="lang-en-inline">Souvenir ticket stub art:</span>
+        </span>
+        <span class="credit-name">是个端某憨憨人 · Ticket Artist</span>
+      </li>
+    </ul>
+  </section>
+      </li>
+    </ul>
+    <p class="credit-note">
+      <span class="lang-zh-inline">如有遗漏或需要更正，欢迎联系我们。</span>
+      <span class="lang-en-inline">If we missed anyone or got something wrong, please reach out via Contact on the homepage.</span>
+    </p>
+  </section>
+
+</div>
+
+<nav class="page-nav">
+  <a class="nav-link" href="index.html">
+    ← <span class="lang-zh-inline">返回主页</span><span class="lang-en-inline">Back to Home</span>
+  </a>
+  <a class="nav-link" href="about.html">
+    <span class="lang-zh-inline">异味须知</span><span class="lang-en-inline">About Us</span> →
+  </a>
+</nav>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="back-to-top-triangle"></span>
+</button>
+
+<div class="page-footer">
+  <div class="footer-copy">© 2026 异味游戏同好会 Weird Games Club</div>
+</div>
+
+<script>
+(function() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  const toggle = () => btn.classList.toggle('visible', window.scrollY > 280);
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
+</script>
+</body>
+</html>
