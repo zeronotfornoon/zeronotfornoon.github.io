@@ -140,10 +140,12 @@ html[lang="en"] .booklet-cover::after {
   letter-spacing: 0.08em;
 }
 .ticket-album-sub {
-  margin-top: 4px;
-  font-size: 0.72rem;
-  color: rgba(200, 169, 110, 0.75);
-  letter-spacing: 0.06em;
+  margin-top: 6px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(244, 233, 201, 0.92);
+  letter-spacing: 0.05em;
+  line-height: 1.55;
 }
 .ticket-album-close {
   background: none;
@@ -175,8 +177,8 @@ html[lang="en"] .booklet-cover::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 8px;
+  gap: 8px;
+  padding: 10px 8px 12px;
   text-align: center;
   overflow: hidden;
 }
@@ -188,28 +190,40 @@ html[lang="en"] .booklet-cover::after {
 .ticket-slot img {
   width: 100%;
   height: auto;
-  max-height: calc(100% - 24px);
+  max-height: calc(100% - 2.6rem);
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
 }
 .ticket-slot-label {
-  font-size: 0.58rem;
-  color: rgba(200, 169, 110, 0.8);
-  line-height: 1.35;
-  letter-spacing: 0.04em;
+  width: 100%;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f4e9c9;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  padding-top: 2px;
 }
 .ticket-slot-empty {
-  font-size: 0.65rem;
-  color: rgba(122, 144, 112, 0.65);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(168, 196, 168, 0.88);
   letter-spacing: 0.08em;
 }
 .ticket-album-foot {
-  margin-top: 14px;
-  font-size: 0.72rem;
-  color: rgba(122, 144, 112, 0.85);
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(200, 169, 110, 0.2);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #d4e0d0;
   text-align: center;
-  line-height: 1.6;
+  line-height: 1.65;
+  letter-spacing: 0.04em;
 }
 
 /* ── 野菌计划隐藏蘑菇 ── */
@@ -441,6 +455,10 @@ html[lang="en"] .booklet-cover::after {
 @media (max-width: 480px) {
   .ticket-album-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ticket-booklet-btn { width: 48px; height: 60px; }
+  .ticket-album-sub,
+  .ticket-album-foot { font-size: 0.86rem; }
+  .ticket-slot-label { font-size: 0.76rem; }
+  .ticket-slot-empty { font-size: 0.74rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
