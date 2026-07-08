@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>信号联络 | Contact — Weird Games Club</title>
+<script src="js/site.js"></script>
+<script>
+setSiteMeta({
+  path: 'contact.html',
+  title: '信号联络 | Contact — Weird Games Club',
+  description: '联系异味游戏同好会：独立游戏本地化合作、怪游戏安利与发行联络。'
+});
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Press+Start+2P&display=swap');
+
+@font-face {
+  font-family: 'ChaoHua Title A';
+  src: url('朝華標題A.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ChaoHua Typewriter';
+  src: url('朝華打字機.woff2') format('woff2');
+  font-display: swap;
+}
+
+:root {
+  --font-title: 'ChaoHua Title A', 'Noto Sans SC', sans-serif;
+  --font-body: 'ChaoHua Typewriter', 'Noto Serif SC', serif;
+  --font-size-title: 2.00rem;
+  --font-size-body: 1.09rem;
+  --white: #ffffff;
+  --off-white: #f5f5f7;
+  --ink: #1a1a1a;
+  --ink-dim: #555;
+  --ink-faint: #999;
+  --pink: #e8a0b4;
+  --pink-bg: #fdf0f4;
+  --pink-deep: #d4607e;
+  --pink-light: #f5d6e0;
+  --border: #e2e2e5;
+  --border-dark: #1a1a1a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--off-white);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+.lang-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  backdrop-filter: blur(8px);
+}
+.lang-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.lang-bar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.lang-bar-logo:hover { transform: translateY(-1px); }
+.site-logo-img {
+  height: 58px;
+  width: auto;
+  max-width: 260px;
+  display: block;
+  object-fit: contain;
+}
+.bar-title {
+  font-family: var(--font-title);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-weight: normal;
+}
+.bar-title a { color: inherit; text-decoration: none; }
+.bar-title a:hover { color: var(--ink); }
+.lang-switch { display: flex; border: 1px solid var(--border-dark); border-radius: 4px; overflow: hidden; }
+.lang-btn {
+  background: none; border: none;
+  padding: 5px 14px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; cursor: pointer;
+  color: var(--ink-dim); transition: all 0.15s;
+}
+.lang-btn.active { background: var(--ink); color: var(--white); }
+
+.page-hero {
+  margin-top: 72px;
+  padding: 52px 24px 44px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(232, 160, 180, 0.28) 0%, transparent 52%),
+    radial-gradient(circle at 82% 72%, rgba(212, 96, 126, 0.12) 0%, transparent 48%),
+    linear-gradient(180deg, var(--pink-bg) 0%, var(--off-white) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.page-hero-label {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  color: var(--pink-deep);
+  letter-spacing: 0.16em;
+  margin-bottom: 10px;
+}
+.page-hero-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.6rem, 5vw, var(--font-size-title));
+  font-weight: normal;
+  color: var(--ink);
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+}
+
+.page-body {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.intro-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 28px 26px;
+  box-shadow: 0 2px 16px rgba(232, 160, 180, 0.08);
+}
+.intro-lead {
+  font-family: var(--font-title);
+  font-size: clamp(1.05rem, 3.2vw, 1.25rem);
+  color: var(--ink);
+  line-height: 1.65;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.1em;
+}
+.intro-prose {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--ink-dim);
+  line-height: 1.95;
+}
+.intro-prose p + p { margin-top: 1em; }
+.intro-form-hint {
+  margin-top: 1.2em;
+  padding-top: 1em;
+  border-top: 1px dashed var(--border);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--ink);
+  line-height: 1.75;
+}
+
+.form-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 8px 8px 0;
+}
+.form-card iframe {
+  display: block;
+  width: 100%;
+  min-height: 480px;
+  border: none;
+  background: transparent;
+}
+
+.form-fallback {
+  padding: 20px 24px 24px;
+  font-size: 0.88rem;
+  color: var(--ink-faint);
+  line-height: 1.7;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+.form-fallback a {
+  color: var(--pink-deep);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px 16px;
+}
+.nav-link {
+  text-decoration: none;
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: color 0.15s;
+}
+.nav-link:hover { color: var(--ink); }
+
+.page-footer {
+  text-align: center;
+  padding: 24px 24px 48px;
+  border-top: 1px solid var(--border);
+  max-width: 720px;
+  margin: 0 auto;
+}
+.footer-copy {
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  margin-top: 8px;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 90;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-dark);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s, visibility 0.25s, transform 0.2s;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.back-to-top:hover { transform: translateY(-2px); }
+.back-to-top-triangle {
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 9px solid var(--ink);
+  margin-top: -2px;
+}
+
+@media (max-width: 576px) {
+  .lang-bar { padding: 8px 16px; }
+  .site-logo-img { height: 44px; max-width: 200px; }
+  .bar-title { display: none; }
+  .page-hero { padding: 40px 16px 32px; }
+  .intro-card { padding: 22px 18px 20px; }
+  .form-card iframe { min-height: 520px; }
+}
+
+.lang-zh, .lang-en { display: none; }
+.lang-zh-inline, .lang-en-inline { display: none; }
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <div class="lang-bar-left">
+    <a class="lang-bar-logo" href="index.html" aria-label="返回主页">
+      <img class="site-logo-img" src="logo2.png" alt="Weird Games Club">
+    </a>
+    <span class="bar-title">
+      <a href="index.html">
+        <span class="lang-zh-inline">信号联络</span>
+        <span class="lang-en-inline">Contact</span>
+      </a>
+    </span>
+  </div>
+  <div class="lang-switch">
+    <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
+    <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<header class="page-hero">
+  <div class="page-hero-label">CONTACT</div>
+  <h1 class="page-hero-title">
+    <span class="lang-zh-inline">信号联络</span>
+    <span class="lang-en-inline">Contact</span>
+  </h1>
+</header>
+
+<div class="page-body">
+
+  <section class="intro-card">
+    <p class="intro-lead">
+      <span class="lang-zh-inline">我们对普通的商业游戏没有兴趣。你们之中如果有高度个人风格化、怪诞、邪典、只想做给特定人群玩的游戏的话，就来找我们吧，完毕！</span>
+      <span class="lang-en-inline">We have zero interest in generic mainstream games. If you're brewing something deeply personal, bizarre, or niche that defies all conventions, come find us. That is all!</span>
+    </p>
+    <div class="intro-prose">
+      <p>
+        <span class="lang-zh-inline">异味游戏同好会致力于为那些怪异、邪典、电波的宝石提供容身之所，将它们带给真正懂得作品灵魂的人。我们不怕你的游戏有瑕疵或者 bug，只怕你的游戏不够有趣！</span>
+        <span class="lang-en-inline">Our mission is to give weird, cult, and eccentric hidden gems a home, and share them with the minds that truly understand their spirit. Don't worry about bugs or rough patches; we aren't afraid of flaws, we're only afraid of missing the fun!</span>
+      </p>
+    </div>
+    <p class="intro-form-hint">
+      <span class="lang-zh-inline">欢迎独立游戏开发者与发行商联系我们，无论是本地化合作还是怪游戏安利，请使用下方表单：</span>
+      <span class="lang-en-inline">Indie devs &amp; publishers, let's talk! Hit us up for localization collabs or to share your bizarre hidden gems:</span>
+    </p>
+  </section>
+
+  <section class="form-card" aria-label="Contact form">
+    <!-- Tally 嵌入：与 Notion 页相同，form id = rjYDyl -->
+    <iframe
+      id="tallyContactForm"
+      data-tally-src="https://tally.so/rjYDyl?hideTitle=1&amp;alignLeft=1"
+      loading="lazy"
+      width="100%"
+      height="480"
+      frameborder="0"
+      marginheight="0"
+      marginwidth="0"
+      title="Contact form">
+    </iframe>
+    <p class="form-fallback">
+      <span class="lang-zh-inline">若表单无法加载，请直接打开 </span>
+      <span class="lang-en-inline">If the form doesn't load, open </span>
+      <a href="https://tally.so/rjYDyl" target="_blank" rel="noopener">tally.so/rjYDyl</a>
+    </p>
+  </section>
+
+</div>
+
+<nav class="page-nav">
+  <a class="nav-link" href="index.html">
+    ← <span class="lang-zh-inline">返回主页</span><span class="lang-en-inline">Back to Home</span>
+  </a>
+  <a class="nav-link" href="about.html">
+    <span class="lang-zh-inline">异味须知</span><span class="lang-en-inline">About Us</span> →
+  </a>
+</nav>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="back-to-top-triangle"></span>
+</button>
+
+<div class="page-footer">
+  <div class="footer-copy">© 2026 异味游戏同好会 Weird Games Club</div>
+</div>
+
+<script async src="https://tally.so/widgets/embed.js"></script>
+<script>
+(function() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  const toggle = () => btn.classList.toggle('visible', window.scrollY > 280);
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
+</script>
+</body>
+</html>
