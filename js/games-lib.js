@@ -36,24 +36,24 @@ var GAME_ROLE_META = {
     en: 'Mushroom Land',
     badgeZh: '野菌计划',
     badgeEn: 'Mushroom Land',
-    descZh: '同好会挑选并孵化的异味独游：多为免费游戏、免费本地化；不一定挂名发行，部分仅做本地化与宣传，部分会由同好会发行。爱发电打赏回流用于发行。',
-    descEn: 'Weird indies we incubate — often free games with free localization. Not always published by us: some get loc & promo only; some we publish. Afdian tips help fund publishing.'
+    descZh: '同好会独有企划，孵化异味独游——详情见右侧贴纸说明。',
+    descEn: 'Our exclusive weird-indie incubation program — see the sidebar sticker for details.'
   },
   collab: {
     zh: '本地化与推广',
     en: 'Localization & Promo',
     badgeZh: '本地化与推广',
     badgeEn: 'Loc & Promo',
-    descZh: '与开发者/发行方的商务合作：同好会提供付费本地化，及/或宣传推荐；发行方仍是对方，不是同好会挂名发行。',
-    descEn: 'Paid localization and/or promotional partnerships. We translate and/or help promote; the other party remains the publisher of record.'
+    descZh: '付费本地化与/或宣传合作——详情见右侧贴纸说明。',
+    descEn: 'Paid loc and/or promo — see the sidebar sticker for details.'
   },
   published: {
     zh: '同好会发行',
     en: 'Published by Us',
     badgeZh: '同好会发行',
     badgeEn: 'Published',
-    descZh: '由异味游戏同好会作为发行方正式上架的作品——厂牌自主发行线。',
-    descEn: 'Games published by Weird Games Club as the publisher of record.'
+    descZh: '同好会作为发行方上架的作品——详情见右侧贴纸说明。',
+    descEn: 'Titles we publish — see the sidebar sticker for details.'
   }
 };
 
