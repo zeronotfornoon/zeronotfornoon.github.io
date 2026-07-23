@@ -236,6 +236,71 @@ body {
   border-radius: 2px;
 }
 
+.games-role-guide {
+  margin-bottom: 28px;
+  padding: 18px 18px 16px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.games-role-guide-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 12px;
+}
+.games-role-guide-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+.games-role-guide-list li {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 9rem) minmax(0, 1fr);
+  gap: 10px 14px;
+  align-items: start;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--ink-dim);
+}
+.games-role-guide-name {
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.games-role-guide-name a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(139, 122, 173, 0.45);
+}
+.games-role-guide-name a:hover {
+  border-bottom-color: var(--games-accent);
+  color: var(--games-accent);
+}
+.games-role-guide-more {
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  line-height: 1.6;
+}
+.games-role-guide-more a {
+  color: var(--games-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+.games-role-guide-more a:hover { text-decoration: underline; }
+@media (max-width: 640px) {
+  .games-role-guide-list li {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
 .games-role-section + .games-role-section {
   margin-top: 36px;
   padding-top: 28px;
@@ -641,6 +706,58 @@ html[lang="en"] .games-label-sticker {
 <div class="games-layout">
 
   <div class="games-main">
+    <div class="games-role-guide" id="gamesRoleGuide">
+      <div class="games-role-guide-title">
+        <span class="lang-zh-inline">三类收录说明</span>
+        <span class="lang-en-inline">How we list titles</span>
+      </div>
+      <ul class="games-role-guide-list">
+        <li>
+          <span class="games-role-guide-name">
+            <a href="#games-role-incubated">
+              <span class="lang-zh-inline">野菌计划</span>
+              <span class="lang-en-inline">Mushroom Land</span>
+            </a>
+          </span>
+          <span>
+            <span class="lang-zh-inline">挑选并孵化的异味独游（多为免费游戏、免费本地化）。不一定挂名发行：有的只做本地化与宣传，有的会由同好会发行；爱发电打赏回流用于发行。</span>
+            <span class="lang-en-inline">Weird indies we incubate (often free games, free localization). Not always our publishing credit — some get loc &amp; promo only; some we publish. Afdian tips fund publishing.</span>
+          </span>
+        </li>
+        <li>
+          <span class="games-role-guide-name">
+            <a href="#games-role-collab">
+              <span class="lang-zh-inline">本地化与推广</span>
+              <span class="lang-en-inline">Loc &amp; Promo</span>
+            </a>
+          </span>
+          <span>
+            <span class="lang-zh-inline">付费本地化及/或宣传推荐的商务合作；发行方仍是对方，同好会不挂名发行。</span>
+            <span class="lang-en-inline">Paid localization and/or promo partnerships. They stay the publisher of record — we don’t publish under our name here.</span>
+          </span>
+        </li>
+        <li>
+          <span class="games-role-guide-name">
+            <a href="#games-role-published">
+              <span class="lang-zh-inline">同好会发行</span>
+              <span class="lang-en-inline">Published by Us</span>
+            </a>
+          </span>
+          <span>
+            <span class="lang-zh-inline">异味游戏同好会作为发行方正式上架的作品。</span>
+            <span class="lang-en-inline">Games we publish as Weird Games Club — we are the publisher of record.</span>
+          </span>
+        </li>
+      </ul>
+      <p class="games-role-guide-more">
+        <span class="lang-zh-inline">想了解野菌计划细节，见 </span>
+        <span class="lang-en-inline">More on Mushroom Land: </span>
+        <a href="mushroom-land-plan.html">
+          <span class="lang-zh-inline">野菌计划页 →</span>
+          <span class="lang-en-inline">Mushroom Land Project →</span>
+        </a>
+      </p>
+    </div>
     <div id="gamesSections"></div>
   </div>
 
