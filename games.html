@@ -9,7 +9,7 @@
 setSiteMeta({
   path: 'games.html',
   title: '合作游戏 | Supported Games — Weird Games Club',
-  description: '异味优选独立游戏收录——不一定是完美的精品，但一定散发异味。'
+  description: '异味游戏同好会收录：野菌计划、本地化与推广、同好会发行的异味独立游戏。'
 });
 </script>
 <style>
@@ -223,7 +223,7 @@ body {
   letter-spacing: 0.14em;
   color: var(--ink-faint);
   text-transform: uppercase;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -236,10 +236,33 @@ body {
   border-radius: 2px;
 }
 
+.games-role-section + .games-role-section {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px dashed rgba(139, 122, 173, 0.28);
+}
+.games-role-desc {
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  line-height: 1.7;
+  margin: 0 0 16px;
+}
+.games-role-section--incubated .section-label::before { background: #5a8a5a; }
+.games-role-section--collab .section-label::before { background: var(--games-accent); }
+.games-role-section--published .section-label::before { background: #d4607e; }
+
 .games-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 18px;
+}
+.games-empty--section {
+  padding: 18px 14px;
+  font-size: 0.88rem;
+  color: var(--ink-faint);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
 }
 .game-card {
   display: flex;
@@ -459,6 +482,21 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
   right: 16px;
   transform: rotate(5deg);
 }
+.games-label-sticker--c {
+  align-self: flex-start;
+  transform: rotate(-1.2deg);
+  border-color: #c4a0d4;
+  color: #7a4f8c;
+  box-shadow:
+    2px 3px 0 rgba(122, 79, 140, 0.1),
+    inset 0 -1px 0 rgba(122, 79, 140, 0.08);
+}
+.games-label-sticker--c::before {
+  background: rgba(196, 160, 212, 0.42);
+  border-color: rgba(122, 79, 140, 0.35);
+  left: 22px;
+  transform: rotate(3deg);
+}
 html[lang="en"] .games-label-sticker {
   font-size: 0.72rem;
   letter-spacing: 0.03em;
@@ -588,8 +626,8 @@ html[lang="en"] .games-label-sticker {
         <span class="lang-en-inline">Supported Games</span>
       </h1>
       <p class="hero-desc">
-        <span class="lang-zh-inline">异味优选，不一定是完美的精品，但一定散发异味。</span>
-        <span class="lang-en-inline">Far from perfect, but utterly unique.</span>
+        <span class="lang-zh-inline">野菌计划、本地化与推广、同好会发行——异味优选，不一定是完美的精品，但一定散发异味。</span>
+        <span class="lang-en-inline">Mushroom Land, localization &amp; promo, and games we publish — far from perfect, but utterly unique.</span>
       </p>
       <div class="hero-stats" id="heroStats" aria-live="polite"></div>
     </div>
@@ -603,11 +641,7 @@ html[lang="en"] .games-label-sticker {
 <div class="games-layout">
 
   <div class="games-main">
-    <div class="section-label">
-      <span class="lang-zh-inline">收录列表</span>
-      <span class="lang-en-inline">Catalog</span>
-    </div>
-    <div class="games-grid" id="gamesGrid"></div>
+    <div id="gamesSections"></div>
   </div>
 
   <aside class="games-sidebar">
@@ -635,11 +669,15 @@ html[lang="en"] .games-label-sticker {
     <div class="games-label-stickers" aria-label="Game labels">
       <div class="games-label-sticker games-label-sticker--a">
         <span class="lang-zh">野菌计划</span>
-        <span class="lang-en">Mushroom Land Plan</span>
+        <span class="lang-en">Mushroom Land</span>
       </div>
       <div class="games-label-sticker games-label-sticker--b">
-        <span class="lang-zh">林地落果</span>
-        <span class="lang-en">Forest Windfalls</span>
+        <span class="lang-zh">本地化与推广</span>
+        <span class="lang-en">Loc &amp; Promo</span>
+      </div>
+      <div class="games-label-sticker games-label-sticker--c">
+        <span class="lang-zh">同好会发行</span>
+        <span class="lang-en">Published</span>
       </div>
     </div>
   </aside>
