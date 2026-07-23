@@ -215,6 +215,7 @@ body {
 .games-sidebar {
   position: sticky;
   top: 88px;
+  overflow: visible;
 }
 
 .section-label {
@@ -234,71 +235,6 @@ body {
   height: 14px;
   background: var(--games-accent);
   border-radius: 2px;
-}
-
-.games-role-guide {
-  margin-bottom: 28px;
-  padding: 18px 18px 16px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-}
-.games-role-guide-title {
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-bottom: 12px;
-}
-.games-role-guide-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin: 0;
-  padding: 0;
-}
-.games-role-guide-list li {
-  display: grid;
-  grid-template-columns: minmax(7.5rem, 9rem) minmax(0, 1fr);
-  gap: 10px 14px;
-  align-items: start;
-  font-size: 0.9rem;
-  line-height: 1.65;
-  color: var(--ink-dim);
-}
-.games-role-guide-name {
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: 0.02em;
-}
-.games-role-guide-name a {
-  color: inherit;
-  text-decoration: none;
-  border-bottom: 1px dashed rgba(139, 122, 173, 0.45);
-}
-.games-role-guide-name a:hover {
-  border-bottom-color: var(--games-accent);
-  color: var(--games-accent);
-}
-.games-role-guide-more {
-  margin-top: 14px;
-  font-size: 0.82rem;
-  color: var(--ink-faint);
-  line-height: 1.6;
-}
-.games-role-guide-more a {
-  color: var(--games-accent);
-  font-weight: 700;
-  text-decoration: none;
-}
-.games-role-guide-more a:hover { text-decoration: underline; }
-@media (max-width: 640px) {
-  .games-role-guide-list li {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
 }
 
 .games-role-section + .games-role-section {
@@ -503,11 +439,20 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
   margin-top: 16px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
   padding: 4px 2px 2px;
 }
+.games-label-sticker-wrap {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+}
+.games-label-sticker-wrap--a { align-self: flex-start; }
+.games-label-sticker-wrap--b { align-self: flex-end; }
+.games-label-sticker-wrap--c { align-self: flex-start; }
 .games-label-sticker {
   position: relative;
+  display: block;
   width: fit-content;
   max-width: 100%;
   padding: 11px 16px 10px;
@@ -521,6 +466,21 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
   letter-spacing: 0.06em;
   color: var(--pink-deep);
   line-height: 1.35;
+  text-decoration: none;
+  cursor: help;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.games-label-sticker-wrap:hover .games-label-sticker,
+.games-label-sticker:focus-visible {
+  z-index: 5;
+  box-shadow:
+    3px 5px 0 rgba(212, 96, 126, 0.16),
+    inset 0 -1px 0 rgba(212, 96, 126, 0.08);
+}
+.games-label-sticker:focus-visible {
+  outline: 2px solid rgba(139, 122, 173, 0.65);
+  outline-offset: 4px;
 }
 .games-label-sticker::before {
   content: '';
@@ -534,21 +494,86 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
   transform: rotate(-4deg);
   pointer-events: none;
 }
+.games-label-sticker-tip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  width: min(260px, calc(100vw - 48px));
+  padding: 12px 14px;
+  background: rgba(255, 254, 248, 0.98);
+  border: 1px solid rgba(212, 96, 126, 0.35);
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--ink-dim);
+  line-height: 1.65;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  z-index: 6;
+}
+.games-label-sticker-tip::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  margin-top: -6px;
+  border: 6px solid transparent;
+  border-left-color: rgba(255, 254, 248, 0.98);
+  filter: drop-shadow(1px 0 0 rgba(212, 96, 126, 0.25));
+}
+.games-label-sticker-wrap:hover .games-label-sticker-tip,
+.games-label-sticker-wrap:focus-within .games-label-sticker-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: auto;
+}
+.games-label-sticker-tip a {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--games-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+.games-label-sticker-tip a:hover { text-decoration: underline; }
 .games-label-sticker--a {
-  align-self: flex-start;
   transform: rotate(-2.5deg);
 }
+.games-label-sticker-wrap--a:hover .games-label-sticker--a,
+.games-label-sticker--a:focus-visible { transform: rotate(-2.5deg) translateY(-2px); }
 .games-label-sticker--b {
-  align-self: flex-end;
   transform: rotate(2.5deg);
 }
+.games-label-sticker-wrap--b:hover .games-label-sticker--b,
+.games-label-sticker--b:focus-visible { transform: rotate(2.5deg) translateY(-2px); }
 .games-label-sticker--b::before {
   left: auto;
   right: 16px;
   transform: rotate(5deg);
 }
+.games-label-sticker-wrap--b .games-label-sticker-tip {
+  right: auto;
+  left: calc(100% + 12px);
+  transform: translateY(-50%) translateX(-6px);
+}
+.games-label-sticker-wrap--b .games-label-sticker-tip::after {
+  left: auto;
+  right: 100%;
+  border-left-color: transparent;
+  border-right-color: rgba(255, 254, 248, 0.98);
+  filter: drop-shadow(-1px 0 0 rgba(212, 96, 126, 0.25));
+}
+.games-label-sticker-wrap--b:hover .games-label-sticker-tip,
+.games-label-sticker-wrap--b:focus-within .games-label-sticker-tip {
+  transform: translateY(-50%) translateX(0);
+}
 .games-label-sticker--c {
-  align-self: flex-start;
   transform: rotate(-1.2deg);
   border-color: #c4a0d4;
   color: #7a4f8c;
@@ -556,6 +581,8 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
     2px 3px 0 rgba(122, 79, 140, 0.1),
     inset 0 -1px 0 rgba(122, 79, 140, 0.08);
 }
+.games-label-sticker-wrap--c:hover .games-label-sticker--c,
+.games-label-sticker--c:focus-visible { transform: rotate(-1.2deg) translateY(-2px); }
 .games-label-sticker--c::before {
   background: rgba(196, 160, 212, 0.42);
   border-color: rgba(122, 79, 140, 0.35);
@@ -565,6 +592,32 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
 html[lang="en"] .games-label-sticker {
   font-size: 0.72rem;
   letter-spacing: 0.03em;
+}
+html[lang="en"] .games-label-sticker-tip {
+  font-size: 0.72rem;
+}
+@media (max-width: 960px) {
+  .games-label-sticker-wrap {
+    width: 100%;
+  }
+  .games-label-sticker-tip,
+  .games-label-sticker-wrap--b .games-label-sticker-tip {
+    right: 0;
+    left: 0;
+    top: calc(100% + 10px);
+    width: 100%;
+    transform: translateY(4px);
+  }
+  .games-label-sticker-tip::after,
+  .games-label-sticker-wrap--b .games-label-sticker-tip::after {
+    display: none;
+  }
+  .games-label-sticker-wrap:hover .games-label-sticker-tip,
+  .games-label-sticker-wrap:focus-within .games-label-sticker-tip,
+  .games-label-sticker-wrap--b:hover .games-label-sticker-tip,
+  .games-label-sticker-wrap--b:focus-within .games-label-sticker-tip {
+    transform: translateY(0);
+  }
 }
 .random-game-btn {
   width: 100%;
@@ -706,58 +759,6 @@ html[lang="en"] .games-label-sticker {
 <div class="games-layout">
 
   <div class="games-main">
-    <div class="games-role-guide" id="gamesRoleGuide">
-      <div class="games-role-guide-title">
-        <span class="lang-zh-inline">三类收录说明</span>
-        <span class="lang-en-inline">How we list titles</span>
-      </div>
-      <ul class="games-role-guide-list">
-        <li>
-          <span class="games-role-guide-name">
-            <a href="#games-role-incubated">
-              <span class="lang-zh-inline">野菌计划</span>
-              <span class="lang-en-inline">Mushroom Land</span>
-            </a>
-          </span>
-          <span>
-            <span class="lang-zh-inline">挑选并孵化的异味独游（多为免费游戏、免费本地化）。不一定挂名发行：有的只做本地化与宣传，有的会由同好会发行；爱发电打赏回流用于发行。</span>
-            <span class="lang-en-inline">Weird indies we incubate (often free games, free localization). Not always our publishing credit — some get loc &amp; promo only; some we publish. Afdian tips fund publishing.</span>
-          </span>
-        </li>
-        <li>
-          <span class="games-role-guide-name">
-            <a href="#games-role-collab">
-              <span class="lang-zh-inline">本地化与推广</span>
-              <span class="lang-en-inline">Loc &amp; Promo</span>
-            </a>
-          </span>
-          <span>
-            <span class="lang-zh-inline">付费本地化及/或宣传推荐的商务合作；发行方仍是对方，同好会不挂名发行。</span>
-            <span class="lang-en-inline">Paid localization and/or promo partnerships. They stay the publisher of record — we don’t publish under our name here.</span>
-          </span>
-        </li>
-        <li>
-          <span class="games-role-guide-name">
-            <a href="#games-role-published">
-              <span class="lang-zh-inline">同好会发行</span>
-              <span class="lang-en-inline">Published by Us</span>
-            </a>
-          </span>
-          <span>
-            <span class="lang-zh-inline">异味游戏同好会作为发行方正式上架的作品。</span>
-            <span class="lang-en-inline">Games we publish as Weird Games Club — we are the publisher of record.</span>
-          </span>
-        </li>
-      </ul>
-      <p class="games-role-guide-more">
-        <span class="lang-zh-inline">想了解野菌计划细节，见 </span>
-        <span class="lang-en-inline">More on Mushroom Land: </span>
-        <a href="mushroom-land-plan.html">
-          <span class="lang-zh-inline">野菌计划页 →</span>
-          <span class="lang-en-inline">Mushroom Land Project →</span>
-        </a>
-      </p>
-    </div>
     <div id="gamesSections"></div>
   </div>
 
@@ -784,17 +785,39 @@ html[lang="en"] .games-label-sticker {
     </div>
 
     <div class="games-label-stickers" aria-label="Game labels">
-      <div class="games-label-sticker games-label-sticker--a">
-        <span class="lang-zh">野菌计划</span>
-        <span class="lang-en">Mushroom Land</span>
+      <div class="games-label-sticker-wrap games-label-sticker-wrap--a">
+        <a class="games-label-sticker games-label-sticker--a" href="#games-role-incubated" aria-describedby="stickerTipIncubated">
+          <span class="lang-zh">野菌计划</span>
+          <span class="lang-en">Mushroom Land</span>
+        </a>
+        <div class="games-label-sticker-tip" id="stickerTipIncubated" role="tooltip">
+          <span class="lang-zh-inline">异味游戏同好会独有企划，挑选并孵化的异味独游，不一定挂名发行。有的只做本地化与宣传，有的会由同好会发行</span>
+          <span class="lang-en-inline">Our exclusive incubation program for weird indies — we don’t always publish under our name. Some titles get localization and promo only; others we publish.</span>
+          <a href="mushroom-land-plan.html">
+            <span class="lang-zh-inline">野菌计划页 →</span>
+            <span class="lang-en-inline">Mushroom Land →</span>
+          </a>
+        </div>
       </div>
-      <div class="games-label-sticker games-label-sticker--b">
-        <span class="lang-zh">本地化与推广</span>
-        <span class="lang-en">Loc &amp; Promo</span>
+      <div class="games-label-sticker-wrap games-label-sticker-wrap--b">
+        <a class="games-label-sticker games-label-sticker--b" href="#games-role-collab" aria-describedby="stickerTipCollab">
+          <span class="lang-zh">本地化与推广</span>
+          <span class="lang-en">Loc &amp; Promo</span>
+        </a>
+        <div class="games-label-sticker-tip" id="stickerTipCollab" role="tooltip">
+          <span class="lang-zh-inline">付费本地化及/或宣传推荐的商务合作；发行方仍是对方，同好会不挂名发行。</span>
+          <span class="lang-en-inline">Paid localization and/or promo partnerships. They stay the publisher of record — we don’t publish under our name here.</span>
+        </div>
       </div>
-      <div class="games-label-sticker games-label-sticker--c">
-        <span class="lang-zh">同好会发行</span>
-        <span class="lang-en">Published</span>
+      <div class="games-label-sticker-wrap games-label-sticker-wrap--c">
+        <a class="games-label-sticker games-label-sticker--c" href="#games-role-published" aria-describedby="stickerTipPublished">
+          <span class="lang-zh">同好会发行</span>
+          <span class="lang-en">Published</span>
+        </a>
+        <div class="games-label-sticker-tip" id="stickerTipPublished" role="tooltip">
+          <span class="lang-zh-inline">异味游戏同好会作为发行方正式上架的作品。</span>
+          <span class="lang-en-inline">Games we publish as Weird Games Club — we are the publisher of record.</span>
+        </div>
       </div>
     </div>
   </aside>
