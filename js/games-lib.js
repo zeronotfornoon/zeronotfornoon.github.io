@@ -23,6 +23,46 @@ function isGameListed(game) {
   return game && game.listed !== false;
 }
 
+/** incubated | collab | published — default collab for older entries */
+function getGameRole(game) {
+  const role = String((game && game.role) || '').trim().toLowerCase();
+  if (role === 'incubated' || role === 'published' || role === 'collab') return role;
+  return 'collab';
+}
+
+var GAME_ROLE_META = {
+  incubated: {
+    zh: '野菌计划',
+    en: 'Mushroom Land',
+    badgeZh: '野菌计划',
+    badgeEn: 'Mushroom Land',
+    descZh: '经野菌计划挑选与支持的异味独立游戏。',
+    descEn: 'Weird indies spotted and supported through the Mushroom Land project.'
+  },
+  collab: {
+    zh: '本地化与推广',
+    en: 'Localization & Promo',
+    badgeZh: '本地化与推广',
+    badgeEn: 'Loc & Promo',
+    descZh: '提供付费本地化及/或宣传推荐的合作游戏。',
+    descEn: 'Titles we localize for a fee and/or help promote.'
+  },
+  published: {
+    zh: '同好会发行',
+    en: 'Published by Us',
+    badgeZh: '同好会发行',
+    badgeEn: 'Published',
+    descZh: '由异味游戏同好会作为发行方上架的作品。',
+    descEn: 'Games published by Weird Games Club.'
+  }
+};
+
+var GAME_ROLE_ORDER = ['incubated', 'collab', 'published'];
+
+function getGameRoleMeta(role) {
+  return GAME_ROLE_META[role] || GAME_ROLE_META.collab;
+}
+
 function getAllGamesPool() {
   if (allGames.length) return allGames;
   const embedded = getEmbeddedGamesData();
@@ -31,6 +71,12 @@ function getAllGamesPool() {
 
 function getListedGames(games) {
   return (games || getAllGamesPool()).filter(isGameListed);
+}
+
+function getListedGamesByRole(role, games) {
+  return getListedGames(games).filter(function(game) {
+    return getGameRole(game) === role;
+  });
 }
 
 function findGameById(id) {
@@ -143,16 +189,16 @@ function renderHeroStats() {
   const total = listed.length;
   if (gamesLibLang === 'en') {
     el.innerHTML =
-      '<span>' + total + ' supported game' + (total === 1 ? '' : 's') + '</span>' +
+      '<span>' + total + ' title' + (total === 1 ? '' : 's') + '</span>' +
       '<span class="hero-stats-sep">·</span>' +
-      '<span>Curated weird picks</span>';
+      '<span>Mushroom Land · Loc &amp; Promo · Publishing</span>';
     return;
   }
 
   el.innerHTML =
-    '<span>' + total + ' 款合作游戏</span>' +
+    '<span>' + total + ' 款收录</span>' +
     '<span class="hero-stats-sep">·</span>' +
-    '<span>异味优选收录</span>';
+    '<span>野菌计划 · 本地化与推广 · 同好会发行</span>';
 }
 
 function renderDefaultCoverHtml(game, className) {
@@ -185,6 +231,10 @@ window.gamesOnLangChange = function gamesOnLangChange(lang) {
 
 window.gamesPickRandom = pickRandomGame;
 window.isGameListed = isGameListed;
+window.getGameRole = getGameRole;
+window.getGameRoleMeta = getGameRoleMeta;
+window.GAME_ROLE_ORDER = GAME_ROLE_ORDER;
 window.getListedGames = getListedGames;
+window.getListedGamesByRole = getListedGamesByRole;
 window.findGameById = findGameById;
 window.findGamesByIds = findGamesByIds;
