@@ -243,11 +243,14 @@ body {
 }
 .prose p + p { margin-top: 1.2em; }
 
-/* ── 服务区两列 ── */
+/* ── 商务能力三列 ── */
 .service-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+}
+.service-grid--biz {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .service-card {
   background: var(--off-white);
@@ -268,12 +271,21 @@ body {
   margin-bottom: 14px;
 }
 .service-card-label.pink { background: var(--pink-deep); }
+.service-card-label.moss { background: #5a8a5a; }
 .service-card-title {
   font-family: var(--font-title);
-  font-size: var(--font-size-title);
+  font-size: 1.15rem;
   font-weight: normal;
   color: var(--ink);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+.service-card-body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--ink-dim);
+  font-weight: normal;
+  line-height: 1.75;
 }
 .service-list {
   list-style: none;
@@ -296,6 +308,63 @@ body {
   left: 4px;
   color: var(--pink);
   font-weight: 700;
+}
+
+.biz-cta {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.biz-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 20px;
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.biz-cta-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.biz-cta-btn.secondary {
+  background: var(--white);
+  color: var(--ink);
+}
+.biz-cta-note {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--ink-faint);
+  line-height: 1.6;
+}
+
+.community-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1.2em;
+}
+.community-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: all 0.15s;
+}
+.community-link:hover {
+  background: var(--ink);
+  color: var(--white);
 }
 
 /* ── 免责声明区 ── */
@@ -505,7 +574,8 @@ body {
   .page-body { padding: 32px 16px 60px; gap: 32px; }
   .section-header { padding: 18px 20px 16px; }
   .section-body { padding: 20px; }
-  .service-grid { grid-template-columns: 1fr; }
+  .service-grid,
+  .service-grid--biz { grid-template-columns: 1fr; }
   .members-grid { grid-template-columns: 1fr; }
   .member-img-wrap { aspect-ratio: 4/3; }
 }
@@ -551,8 +621,8 @@ body {
       <span class="lang-en-inline">Who We Are</span>
     </div>
     <div class="hero-title-en">
-      <span class="lang-zh-inline">WEIRD GAMES CLUB</span>
-      <span class="lang-en-inline">WEIRD GAMES CLUB</span>
+      <span class="lang-zh-inline">本地化 · 发行 · 异味发掘</span>
+      <span class="lang-en-inline">Localization · Publishing · Weird Curation</span>
     </div>
   </div>
 </div>
@@ -574,73 +644,147 @@ body {
     </div>
     <div class="section-body">
       <div class="prose lang-zh">
-        <p>我们是<strong>异味游戏同好会（Weird Games Club）</strong>。这是一个由二人组成的独立游戏厂牌，目的是发掘那些拥有作者性、邪典、怪诞和只为特定受众制作的游戏，将这些异味宝石带给真正热爱它们的人。</p>
+        <p>我们是<strong>异味游戏同好会（Weird Games Club）</strong>——一个由二人组成的独立游戏厂牌。我们发掘那些拥有作者性、邪典、怪诞、只为特定受众制作的游戏，把它们带给真正热爱异味的人。</p>
+        <p>我们也会以<strong>发行方</strong>身份，挑选、上架并推广选中的异味独立游戏；同时提供本地化与宣传合作。厂牌履历见「合作游戏」：野菌计划、本地化与推广、同好会发行。</p>
       </div>
       <div class="prose lang-en">
-        <p>We are the <strong>Weird Games Club</strong>, a two-person indie outfit hunting for the cult, the surreal, and the beautifully bizarre. We believe that some games are only meant for a chosen few. Our job? To find those eccentric masterpieces and deliver them to the players who live for the weird.</p>
+        <p>We are the <strong>Weird Games Club</strong> — a two-person indie label hunting for the cult, the surreal, and the beautifully bizarre. Some games are only meant for a chosen few; our job is to find them and put them in the right hands.</p>
+        <p>We also <strong>publish</strong> selected weird indies, and partner on localization and promotion. See our catalog under Supported Games: Mushroom Land, Loc &amp; Promo, and Published by Us.</p>
       </div>
     </div>
   </div>
 
-  <!-- 02 我们能为你做什么 -->
+  <!-- 02 商务合作（独占） -->
   <div class="section">
     <div class="section-header">
       <div>
         <div class="section-num">02</div>
         <div class="section-title-zh">
-          <span class="lang-zh-inline">我们能为你做什么？</span>
-          <span class="lang-en-inline">What We Offer</span>
+          <span class="lang-zh-inline">商务合作</span>
+          <span class="lang-en-inline">Business Partners</span>
         </div>
-        <div class="section-title-en">WHAT WE OFFER</div>
+        <div class="section-title-en">FOR DEVELOPERS &amp; PUBLISHERS</div>
       </div>
     </div>
     <div class="section-body">
-      <div class="service-grid">
+      <div class="prose lang-zh" style="margin-bottom:1.2em;">
+        <p>面向独立游戏开发者与发行方。以下三项是同好会对外提供的核心能力——本地化、发行与推广<strong>同级并列</strong>，欢迎通过信号联络洽谈。</p>
+      </div>
+      <div class="prose lang-en" style="margin-bottom:1.2em;">
+        <p>For indie developers and publishers. Three core offerings at equal weight — localization, publishing, and promo. Reach out via Contact to talk.</p>
+      </div>
 
-        <!-- 面向开发者 -->
+      <div class="service-grid service-grid--biz">
         <div class="service-card">
           <span class="service-card-label">
-            <span class="lang-zh-inline">面向独立游戏开发者</span>
-            <span class="lang-en-inline">For Indie Developers</span>
+            <span class="lang-zh-inline">本地化</span>
+            <span class="lang-en-inline">Localization</span>
           </span>
-          <ul class="service-list lang-zh">
-            <li>我们提供简中本地化 / 日语本地化 / 英文本地化的<strong>商业收费服务</strong></li>
-            <li>负责本地化的译者均为深耕怪奇独立游戏领域的译者，他们不仅是译者，更是爱好者，懂本地化，<strong>更懂您的游戏</strong></li>
-            <li>我们的新浪微博官方账号"异味游戏同好会"会提供<strong>免费推广支持</strong></li>
-          </ul>
-          <ul class="service-list lang-en">
-            <li>We offer premium localization services for <strong>Simplified Chinese, Japanese, and English</strong></li>
-            <li>Our translators aren't just language experts — they are die-hard fans deeply rooted in the bizarre and cult indie scene</li>
-            <li>Complimentary shout-outs and promotional support on our official <strong>Weibo account</strong></li>
-          </ul>
+          <div class="service-card-title">
+            <span class="lang-zh-inline">付费本地化</span>
+            <span class="lang-en-inline">Paid localization</span>
+          </div>
+          <div class="service-card-body lang-zh">
+            提供简中 / 日语 / 英文本地化的商业收费服务。译者深耕怪奇独立游戏，懂语言，更懂你的游戏。
+          </div>
+          <div class="service-card-body lang-en">
+            Premium Simplified Chinese, Japanese, and English localization. Translators rooted in the cult indie scene — language experts who get your game.
+          </div>
         </div>
 
-        <!-- 面向玩家 -->
         <div class="service-card">
           <span class="service-card-label pink">
-            <span class="lang-zh-inline">面向独立游戏玩家</span>
-            <span class="lang-en-inline">For Gamers</span>
+            <span class="lang-zh-inline">发行</span>
+            <span class="lang-en-inline">Publishing</span>
           </span>
-          <ul class="service-list lang-zh">
-            <li>新浪微博官方账号"异味游戏同好会"搬运和发布各类<strong>异味独立游戏资讯</strong></li>
-            <li>异味游戏同好会的<strong>游戏 repo</strong>，将冷门但有趣的独立游戏带到您面前</li>
-          </ul>
-          <ul class="service-list lang-en">
-            <li>Our official <strong>Weibo account</strong> is your hub for all things weird and wonderful in the indie world</li>
-            <li>We curate the latest obscure game news and drop our own passionate <strong>game reviews</strong></li>
-            <li>Our mission: drag hidden, eccentric gems out of the shadows and onto your screen</li>
-          </ul>
+          <div class="service-card-title">
+            <span class="lang-zh-inline">同好会发行</span>
+            <span class="lang-en-inline">We publish</span>
+          </div>
+          <div class="service-card-body lang-zh">
+            以发行方身份挑选并上架异味独立游戏。适合高度个人风格、邪典、电波向作品——欢迎有发行意向的开发者联系我们。
+          </div>
+          <div class="service-card-body lang-en">
+            We publish selected weird indies under our own label. Personal, cult, radio-wave titles welcome — talk to us if you want a publisher who gets the odd.
+          </div>
         </div>
 
+        <div class="service-card">
+          <span class="service-card-label moss">
+            <span class="lang-zh-inline">推广</span>
+            <span class="lang-en-inline">Promo</span>
+          </span>
+          <div class="service-card-title">
+            <span class="lang-zh-inline">宣传推荐</span>
+            <span class="lang-en-inline">Promotion</span>
+          </div>
+          <div class="service-card-body lang-zh">
+            通过新浪微博官方账号「异味游戏同好会」等渠道提供推广与曝光支持，把冷门异味带进简中玩家视野。
+          </div>
+          <div class="service-card-body lang-en">
+            Promotional support via our official Weibo and related channels — helping obscure weird gems reach Simplified Chinese players.
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-cta">
+        <a class="biz-cta-btn" href="contact.html">
+          <span class="lang-zh-inline">有意向？→ 信号联络</span>
+          <span class="lang-en-inline">Interested? → Contact</span>
+        </a>
+        <a class="biz-cta-btn secondary" href="games.html">
+          <span class="lang-zh-inline">查看厂牌作品</span>
+          <span class="lang-en-inline">View catalog</span>
+        </a>
+        <span class="biz-cta-note">
+          <span class="lang-zh-inline">本地化、发行、推广均可单独或组合洽谈。</span>
+          <span class="lang-en-inline">Localization, publishing, and promo can be discussed separately or together.</span>
+        </span>
       </div>
     </div>
   </div>
 
-  <!-- 03 免责声明 -->
+  <!-- 03 玩家与社群 -->
   <div class="section">
     <div class="section-header">
       <div>
         <div class="section-num">03</div>
+        <div class="section-title-zh">
+          <span class="lang-zh-inline">玩家与社群</span>
+          <span class="lang-en-inline">Players &amp; Community</span>
+        </div>
+        <div class="section-title-en">FOR PLAYERS</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="prose lang-zh">
+        <p>同好会同时也运营面向玩家的内容与玩法：微博上的异味资讯、文字档案，以及异味林地里的会员小世界。这些是厂牌气质与社群入口，<strong>不是</strong>对外商务菜单。</p>
+      </div>
+      <div class="prose lang-en">
+        <p>We also run player-facing spaces — weird-game news on Weibo, written archives, and The Humid Wilds. That's our community flavor, <strong>not</strong> our business menu.</p>
+      </div>
+      <div class="community-links">
+        <a class="community-link" href="archive.html">
+          <span class="lang-zh-inline">异味档案 →</span>
+          <span class="lang-en-inline">Archives →</span>
+        </a>
+        <a class="community-link" href="forest.html">
+          <span class="lang-zh-inline">异味林地 →</span>
+          <span class="lang-en-inline">The Humid Wilds →</span>
+        </a>
+        <a class="community-link" href="mushroom-land-plan.html">
+          <span class="lang-zh-inline">野菌计划 →</span>
+          <span class="lang-en-inline">Mushroom Land →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 异味雷区 -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-num">04</div>
         <div class="section-title-zh">
           <span class="lang-zh-inline">异味雷区</span>
           <span class="lang-en-inline">Disclaimer & Boundaries</span>
@@ -652,13 +796,13 @@ body {
       <div class="disclaimer-list">
 
         <div class="disclaimer-item">
-          <div class="disclaimer-item-title lang-zh">⚖️ 官方版权与唯一合法性声明</div>
+          <div class="disclaimer-item-title lang-zh">⚖️ 官方版权与合法合作声明</div>
           <div class="disclaimer-item-title lang-en">⚖️ Official Copyright & Legitimacy Notice</div>
           <div class="disclaimer-item-body lang-zh">
-            异味游戏同好会的所有本地化项目<strong>均为受游戏开发商/发行商官方委托的合法商业行为</strong>。我们<strong>不提供</strong>任何非官方的民间汉化补丁、破解包或私下分发渠道。所有经由我们翻译的文本，其最终版权均归原作者或官方发行商所有，玩家请通过 Steam、Switch 等官方渠道支持正版游戏。
+            异味游戏同好会的本地化与发行相关合作<strong>均为与游戏开发商/发行方正式洽谈的合法商业行为</strong>。我们<strong>不提供</strong>任何非官方的民间汉化补丁、破解包或私下分发渠道。经由我们翻译或发行的作品，请通过 Steam、Switch 等官方渠道支持正版。
           </div>
           <div class="disclaimer-item-body lang-en">
-            Every single localization project under the Weird Games Club banner is an <strong>officially commissioned, fully authorized collaboration</strong> with the respective game developers and publishers. We do not — and will not — produce unofficial fan translations, cracked patches, or illicit distribution links. All text and localized content remain the sole intellectual property of the original creators. Please support these eccentric masterpieces via official storefronts like Steam and Nintendo Switch.
+            Localization and publishing collaborations under the Weird Games Club are <strong>formal, authorized business arrangements</strong> with developers and rights holders. We do not produce unofficial fan translations, cracks, or illicit downloads. Please support titles via official storefronts such as Steam and Nintendo Switch.
           </div>
         </div>
 
@@ -677,10 +821,10 @@ body {
           <div class="disclaimer-item-title lang-zh">🚫 拒绝为"非本地化引发的舆论风波"背锅</div>
           <div class="disclaimer-item-title lang-en">🚫 Not Our Circus, Not Our Monkeys</div>
           <div class="disclaimer-item-body lang-zh">
-            我们深知每款独立游戏都承载着作者强烈的个人表达。同好会仅对"文本翻译的准确性与艺术性"负责。<strong>若游戏原作者、发行商因其自身的政治立场、言论争议、运营策略或跳票行为引发任何社媒舆论风波，均与异味游戏同好会无关。</strong>团队拒绝接受任何形式的连带舆论网暴与无端指责。
+            我们深知每款独立游戏都承载着作者强烈的个人表达。同好会仅对"文本翻译的准确性与艺术性"，以及我们作为发行方明确承诺的事项负责。<strong>若游戏原作者、其他发行商因其自身的政治立场、言论争议、运营策略或跳票行为引发任何社媒舆论风波，均与异味游戏同好会无关。</strong>团队拒绝接受任何形式的连带舆论网暴与无端指责。
           </div>
           <div class="disclaimer-item-body lang-en">
-            We deeply respect that every indie game carries the fierce personal expression of its author. That said, our responsibility begins and ends strictly with the <strong>"accuracy and artistic quality of the translation."</strong> Should the original creators or publishers find themselves entangled in social media backlashes or controversies due to their own political stances, statements, operational strategies, or delays — the Weird Games Club shall remain entirely neutral and unassociated. Our team has zero tolerance for any form of associative online harassment, cyberbullying, or groundless accusations.
+            We deeply respect that every indie game carries the fierce personal expression of its author. Our responsibility covers translation quality and whatever we expressly commit to as a publisher. Should original creators or other publishers face backlash over their own politics, statements, ops, or delays — the Weird Games Club remains unassociated. Zero tolerance for groundless pile-ons aimed at us by association.
           </div>
         </div>
 
@@ -688,11 +832,11 @@ body {
     </div>
   </div>
 
-  <!-- 04 成员介绍 -->
+  <!-- 05 成员介绍 -->
   <div class="section">
     <div class="section-header">
       <div>
-        <div class="section-num">04</div>
+        <div class="section-num">05</div>
         <div class="section-title-zh">
           <span class="lang-zh-inline">异味游戏同好会成员介绍</span>
           <span class="lang-en-inline">Gem Diggers</span>
@@ -721,7 +865,7 @@ body {
               <div class="member-pronouns lang-en" style="margin-top:6px;">Genderqueer · Any pronouns</div>
             </div>
             <ul class="member-traits lang-zh">
-              <li>异味游戏同好会<strong>会长</strong>，拥有给游戏做中文本地化程度的能力</li>
+              <li>异味游戏同好会<strong>会长</strong>；负责厂牌发行对接与本地化</li>
               <li>司礼监唯一会做本地化的</li>
               <li>文字炼金术师，没睡够8小时就无法恢复法术位</li>
               <li>龙彦亲王的家臣，喜欢收集怪异游戏和奇奇怪怪的边角料</li>
@@ -729,7 +873,7 @@ body {
               <li><a href="portfolio.html">个人过往项目 →</a></li>
             </ul>
             <ul class="member-traits lang-en">
-              <li>21st-century priest of Attis and your <strong>indie-friendly game translator</strong></li>
+              <li>Club lead — <strong>publishing outreach</strong> and indie-friendly localization</li>
               <li>A vassal of Prince Tatsuhiko, dedicated to collecting bizarre titles and eccentric ephemera</li>
               <li>Fueled by Lo-Fi radio channels while deep-diving into localizations</li>
               <li><a href="portfolio.html">Past portfolio projects →</a></li>
