@@ -499,7 +499,8 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
   right: calc(100% + 12px);
   top: 50%;
   transform: translateY(-50%) translateX(6px);
-  width: min(260px, calc(100vw - 48px));
+  width: min(280px, 42vw);
+  max-width: calc(100vw - 360px);
   padding: 12px 14px;
   background: rgba(255, 254, 248, 0.98);
   border: 1px solid rgba(212, 96, 126, 0.35);
@@ -511,6 +512,9 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
   color: var(--ink-dim);
   line-height: 1.65;
   text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -557,22 +561,6 @@ html[lang="en"] .side-char-line { font-size: 0.82rem; }
   right: 16px;
   transform: rotate(5deg);
 }
-.games-label-sticker-wrap--b .games-label-sticker-tip {
-  right: auto;
-  left: calc(100% + 12px);
-  transform: translateY(-50%) translateX(-6px);
-}
-.games-label-sticker-wrap--b .games-label-sticker-tip::after {
-  left: auto;
-  right: 100%;
-  border-left-color: transparent;
-  border-right-color: rgba(255, 254, 248, 0.98);
-  filter: drop-shadow(-1px 0 0 rgba(212, 96, 126, 0.25));
-}
-.games-label-sticker-wrap--b:hover .games-label-sticker-tip,
-.games-label-sticker-wrap--b:focus-within .games-label-sticker-tip {
-  transform: translateY(-50%) translateX(0);
-}
 .games-label-sticker--c {
   transform: rotate(-1.2deg);
   border-color: #c4a0d4;
@@ -600,22 +588,19 @@ html[lang="en"] .games-label-sticker-tip {
   .games-label-sticker-wrap {
     width: 100%;
   }
-  .games-label-sticker-tip,
-  .games-label-sticker-wrap--b .games-label-sticker-tip {
+  .games-label-sticker-tip {
     right: 0;
     left: 0;
     top: calc(100% + 10px);
     width: 100%;
+    max-width: none;
     transform: translateY(4px);
   }
-  .games-label-sticker-tip::after,
-  .games-label-sticker-wrap--b .games-label-sticker-tip::after {
+  .games-label-sticker-tip::after {
     display: none;
   }
   .games-label-sticker-wrap:hover .games-label-sticker-tip,
-  .games-label-sticker-wrap:focus-within .games-label-sticker-tip,
-  .games-label-sticker-wrap--b:hover .games-label-sticker-tip,
-  .games-label-sticker-wrap--b:focus-within .games-label-sticker-tip {
+  .games-label-sticker-wrap:focus-within .games-label-sticker-tip {
     transform: translateY(0);
   }
 }
