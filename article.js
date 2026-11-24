@@ -172,6 +172,7 @@ function renderLoadingError(messageZh, messageEn) {
   document.getElementById('articleTags').style.display = 'none';
   document.getElementById('articleGames')?.classList.add('hidden');
   document.getElementById('articleToc')?.classList.add('hidden');
+  document.getElementById('articleGifts')?.classList.add('hidden');
   document.getElementById('articleShare')?.classList.add('hidden');
   document.getElementById('articleRelated')?.classList.add('hidden');
   document.getElementById('articleBody').innerHTML =
@@ -557,6 +558,8 @@ function renderArticle(article, bodyHtml) {
     tagsEl.style.display = 'none';
   }
 
+  document.getElementById('articleGifts')?.classList.remove('hidden');
+  if (window.ArticleGifts) window.ArticleGifts.open(article.id);
   document.getElementById('articleShare')?.classList.remove('hidden');
   updateShareLinks(article);
   renderLinkedGames(article);
@@ -577,6 +580,7 @@ function renderNotFound() {
   document.getElementById('articleToc')?.classList.add('hidden');
   document.getElementById('articleTocList').innerHTML = '';
   document.getElementById('articleBody').innerHTML = msg.body;
+  document.getElementById('articleGifts')?.classList.add('hidden');
   document.getElementById('articleShare')?.classList.add('hidden');
   document.getElementById('articleRelated')?.classList.add('hidden');
   document.getElementById('articleRelatedList').innerHTML = '';

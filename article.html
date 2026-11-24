@@ -495,6 +495,76 @@ body {
 .share-btn-qq .share-btn-icon { background: #12b7f5; color: #fff; }
 .share-btn-copy .share-btn-icon { background: var(--ink); color: #fff; }
 
+/* ── 投喂 ── */
+.article-gifts {
+  margin: 0 40px 8px;
+  padding: 22px 22px 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+}
+.article-gifts.hidden { display: none; }
+.article-gifts .hidden { display: none; }
+.article-gifts-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  margin-bottom: 8px;
+}
+.article-gifts-lead {
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.gift-totals {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.gift-total {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  background: var(--pink-bg);
+}
+.gift-total strong { font-size: 1.05rem; }
+.gift-auth, .gift-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.gift-auth input {
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  min-width: 180px;
+}
+.gift-auth button, .gift-actions button {
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.gift-actions button.gift-btn-secondary,
+.gift-auth button.gift-btn-secondary {
+  background: var(--white);
+  color: var(--ink);
+}
+.gift-status { margin-top: 10px; font-size: 0.82rem; color: var(--ink-dim); min-height: 1.2em; }
+.gift-board { margin-top: 16px; }
+.gift-board-title { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; color: var(--ink-faint); margin-bottom: 8px; }
+.gift-board ol { margin: 0; padding-left: 1.2em; }
+.gift-board li { margin: 4px 0; font-size: 0.84rem; }
+.gift-board a { color: var(--ink); }
+#wgcTurnstile { margin-top: 10px; }
+
 /* ── 相关推荐 ── */
 .article-related {
   margin-top: 28px;
@@ -820,6 +890,34 @@ body {
       <ol class="article-toc-list" id="articleTocList"></ol>
     </nav>
     <div class="article-body" id="articleBody"></div>
+    <section class="article-gifts hidden" id="articleGifts" aria-label="投喂">
+      <div class="article-gifts-title">投喂这篇文章</div>
+      <p class="article-gifts-lead">登录后，用林地背包里的树枝或浆果投喂。数量全站可见，每天有次数上限。</p>
+      <div class="gift-totals" id="giftTotals">
+        <span class="gift-total">树枝 <strong id="giftBranchTotal">0</strong></span>
+        <span class="gift-total">浆果 <strong id="giftBerryTotal">0</strong></span>
+      </div>
+      <div class="gift-auth" id="giftAuth">
+        <input id="giftEmail" type="email" placeholder="邮箱" autocomplete="email">
+        <button type="button" id="giftSendCode">发送验证码</button>
+        <input id="giftCode" type="text" inputmode="numeric" maxlength="6" placeholder="6 位验证码" autocomplete="one-time-code">
+        <input id="giftName" type="text" maxlength="32" placeholder="林地昵称（可选）">
+        <button type="button" id="giftLogin">登录</button>
+      </div>
+      <div class="gift-actions hidden" id="giftActions">
+        <span id="giftWho"></span>
+        <span id="giftPack">背包：树枝 0 · 浆果 0</span>
+        <button type="button" id="giftBranchBtn">投 1 根树枝</button>
+        <button type="button" id="giftBerryBtn">投 1 颗浆果</button>
+        <button type="button" class="gift-btn-secondary" id="giftLogout">退出</button>
+      </div>
+      <div id="wgcTurnstile"></div>
+      <div class="gift-status" id="giftStatus"></div>
+      <div class="gift-board">
+        <div class="gift-board-title">全站投喂榜</div>
+        <ol id="giftBoard"></ol>
+      </div>
+    </section>
     <div class="article-share" id="articleShare">
       <div class="article-share-title">
         <span class="lang-zh-inline">分享这篇文章</span>
@@ -899,7 +997,11 @@ body {
 <script src="js/archive-data.js"></script>
 <script src="js/games-data.js"></script>
 <script src="js/games-lib.js"></script>
+<script src="js/wgc-config.js"></script>
+<script src="js/wgc-api.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <script src="article.js"></script>
+<script src="js/article-gifts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" async></script>
 <script>
 registerSiteLangHook(function(lang) {
