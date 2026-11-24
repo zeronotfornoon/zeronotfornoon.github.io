@@ -77,6 +77,49 @@ body {
   pointer-events: none;
   overflow: hidden;
 }
+.site-bg::before,
+.site-bg::after {
+  content: '';
+  position: absolute;
+  left: -25%;
+  width: 150%;
+  height: 38%;
+  border-radius: 50%;
+  filter: blur(28px);
+  pointer-events: none;
+}
+.site-bg::before {
+  top: 22%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(150, 205, 235, 0.28) 22%,
+    rgba(70, 155, 215, 0.18) 48%,
+    rgba(190, 225, 245, 0.32) 72%,
+    transparent 100%
+  );
+  animation: site-wave-a 28s ease-in-out infinite alternate;
+}
+.site-bg::after {
+  bottom: 4%;
+  background: linear-gradient(
+    80deg,
+    transparent 0%,
+    rgba(90, 170, 220, 0.16) 30%,
+    rgba(170, 215, 240, 0.28) 58%,
+    rgba(60, 140, 200, 0.12) 82%,
+    transparent 100%
+  );
+  animation: site-wave-b 36s ease-in-out infinite alternate;
+}
+@keyframes site-wave-a {
+  0% { transform: translate3d(-8%, 0, 0) scaleY(1); }
+  100% { transform: translate3d(10%, 6%, 0) scaleY(1.18); }
+}
+@keyframes site-wave-b {
+  0% { transform: translate3d(8%, 2%, 0) scaleY(1.05); }
+  100% { transform: translate3d(-12%, -4%, 0) scaleY(0.92); }
+}
 .site-bg-glow {
   position: absolute;
   border-radius: 50%;
@@ -84,46 +127,46 @@ body {
   will-change: transform;
 }
 .site-bg-glow-a {
-  width: min(68vw, 560px);
-  height: min(52vw, 440px);
-  top: 52%;
-  left: -12%;
-  background: rgba(232, 160, 180, 0.18);
-  animation: site-glow-drift-a 22s ease-in-out infinite alternate;
+  width: min(72vw, 620px);
+  height: min(36vw, 280px);
+  top: 46%;
+  left: -16%;
+  background: rgba(90, 170, 220, 0.22);
+  animation: site-glow-drift-a 24s ease-in-out infinite alternate;
 }
 @keyframes site-glow-drift-a {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(6%, 8%) scale(1.06); }
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(18%, 8%, 0) scale(1.12, 0.86); }
 }
 @keyframes site-glow-drift-b {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(-5%, 6%) scale(1.08); }
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-16%, 6%, 0) scale(1.08, 0.9); }
 }
 @keyframes site-glow-drift-c {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(4%, -5%) scale(1.05); }
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(14%, -7%, 0) scale(0.94, 1.16); }
 }
 .site-bg-glow-b {
-  width: min(55vw, 480px);
-  height: min(48vw, 400px);
-  top: 38%;
-  right: -14%;
-  background: rgba(122, 158, 122, 0.16);
-  animation: site-glow-drift-b 28s ease-in-out infinite alternate;
+  width: min(64vw, 540px);
+  height: min(32vw, 240px);
+  top: 34%;
+  right: -18%;
+  background: rgba(140, 200, 235, 0.24);
+  animation: site-glow-drift-b 32s ease-in-out infinite alternate;
 }
 .site-bg-glow-c {
-  width: min(62vw, 520px);
-  height: min(44vw, 360px);
-  bottom: -8%;
-  left: 28%;
-  background: rgba(196, 168, 130, 0.2);
-  animation: site-glow-drift-c 26s ease-in-out infinite alternate;
+  width: min(70vw, 580px);
+  height: min(30vw, 220px);
+  bottom: 2%;
+  left: 18%;
+  background: rgba(70, 150, 210, 0.18);
+  animation: site-glow-drift-c 30s ease-in-out infinite alternate;
 }
 .site-bg-spore {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, #f5c8d6 0%, rgba(232, 160, 180, 0.85) 55%, rgba(232, 160, 180, 0.2) 100%);
-  box-shadow: 0 0 10px rgba(232, 160, 180, 0.85), 0 0 18px rgba(232, 160, 180, 0.35);
+  background: radial-gradient(circle, #d7eef8 0%, rgba(120, 185, 225, 0.85) 55%, rgba(120, 185, 225, 0.2) 100%);
+  box-shadow: 0 0 10px rgba(120, 185, 225, 0.75), 0 0 18px rgba(90, 160, 210, 0.3);
   opacity: 0.15;
   animation: site-spore-float 7s ease-in-out infinite;
 }
@@ -149,6 +192,8 @@ body {
   100% { opacity: 0.1;  transform: translate(10px, -52px) scale(0.9); }
 }
 @media (prefers-reduced-motion: reduce) {
+  .site-bg::before,
+  .site-bg::after,
   .site-bg-glow,
   .site-bg-spore { animation: none; }
   .site-bg-glow-a { opacity: 0.85; }
