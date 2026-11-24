@@ -240,13 +240,11 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 52%;
+  height: 18%;
   background: linear-gradient(
     to bottom,
-    rgba(186, 214, 232, 0) 0%,
-    rgba(176, 210, 230, 0.2) 28%,
-    rgba(186, 218, 234, 0.62) 58%,
-    rgba(198, 226, 240, 0.35) 82%,
+    rgba(186, 216, 234, 0) 0%,
+    rgba(186, 216, 234, 0.35) 55%,
     rgba(198, 226, 240, 0) 100%
   );
   pointer-events: none;
@@ -257,22 +255,8 @@ body {
   display: block;
   height: auto;
   vertical-align: top;
-  margin-bottom: -18%;
-  filter: brightness(0.98);
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 62%,
-    rgba(0, 0, 0, 0.45) 78%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 62%,
-    rgba(0, 0, 0, 0.45) 78%,
-    transparent 100%
-  );
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
 }
 
 /* ── 倒计时条 ── */
@@ -1597,7 +1581,6 @@ html[lang="en"] .side-char-line {
 
 @media (max-width: 576px) {
   .hero-lang-switch { top: 10px; right: 12px; }
-  .hero::after { height: 58%; }
   .site-bg-spore { animation-duration: 9s; }
   .countdown-strip { gap: 14px; padding: 10px 0 4px; }
   .cd-num { font-size: 0.85rem; min-width: 44px; padding: 6px 8px; }
