@@ -234,29 +234,11 @@ body {
   overflow: hidden;
   background: transparent;
 }
-.hero::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 18%;
-  background: linear-gradient(
-    to bottom,
-    rgba(186, 216, 234, 0) 0%,
-    rgba(186, 216, 234, 0.35) 55%,
-    rgba(198, 226, 240, 0) 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
 .hero-bg {
   width: 100%;
   display: block;
   height: auto;
   vertical-align: top;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
 }
 
 /* ── 倒计时条 ── */
@@ -1680,7 +1662,7 @@ html[lang="en"] .side-char-line {
 
 <!-- 主视觉区 -->
 <div class="hero">
-  <img class="hero-bg" src="ywyxthh.jpg" alt="异味游戏同好会">
+  <img class="hero-bg" src="ywyxthh.png" alt="异味游戏同好会">
   <div class="hero-lang-switch">
     <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
     <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
