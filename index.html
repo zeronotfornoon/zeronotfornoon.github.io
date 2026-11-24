@@ -232,7 +232,7 @@ body {
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: var(--off-white);
+  background: transparent;
 }
 .hero::after {
   content: '';
@@ -240,11 +240,13 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 48px;
+  height: 28%;
   background: linear-gradient(
     to bottom,
-    transparent 0%,
-    var(--off-white) 100%
+    rgba(214, 230, 242, 0) 0%,
+    rgba(196, 220, 236, 0.35) 42%,
+    rgba(186, 216, 234, 0.78) 72%,
+    rgba(198, 224, 238, 0.96) 100%
   );
   pointer-events: none;
   z-index: 1;
@@ -255,6 +257,8 @@ body {
   height: auto;
   vertical-align: top;
   filter: brightness(0.98);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
 }
 
 /* ── 倒计时条 ── */
@@ -1579,7 +1583,7 @@ html[lang="en"] .side-char-line {
 
 @media (max-width: 576px) {
   .hero-lang-switch { top: 10px; right: 12px; }
-  .hero::after { height: 32px; }
+  .hero::after { height: 34%; }
   .site-bg-spore { animation-duration: 9s; }
   .countdown-strip { gap: 14px; padding: 10px 0 4px; }
   .cd-num { font-size: 0.85rem; min-width: 44px; padding: 6px 8px; }
