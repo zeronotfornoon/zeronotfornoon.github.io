@@ -533,6 +533,18 @@ body {
 }
 .gift-total strong { font-size: 1.05rem; }
 .gift-auth, .gift-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.gift-sub {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-basis: 100%;
+  margin-top: 4px;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--ink);
+  cursor: pointer;
+}
+.gift-sub input { margin-top: 3px; }
 .gift-auth input {
   border: 1px solid var(--border-dark);
   border-radius: 8px;
@@ -907,6 +919,10 @@ body {
       <div class="gift-actions hidden" id="giftActions">
         <span id="giftWho"></span>
         <span id="giftPack">背包：树枝 0 · 浆果 0</span>
+        <label class="gift-sub" for="giftSubscribe">
+          <input id="giftSubscribe" type="checkbox">
+          <span>有新文章时发邮件给我（发到这个账号的登录邮箱，可随时取消）</span>
+        </label>
         <button type="button" id="giftBranchBtn">投 1 根树枝</button>
         <button type="button" id="giftBerryBtn">投 1 颗浆果</button>
         <button type="button" class="gift-btn-secondary" id="giftLogout">退出</button>
