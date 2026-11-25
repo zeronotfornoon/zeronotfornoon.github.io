@@ -69,7 +69,28 @@
     $('giftWho').textContent = name;
     var pack = backpack || {};
     $('giftPack').textContent = '背包：树枝 ' + (pack['树枝'] || 0) + ' · 浆果 ' + (pack['浆果'] || 0);
+    var box = $('giftSubscribe');
+    if (box) {
+      box.checked = !!(user && user.notifyOptIn);
+      box.disabled = false;
+    }
     ensureTurnstile();
+  }
+
+  async function onSubscribeChange() {
+    var box = $('giftSubscribe');
+    if (!box || !window.WGCApi) return;
+    var want = box.checked;
+    box.disabled = true;
+    try {
+      await WGCApi.setSubscription(want);
+      setStatus(want ? '已订阅。之后有新文章会发到你的登录邮箱。' : '已取消订阅，之后不会发更新邮件。');
+    } catch (err) {
+      box.checked = !want;
+      setStatus((err.data && err.data.error) || err.message || '订阅设置失败');
+    } finally {
+      box.disabled = false;
+    }
   }
 
   async function refreshSession() {
@@ -167,6 +188,8 @@
       showLoggedOut();
       setStatus('已退出。');
     });
+    var sub = $('giftSubscribe');
+    if (sub) sub.addEventListener('change', onSubscribeChange);
     $('giftBranchBtn').addEventListener('click', function () { gift('树枝'); });
     $('giftBerryBtn').addEventListener('click', function () { gift('浆果'); });
   }
